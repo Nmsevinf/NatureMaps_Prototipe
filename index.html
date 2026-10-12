@@ -1,0 +1,695 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Nature MAPS — Prototipo para valoración</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; font-family: 'Inter', system-ui, sans-serif; background: #E7E7E2; }
+  body { min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 24px 0 60px; }
+  .intro { max-width: 440px; text-align: center; padding: 0 20px 18px; }
+  .intro h1 { font-size: 20.5px; color: #1F2937; margin: 0 0 4px; }
+  .intro p { font-size: 14px; color: #6B7273; margin: 0; line-height: 1.5; }
+
+  .phone-wrap { width: 390px; max-width: 94vw; }
+  .phone { position: relative; width: 100%; height: 844px; max-height: 80vh; background: #fff;
+    border-radius: 42px; overflow: hidden; box-shadow: 0 0 0 10px #17241b, 0 20px 50px rgba(0,0,0,0.25); }
+  .screen { position: absolute; inset: 0; display: none; flex-direction: column; overflow: hidden; background: #F9F9F6; }
+  .screen.active { display: flex; }
+
+  button, .tappable { transition: transform 0.08s ease, opacity 0.08s ease, background 0.15s ease, border-color 0.15s ease, color 0.15s ease; cursor: pointer; }
+  button:active, .tappable:active { transform: scale(0.96); opacity: 0.85; }
+  .nav-item { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+  .navbar { display: flex; justify-content: space-around; align-items: center; padding: 10px 12px 22px; background: #FFFFFF; border-top: 1px solid #E8E8E3; }
+  .chip { padding: 7px 13px; border-radius: 18px; font-size: 12.5px; font-weight: 500; border: 1px solid #E8E8E3; background: #FFFFFF; color: #6B7273; white-space: nowrap; }
+  .chip.active { background: #2B6942; color: #FFFFFF; border-color: #2B6942; }
+  .route-card:hover { box-shadow: 0 6px 18px rgba(0,0,0,0.08); }
+  .lang-row.selected { border-color: #2B6942 !important; background: #F3F8EF; }
+  .radio { width: 20px; height: 20px; border-radius: 10px; border: 2px solid #D8D8D2; position: relative; flex-shrink: 0; }
+  .radio.on { border-color: #2B6942; }
+  .radio.on::after { content: ''; position: absolute; inset: 3px; border-radius: 6px; background: #2B6942; }
+  .opt.selected { border-color: #2B6942 !important; }
+  .pin.active { transform: scale(1.15); }
+  #shutter:active { transform: scale(0.88); background: #E7EEDD; }
+  @keyframes flash { 0% { opacity: 0; } 30% { opacity: 1; } 100% { opacity: 0; } }
+  .flash-overlay.on { animation: flash 0.4s ease; }
+  .badge-mode { display: inline-block; padding: 4px 10px; border-radius: 20px; background: #2B6942; font-size: 11.5px; font-weight: 700; color: #FFFFFF; letter-spacing: 0.03em; }
+
+  .flip-card { perspective: 900px; cursor: pointer; }
+  .flip-card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.55s cubic-bezier(.25,.9,.3,1.1); transform-style: preserve-3d; }
+  .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
+  .flip-face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; border-radius: 14px; }
+  .flip-back { transform: rotateY(180deg); background: repeating-linear-gradient(135deg, #6C4CE0, #6C4CE0 8px, #5A3DC7 8px, #5A3DC7 16px); display: flex; align-items: center; justify-content: center; border: 2px solid #8B6EF0; }
+
+  .settings-btn { width: 36px; height: 36px; border-radius: 18px; background: #2B6942; border: none; display: flex; align-items: center; justify-content: center; position: relative; box-shadow: 0 4px 10px rgba(43,105,66,0.35); }
+  .settings-dot { position: absolute; top: -2px; right: -2px; width: 11px; height: 11px; border-radius: 6px; background: #E85D5D; border: 2px solid #F9F9F6; }
+  .settings-toast { position: absolute; top: 66px; right: 16px; z-index: 40; background: #1F2937; color: #fff; border-radius: 14px; padding: 13px 14px; width: 220px; box-shadow: 0 12px 28px rgba(0,0,0,0.3); display: none; }
+  .settings-toast::after { content: ''; position: absolute; top: -6px; right: 14px; width: 12px; height: 12px; background: #1F2937; transform: rotate(45deg); }
+  .settings-toast p { margin: 0 0 10px; font-size: 13px; line-height: 1.4; }
+  .settings-toast .row { display: flex; justify-content: space-between; align-items: center; }
+  .settings-toast button { background: #2B6942; color: #fff; border: none; padding: 7px 12px; border-radius: 10px; font-family: 'Inter'; font-size: 12.5px; font-weight: 600; }
+  .settings-toast .close { color: rgba(255,255,255,0.6); font-size: 12.5px; padding: 7px; }
+</style>
+
+
+
+<div class="intro">
+  <h1>Nature MAPS — Prueba el prototipo</h1>
+  <p>Toca las pantallas como lo harías en el móvil, para hacerte una idea de la navegación completa de la app.</p>
+</div>
+
+<div class="phone-wrap">
+<div class="phone">
+
+  <div class="settings-toast" id="settingsToast">
+    <p>💡 Desde aquí puedes cambiar el <b>idioma</b>, activar los <b>avisos cercanos</b> (sin abrir la app) o descargar una zona en <b>modo offline</b>.</p>
+    <div class="row">
+      <span class="close tappable" onclick="closeToast()">Ahora no</span>
+      <button class="tappable" onclick="nav('idioma'); closeToast();">Ver ajustes</button>
+    </div>
+  </div>
+
+  <!-- ENCUESTA -->
+  <section id="scr-encuesta" class="screen active">
+    <div style="padding: 24px 20px 0; font-size: 16px; font-weight: 600; color: #1F2937;">9:41</div>
+    <div style="padding: 20px 24px 6px;">
+      <div style="font-size: 23px; font-weight: 700; color: #1F2937; line-height: 1.3;">¿Cómo quieres explorar Valencia?</div>
+      <div style="font-size: 14px; color: #6B7273; margin-top: 6px;">Elige lo que más te apetece — puedes cambiarlo luego</div>
+    </div>
+    <div style="flex: 1; padding: 16px 20px; display: flex; flex-direction: column; gap: 12px; overflow: hidden;">
+      <div class="opt tappable selected" onclick="chooseProfile('home-gamer', this)" style="display:flex; align-items:center; gap:14px; padding:16px; border-radius:16px; background:#fff; border:2px solid #2B6942;">
+        <div style="width:48px; height:48px; border-radius:14px; background:#E7EEDD; display:flex; align-items:center; justify-content:center;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2B6942" stroke-width="1.8"><rect x="4" y="8" width="16" height="10" rx="3"/><circle cx="9" cy="13" r="1.3" fill="#2B6942" stroke="none"/><circle cx="15" cy="13" r="1.3" fill="#2B6942" stroke="none"/></svg>
+        </div>
+        <div style="flex:1;"><div style="font-size:16px; font-weight:600; color:#1F2937;">Modo aventura</div><div style="font-size:12.5px; color:#6B7273;">Captura plantas, colecciona y sube de nivel</div></div>
+        <svg class="check" width="20" height="20" viewBox="0 0 24 24" fill="#2B6942"><circle cx="12" cy="12" r="10"/><path d="M8 12l2.5 2.5L16 9" stroke="#fff" stroke-width="2" fill="none"/></svg>
+      </div>
+      <div class="opt tappable" onclick="chooseProfile('home-descubridor', this)" style="display:flex; align-items:center; gap:14px; padding:16px; border-radius:16px; background:#fff; border:2px solid #E8E8E3;">
+        <div style="width:48px; height:48px; border-radius:14px; background:#F1F1EE; display:flex; align-items:center; justify-content:center;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6B7273" stroke-width="1.6"><path d="M12 22V12M12 12c0-4 3-7 7-7 0 4-3 7-7 7Zm0 0C12 8 9 5 5 5c0 4 3 7 7 7Z"/></svg>
+        </div>
+        <div style="flex:1;"><div style="font-size:16px; font-weight:600; color:#1F2937;">Paseo tranquilo</div><div style="font-size:12.5px; color:#6B7273;">Naturaleza e historia cultural, sin prisa</div></div>
+        <svg class="check" width="20" height="20" viewBox="0 0 24 24" fill="#2B6942" style="display:none;"><circle cx="12" cy="12" r="10"/><path d="M8 12l2.5 2.5L16 9" stroke="#fff" stroke-width="2" fill="none"/></svg>
+      </div>
+      <div class="opt tappable" onclick="chooseProfile('home-descubridor', this)" style="display:flex; align-items:center; gap:14px; padding:16px; border-radius:16px; background:#fff; border:2px solid #E8E8E3;">
+        <div style="width:48px; height:48px; border-radius:14px; background:#F1F1EE; display:flex; align-items:center; justify-content:center;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6B7273" stroke-width="1.6"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8Z"/></svg>
+        </div>
+        <div style="flex:1;"><div style="font-size:16px; font-weight:600; color:#1F2937;">Solo lo esencial</div><div style="font-size:12.5px; color:#6B7273;">Mapa simple con lo que otros descubrieron</div></div>
+        <svg class="check" width="20" height="20" viewBox="0 0 24 24" fill="#2B6942" style="display:none;"><circle cx="12" cy="12" r="10"/><path d="M8 12l2.5 2.5L16 9" stroke="#fff" stroke-width="2" fill="none"/></svg>
+      </div>
+      <div class="opt tappable" onclick="chooseProfile('home-educativo', this)" style="display:flex; align-items:center; gap:14px; padding:16px; border-radius:16px; background:#fff; border:2px solid #E8E8E3;">
+        <div style="width:48px; height:48px; border-radius:14px; background:#F1F1EE; display:flex; align-items:center; justify-content:center;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#6B7273" stroke-width="1.6"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12.5V17c0 1.1 2.7 2 6 2s6-.9 6-2v-4.5"/></svg>
+        </div>
+        <div style="flex:1;"><div style="font-size:16px; font-weight:600; color:#1F2937;">Grupo escolar</div><div style="font-size:12.5px; color:#6B7273;">Ruta guiada, fichas y test final</div></div>
+        <svg class="check" width="20" height="20" viewBox="0 0 24 24" fill="#2B6942" style="display:none;"><circle cx="12" cy="12" r="10"/><path d="M8 12l2.5 2.5L16 9" stroke="#fff" stroke-width="2" fill="none"/></svg>
+      </div>
+      <div style="flex:1;"></div>
+      <div style="text-align:center; font-size:12.5px; color:#9AA0A0; padding-bottom:6px;">Toca una opción para continuar</div>
+    </div>
+  </section>
+
+  <!-- HOME GAMER -->
+  <section id="scr-home-gamer" class="screen" style="background:#F6F3FE;">
+    <div style="padding: 24px 20px 0; font-size: 16px; font-weight: 600; color: #1F2937; display:flex; justify-content:space-between;">
+      <span>9:41</span>
+      <button class="settings-btn tappable" onclick="openSettings()" style="background:#6C4CE0; box-shadow:0 4px 10px rgba(108,76,224,0.4);">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg>
+        <span class="settings-dot"></span>
+      </button>
+    </div>
+    <div style="padding: 12px 20px 0;"><span class="badge-mode" style="background:#6C4CE0;">🎮 MODO AVENTURA</span> <span class="tappable" onclick="volverAModos()" style="font-size:11.5px; color:#8B7BB8; text-decoration:underline; margin-left:6px;">Cambiar</span></div>
+    <div style="margin: 10px 20px 0; padding: 16px; border-radius: 16px; background: linear-gradient(135deg,#6C4CE0,#9B6BEF); display: flex; align-items: center; gap: 12px; box-shadow:0 8px 20px rgba(108,76,224,0.3);">
+      <div style="width: 46px; height: 46px; border-radius: 23px; background: rgba(255,255,255,0.22); display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; color: #fff; border:2px solid rgba(255,255,255,0.4);">Nv.6</div>
+      <div style="flex:1;">
+        <div style="font-size:16px; font-weight:700; color:#fff;">Tu colección</div>
+        <div style="font-size:12.5px; color:#E4DBFF;">12 / 40 especies capturadas</div>
+        <div style="width:100%; height:6px; border-radius:3px; background:rgba(255,255,255,0.28); margin-top:6px;"><div style="width:30%; height:100%; background:#FFC94D; border-radius:3px;"></div></div>
+      </div>
+      <span style="font-size:23px;">⚡</span>
+    </div>
+    <div style="padding: 14px 20px 4px; font-size: 15px; font-weight: 700; color: #1F2937;">🗺️ Cerca de ti</div>
+
+    <div style="margin: 0 20px 10px; padding: 12px 14px; border-radius: 14px; background: #FDF3DE; border: 1.5px dashed #E9C46A; display:flex; gap:10px; align-items:flex-start;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B8863B" stroke-width="2" style="flex-shrink:0; margin-top:1px;"><path d="M12 21s7-6.3 7-11.5A7 7 0 0 0 5 9.5C5 14.7 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.2"/></svg>
+      <div style="flex:1;">
+        <div style="font-size:13px; font-weight:700; color:#8A5F24;">📍 Aquí hay una Ficus microcarpa</div>
+        <div style="font-size:12px; color:#8A5F24; margin-top:1px; line-height:1.4;">Importancia cultural: plantado en 1900 junto al Ayuntamiento. ¡Descúbrela!</div>
+        <button onclick="nav('identificar')" style="margin-top:8px; padding:7px 12px; border-radius:10px; background:#6C4CE0; border:none; color:#fff; font-family:'Inter'; font-size:12.5px; font-weight:700;">📷 Hacer foto para descubrir</button>
+      </div>
+    </div>
+
+    <div style="flex: 1; padding: 4px 16px 8px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; overflow: hidden;">
+      <div class="flip-card" style="aspect-ratio:0.82;" onclick="flipCard(this)">
+        <div class="flip-card-inner">
+          <div class="flip-face flip-front" style="background:#fff; border:2px solid #FFC94D; padding:8px; text-align:center; position:relative;">
+            <div style="position:absolute; top:6px; right:6px; font-size:9px; font-weight:700; color:#8A5F24; background:#FFF3D6; padding:2px 5px; border-radius:8px;">✨ RARA</div>
+            <div style="width:100%; aspect-ratio:1; border-radius:10px; background:linear-gradient(135deg,#FFE9A8,#FFC94D); display:flex; align-items:center; justify-content:center; margin-top:8px;">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#8A5F24" stroke-width="1.6"><path d="M12 22V12M12 12c0-4 3-7 7-7 0 4-3 7-7 7Zm0 0C12 8 9 5 5 5c0 4 3 7 7 7Z"/></svg>
+            </div>
+            <div style="font-size:11.5px; font-weight:700; color:#1F2937; margin-top:6px;">Jacaranda</div>
+          </div>
+          <div class="flip-face flip-back">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="1.6"><path d="M12 22V12M12 12c0-4 3-7 7-7 0 4-3 7-7 7Zm0 0C12 8 9 5 5 5c0 4 3 7 7 7Z"/></svg>
+          </div>
+        </div>
+      </div>
+      <div class="flip-card" style="aspect-ratio:0.82;" onclick="flipCard(this)">
+        <div class="flip-card-inner">
+          <div class="flip-face flip-front" style="background:#fff; border:1px solid #E4DBFF; padding:8px; text-align:center;">
+            <div style="width:100%; aspect-ratio:1; border-radius:10px; background:#EDE7FB; display:flex; align-items:center; justify-content:center; margin-top:8px;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6C4CE0" stroke-width="1.6"><path d="M12 22V12M12 12c0-4 3-7 7-7 0 4-3 7-7 7Zm0 0C12 8 9 5 5 5c0 4 3 7 7 7Z"/></svg>
+            </div>
+            <div style="font-size:11.5px; font-weight:700; color:#1F2937; margin-top:6px;">Palmera</div>
+          </div>
+          <div class="flip-face flip-back">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="1.6"><path d="M12 22V12M12 12c0-4 3-7 7-7 0 4-3 7-7 7Zm0 0C12 8 9 5 5 5c0 4 3 7 7 7Z"/></svg>
+          </div>
+        </div>
+      </div>
+      <div style="border-radius:14px; background:#F3F1FB; border:1.5px dashed #C9BCF2; padding:8px; text-align:center;">
+        <div style="width:100%; aspect-ratio:1; border-radius:10px; background:#E4DBFF; display:flex; align-items:center; justify-content:center; margin-top:8px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9B7FE0" stroke-width="1.8"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+        </div>
+        <div style="font-size:11.5px; font-weight:700; color:#9B7FE0; margin-top:6px;">???</div>
+      </div>
+      <div class="flip-card" style="aspect-ratio:0.82;" onclick="flipCard(this)">
+        <div class="flip-card-inner">
+          <div class="flip-face flip-front" style="background:#fff; border:1px solid #E4DBFF; padding:8px; text-align:center;">
+            <div style="width:100%; aspect-ratio:1; border-radius:10px; background:#EDE7FB; display:flex; align-items:center; justify-content:center; margin-top:8px;">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6C4CE0" stroke-width="1.6"><circle cx="12" cy="9" r="4"/><path d="M12 13v7"/></svg>
+            </div>
+            <div style="font-size:11.5px; font-weight:700; color:#1F2937; margin-top:6px;">Hibisco</div>
+          </div>
+          <div class="flip-face flip-back">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="1.6"><circle cx="12" cy="9" r="4"/><path d="M12 13v7"/></svg>
+          </div>
+        </div>
+      </div>
+      <div style="border-radius:14px; background:#F3F1FB; border:1.5px dashed #C9BCF2; padding:8px; text-align:center;">
+        <div style="width:100%; aspect-ratio:1; border-radius:10px; background:#E4DBFF; display:flex; align-items:center; justify-content:center; margin-top:8px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9B7FE0" stroke-width="1.8"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+        </div>
+        <div style="font-size:11.5px; font-weight:700; color:#9B7FE0; margin-top:6px;">???</div>
+      </div>
+      <div style="border-radius:14px; background:#F3F1FB; border:1.5px dashed #C9BCF2; padding:8px; text-align:center;">
+        <div style="width:100%; aspect-ratio:1; border-radius:10px; background:#E4DBFF; display:flex; align-items:center; justify-content:center; margin-top:8px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9B7FE0" stroke-width="1.8"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+        </div>
+        <div style="font-size:11.5px; font-weight:700; color:#9B7FE0; margin-top:6px;">???</div>
+      </div>
+    </div>
+    <div class="navbar" style="background:#fff;">
+      <div class="nav-item tappable" onclick="nav('home')" style="color:#6C4CE0;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9Z"/></svg><span style="font-size:10.5px; font-weight:700;">Inicio</span></div>
+      <div class="nav-item tappable" onclick="nav('mapa')" style="color:#9B9AA8;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22V12M12 12c0-4 3-7 7-7 0 4-3 7-7 7Zm0 0C12 8 9 5 5 5c0 4 3 7 7 7Z"/></svg><span style="font-size:10.5px;">Mapa</span></div>
+      <div class="nav-item tappable" onclick="nav('identificar')" style="color:#9B9AA8;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8Z"/></svg><span style="font-size:10.5px;">Escanear</span></div>
+      <div class="nav-item tappable" onclick="nav('rutas')" style="color:#9B9AA8;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 2 8l10 5 10-5-10-5Z"/></svg><span style="font-size:10.5px;">Rutas</span></div>
+      <div class="nav-item tappable" onclick="nav('buscar')" style="color:#9B9AA8;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg><span style="font-size:10.5px;">Buscar</span></div>
+    </div>
+  </section>
+
+  <!-- HOME DESCUBRIDOR -->
+  <section id="scr-home-descubridor" class="screen" style="background:#F1F7F5;">
+    <div style="padding: 24px 20px 0; font-size: 16px; font-weight: 600; color: #1F2937; display:flex; justify-content:space-between; position:relative; z-index:2;">
+      <span>9:41</span><button class="settings-btn tappable" onclick="openSettings()" style="background:#1F7A6C; box-shadow:0 4px 10px rgba(31,122,108,0.4);">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg>
+        <span class="settings-dot"></span>
+      </button>
+    </div>
+    <div style="padding: 10px 20px 0; position:relative; z-index:2;"><span class="badge-mode" style="background:#1F7A6C;">🍃 MODO DESCUBRIDOR</span> <span class="tappable" onclick="volverAModos()" style="font-size:11.5px; color:#6B8F87; text-decoration:underline; margin-left:6px;">Cambiar</span></div>
+    <div style="padding: 8px 20px 10px; display: flex; align-items: center; justify-content: space-between; position: relative; z-index: 2;">
+      <div><div style="font-size:22px; font-weight:700; color:#1F2937;">Explora Valencia</div><div style="font-size:12.5px; color:#6B8F87;">Descubre lo que otros ya han encontrado</div></div>
+      <div style="display:flex; background:#fff; border:1px solid #DCEAE6; border-radius:20px; padding:3px;">
+        <div id="pillHistoria" class="tappable" onclick="setPill(true)" style="padding:6px 10px; border-radius:16px; background:#DCEEE9; font-size:11.5px; font-weight:600; color:#1F7A6C;">Con historia</div>
+        <div id="pillEsencial" class="tappable" onclick="setPill(false)" style="padding:6px 10px; border-radius:16px; font-size:11.5px; font-weight:500; color:#9AA0A0;">Esencial</div>
+      </div>
+    </div>
+    <div style="flex: 1; background: #DCE8D3; position: relative; overflow: hidden;">
+      <svg width="100%" height="100%" viewBox="0 0 390 480" preserveAspectRatio="xMidYMid slice" style="position:absolute; inset:0;"><path d="M0 340 Q100 300 195 335 T390 320 V480 H0 Z" fill="#C7DBB9"/><path d="M0 0 H390 V120 Q280 160 195 120 T0 150 Z" fill="#CFE0C5"/></svg>
+      <div id="discoverLayer" style="position:absolute; inset:0;"></div>
+    </div>
+    <div class="tappable" onclick="nav('rutas')" style="position: absolute; left: 16px; right: 16px; bottom: 96px; background: #fff; border-radius: 16px; padding: 14px; display: flex; align-items: center; gap: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.12); z-index: 3;">
+      <div style="width:46px; height:46px; border-radius:12px; background:#DCEEE9; display:flex; align-items:center; justify-content:center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1F7A6C" stroke-width="1.8"><path d="M12 3 2 8l10 5 10-5-10-5Z"/></svg></div>
+      <div><div style="font-size:15px; font-weight:600; color:#1F2937;">Ruta corta: Jardín del Turia</div><div style="font-size:12.5px; color:#6B7273;">1.1 km · 20 min · contexto histórico</div></div>
+    </div>
+    <div class="navbar" style="position:relative; z-index:3;">
+      <div class="nav-item tappable" onclick="nav('home')" style="color:#6B7273;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9Z"/></svg><span style="font-size:10.5px;">Inicio</span></div>
+      <div class="nav-item tappable" onclick="nav('mapa')" style="color:#1F7A6C;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22V12M12 12c0-4 3-7 7-7 0 4-3 7-7 7Zm0 0C12 8 9 5 5 5c0 4 3 7 7 7Z"/></svg><span style="font-size:10.5px; font-weight:600;">Mapa</span></div>
+      <div class="nav-item tappable" onclick="nav('identificar')" style="color:#6B7273;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8Z"/></svg><span style="font-size:10.5px;">Escanear</span></div>
+      <div class="nav-item tappable" onclick="nav('rutas')" style="color:#6B7273;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 2 8l10 5 10-5-10-5Z"/></svg><span style="font-size:10.5px;">Rutas</span></div>
+      <div class="nav-item tappable" onclick="nav('buscar')" style="color:#6B7273;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg><span style="font-size:10.5px;">Buscar</span></div>
+    </div>
+  </section>
+
+  <!-- HOME EDUCATIVO -->
+  <section id="scr-home-educativo" class="screen" style="background:#EAF6FF;">
+    <div style="padding: 24px 20px 0; font-size: 16px; font-weight: 600; color: #1F2937; display:flex; justify-content:space-between;"><span>9:41</span><button class="settings-btn tappable" onclick="openSettings()" style="background:#FF9D3D; box-shadow:0 4px 10px rgba(255,157,61,0.4);">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg>
+        <span class="settings-dot"></span>
+      </button></div>
+    <div style="padding: 12px 20px 0; display:flex; align-items:center; gap:10px;"><span class="badge-mode" style="background:#2F8FE0;">🎒 MODO EDUCATIVO</span> <span class="tappable" onclick="volverAModos()" style="font-size:11.5px; color:#6B93B8; text-decoration:underline; margin-left:6px;">Cambiar</span><span style="font-size:12.5px; color:#6B93B8; margin-left:4px;">4ºB · CEIP Jardín del Turia</span></div>
+    <div style="padding: 8px 20px 0;"><div style="font-size:23px; font-weight:800; color:#1F2937;">🌳 Ruta: Jardín de las Hespérides</div><div style="font-size:12.5px; color:#5C7A94;">Configurada por la profesora Ana · 6 paradas</div></div>
+    <div style="flex: 1; padding: 12px 20px 8px; display: flex; flex-direction: column; gap: 12px; overflow-y: auto;">
+      <div style="border-radius: 20px; background: #fff; border: 2.5px solid #2F8FE0; padding: 14px;">
+        <div style="display:flex; gap:12px; align-items:center;">
+          <div style="width:56px; height:56px; border-radius:16px; background:#DBEEFF; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2F8FE0" stroke-width="1.8"><circle cx="9" cy="10" r="3"/><circle cx="15" cy="14" r="3"/></svg>
+          </div>
+          <div style="flex:1;">
+            <div style="font-size:12px; font-weight:800; color:#2F8FE0; text-transform:uppercase; letter-spacing:.03em;">🌿 Descubre la naturaleza de Valencia</div>
+            <div style="font-size:15.5px; font-weight:700; color:#1F2937; margin-top:2px;">Tu misión: encuentra el Ficus microcarpa</div>
+          </div>
+        </div>
+        <div style="margin-top:10px; display:flex; flex-direction:column; gap:8px;">
+          <div style="display:flex; gap:8px; align-items:flex-start;"><span style="width:19px; height:19px; border-radius:10px; background:#FF9D3D; color:#fff; font-size:11.5px; font-weight:800; display:flex; align-items:center; justify-content:center; flex-shrink:0;">1</span><span style="font-size:13px; color:#3E5C73; font-weight:500;">Sigue el camino marcado hasta la parada 5</span></div>
+          <div style="display:flex; gap:8px; align-items:flex-start;"><span style="width:19px; height:19px; border-radius:10px; background:#FF9D3D; color:#fff; font-size:11.5px; font-weight:800; display:flex; align-items:center; justify-content:center; flex-shrink:0;">2</span><span style="font-size:13px; color:#3E5C73; font-weight:500;">Busca la planta que se parece a la foto</span></div>
+          <div style="display:flex; gap:8px; align-items:flex-start;"><span style="width:19px; height:19px; border-radius:10px; background:#FF9D3D; color:#fff; font-size:11.5px; font-weight:800; display:flex; align-items:center; justify-content:center; flex-shrink:0;">3</span><span style="font-size:13px; color:#3E5C73; font-weight:500;">Haz una foto para validarla y añadirla a tu ficha</span></div>
+        </div>
+        <button onclick="nav('identificar')" style="width:100%; margin-top:12px; padding:12px; border-radius:14px; background:#FF9D3D; border:none; color:#fff; font-family:'Inter'; font-size:15px; font-weight:800; box-shadow:0 4px 10px rgba(255,157,61,0.35);">📷 ¡Hacer foto para validar!</button>
+      </div>
+
+      <div>
+        <div style="font-size:14.5px; font-weight:800; color:#1F2937; margin-bottom:8px;">🃏 Fichas de biodiversidad · 5/6</div>
+        <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:8px;">
+          <div class="tappable" onclick="nav('ficha')" style="border-radius:16px; background:#fff; border:2px solid #DBEEFF; padding:6px; text-align:center;"><div style="width:100%; aspect-ratio:1; border-radius:12px; background:#DBEEFF; display:flex; align-items:center; justify-content:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2F8FE0" stroke-width="1.8"><path d="M12 22V12M12 12c0-4 3-7 7-7 0 4-3 7-7 7Zm0 0C12 8 9 5 5 5c0 4 3 7 7 7Z"/></svg></div><div style="font-size:11px; font-weight:700; color:#1F2937; margin-top:4px;">Jacaranda</div></div>
+          <div class="tappable" onclick="nav('ficha')" style="border-radius:16px; background:#fff; border:2px solid #DBEEFF; padding:6px; text-align:center;"><div style="width:100%; aspect-ratio:1; border-radius:12px; background:#DBEEFF; display:flex; align-items:center; justify-content:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2F8FE0" stroke-width="1.8"><circle cx="12" cy="9" r="4"/><path d="M12 13v7"/></svg></div><div style="font-size:11px; font-weight:700; color:#1F2937; margin-top:4px;">Hibisco</div></div>
+          <div class="tappable" onclick="nav('ficha')" style="border-radius:16px; background:#fff; border:2px solid #DBEEFF; padding:6px; text-align:center;"><div style="width:100%; aspect-ratio:1; border-radius:12px; background:#DBEEFF; display:flex; align-items:center; justify-content:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2F8FE0" stroke-width="1.8"><path d="M12 22V12M12 12c0-4 3-7 7-7 0 4-3 7-7 7Zm0 0C12 8 9 5 5 5c0 4 3 7 7 7Z"/></svg></div><div style="font-size:11px; font-weight:700; color:#1F2937; margin-top:4px;">Palmera</div></div>
+          <div class="tappable" onclick="nav('ficha')" style="border-radius:16px; background:#fff; border:2px solid #DBEEFF; padding:6px; text-align:center;"><div style="width:100%; aspect-ratio:1; border-radius:12px; background:#DBEEFF; display:flex; align-items:center; justify-content:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2F8FE0" stroke-width="1.8"><circle cx="9" cy="10" r="3"/><circle cx="15" cy="14" r="3"/></svg></div><div style="font-size:11px; font-weight:700; color:#1F2937; margin-top:4px;">Ficus</div></div>
+          <div class="tappable" onclick="nav('ficha')" style="border-radius:16px; background:#fff; border:2px solid #DBEEFF; padding:6px; text-align:center;"><div style="width:100%; aspect-ratio:1; border-radius:12px; background:#DBEEFF; display:flex; align-items:center; justify-content:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2F8FE0" stroke-width="1.8"><path d="M12 22V12M12 12c0-4 3-7 7-7 0 4-3 7-7 7Zm0 0C12 8 9 5 5 5c0 4 3 7 7 7Z"/></svg></div><div style="font-size:11px; font-weight:700; color:#1F2937; margin-top:4px;">Laurel</div></div>
+          <div style="border-radius:16px; background:#F4F8FB; border:2px dashed #C3D9E8; padding:6px; text-align:center;"><div style="width:100%; aspect-ratio:1; border-radius:12px; background:#E7F0F6; display:flex; align-items:center; justify-content:center;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#8FADC2" stroke-width="1.8"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div><div style="font-size:11px; font-weight:700; color:#8FADC2; margin-top:4px;">1 pend.</div></div>
+        </div>
+      </div>
+      <div style="border-radius:20px; background:linear-gradient(135deg,#2F8FE0,#57B4F0); padding:16px;">
+        <div style="display:flex; justify-content:space-between;"><div style="font-size:15.5px; font-weight:800; color:#fff;">📝 Test final</div><div style="font-size:14.5px; font-weight:800; color:#fff;">9/10 aciertos</div></div>
+        <div style="width:100%; height:9px; border-radius:5px; background:rgba(255,255,255,0.3); margin-top:8px;"><div style="width:90%; height:100%; background:#FFD166; border-radius:5px;"></div></div>
+        <div style="display:flex; align-items:center; gap:8px; margin-top:8px;"><span style="font-size:19.5px;">🏆</span><div style="font-size:14px; color:#EAF6FF; font-weight:600;">320 puntos por biodiversidad encontrada</div></div>
+      </div>
+    </div>
+    <div style="padding: 0 20px 24px;"><button onclick="nav('home')" style="width:100%; padding:14px; border-radius:16px; background:#fff; border:2px solid #DBEEFF; color:#2F8FE0; font-family:'Inter'; font-size:16px; font-weight:700;">Volver</button></div>
+  </section>
+
+  <!-- 1. PLANTAS CERCANAS -->
+  <section id="scr-plantas-cercanas" class="screen">
+    <div style="padding: 24px 20px 0; font-size: 16px; font-weight: 600; color: #1F2937;">9:41</div>
+    <div style="padding: 16px 20px 10px;"><div style="font-size:24px; font-weight:700; color:#1F2937;">Plantas cercanas</div><div style="font-size:14px; color:#6B7273;">8 especies a menos de 300 m</div></div>
+    <div class="tappable" onclick="nav('buscar')" style="margin: 0 20px 14px; padding: 12px 14px; border-radius: 14px; background: #fff; border: 1px solid #E8E8E3; display: flex; align-items: center; gap: 10px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6B7273" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg><span style="font-size:15px; color:#9AA0A0;">Buscar una planta...</span></div>
+    <div class="tappable" onclick="nav('mapa')" style="margin: 0 20px 14px; height: 100px; border-radius: 14px; background: #DCE8D3; position: relative; overflow: hidden;">
+      <div style="position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:12px; height:12px; border-radius:6px; background:#2B6942; border:2px solid #fff;"></div>
+    </div>
+    <div style="padding: 0 20px 6px; font-size: 14px; font-weight: 600; color: #1F2937;">Lista</div>
+    <div style="flex: 1; padding: 4px 20px 8px; display: flex; flex-direction: column; gap: 10px; overflow: hidden;">
+      <div class="tappable" onclick="nav('ficha')" style="display:flex; align-items:center; gap:12px; padding:10px; border-radius:14px; background:#fff; border:1px solid #E8E8E3;"><div style="width:44px; height:44px; border-radius:12px; background:#E7EEDD; display:flex; align-items:center; justify-content:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2B6942" stroke-width="1.8"><path d="M12 22V12M12 12c0-4 3-7 7-7 0 4-3 7-7 7Zm0 0C12 8 9 5 5 5c0 4 3 7 7 7Z"/></svg></div><div style="flex:1;"><div style="font-size:15px; font-weight:600; color:#1F2937;">Jacaranda mimosifolia</div><div style="font-size:12.5px; color:#6B7273;">80 m · Parc Central</div></div></div>
+      <div class="tappable" onclick="nav('ficha')" style="display:flex; align-items:center; gap:12px; padding:10px; border-radius:14px; background:#fff; border:1px solid #E8E8E3;"><div style="width:44px; height:44px; border-radius:12px; background:#E7EEDD; display:flex; align-items:center; justify-content:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2B6942" stroke-width="1.8"><circle cx="12" cy="9" r="4"/><path d="M12 13v7"/></svg></div><div style="flex:1;"><div style="font-size:15px; font-weight:600; color:#1F2937;">Hibiscus rosa-sinensis</div><div style="font-size:12.5px; color:#6B7273;">140 m · Jardín del Turia</div></div></div>
+    </div>
+    <div class="navbar">
+      <div class="nav-item tappable" onclick="nav('home')" style="color:#2B6942;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9Z"/></svg><span style="font-size:10.5px; font-weight:600;">Inicio</span></div>
+      <div class="nav-item tappable" onclick="nav('mapa')" style="color:#6B7273;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22V12M12 12c0-4 3-7 7-7 0 4-3 7-7 7Zm0 0C12 8 9 5 5 5c0 4 3 7 7 7Z"/></svg><span style="font-size:10.5px;">Mapa</span></div>
+      <div class="nav-item tappable" onclick="nav('identificar')" style="color:#6B7273;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8Z"/></svg><span style="font-size:10.5px;">Escanear</span></div>
+      <div class="nav-item tappable" onclick="nav('rutas')" style="color:#6B7273;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 2 8l10 5 10-5-10-5Z"/></svg><span style="font-size:10.5px;">Rutas</span></div>
+      <div class="nav-item tappable" onclick="nav('buscar')" style="color:#6B7273;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg><span style="font-size:10.5px;">Buscar</span></div>
+    </div>
+  </section>
+
+  <!-- 2. IDENTIFICAR -->
+  <section id="scr-identificar" class="screen" style="background:#14251a;">
+    <div style="position: relative; padding: 24px 20px 0; display: flex; justify-content: space-between;">
+      <div class="tappable" onclick="back()" style="width:36px; height:36px; border-radius:18px; background:rgba(255,255,255,0.15); display:flex; align-items:center; justify-content:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></div>
+      <div style="width:36px; height:36px; border-radius:18px; background:rgba(255,255,255,0.15); display:flex; align-items:center; justify-content:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="#fff"><path d="M11 2 3 14h6l-1 8 9-13h-6l1-7Z"/></svg></div>
+    </div>
+    <div style="display:flex; justify-content:center; padding:14px 0 0; position:relative; z-index:2;">
+      <div style="display:flex; background:rgba(255,255,255,0.15); border-radius:20px; padding:3px;">
+        <div id="scanPlant" class="tappable" onclick="setScanMode('planta')" style="padding:7px 14px; border-radius:16px; background:#fff; font-size:12.5px; font-weight:600; color:#1F2937;">🌿 Planta</div>
+        <div id="scanMonument" class="tappable" onclick="setScanMode('monumento')" style="padding:7px 14px; border-radius:16px; font-size:12.5px; font-weight:500; color:#fff;">🏛️ Monumento o calle</div>
+      </div>
+    </div>
+    <div id="scanBg" style="position:absolute; inset:0; background:radial-gradient(circle at 50% 40%, rgba(43,105,66,0.35), transparent 60%); transition:background 0.3s ease; pointer-events:none; z-index:0;"></div>
+    <div class="flash-overlay" id="flash" style="position:absolute; inset:0; background:#fff; opacity:0; pointer-events:none;"></div>
+    <div style="flex: 1; display: flex; align-items: center; justify-content: center; position:relative;">
+      <svg id="scanFrame" width="220" height="220" viewBox="0 0 260 260" fill="none"><path d="M8 40V16a8 8 0 0 1 8-8h24" stroke="#79C08A" stroke-width="3" stroke-linecap="round"/><path d="M252 40V16a8 8 0 0 0-8-8h-24" stroke="#79C08A" stroke-width="3" stroke-linecap="round"/><path d="M8 220v24a8 8 0 0 0 8 8h24" stroke="#79C08A" stroke-width="3" stroke-linecap="round"/><path d="M252 220v24a8 8 0 0 1-8 8h-24" stroke="#79C08A" stroke-width="3" stroke-linecap="round"/></svg>
+    </div>
+    <div style="text-align: center; padding: 0 40px 12px; position:relative;"><div id="scanHint" style="font-size:15px; color:#fff; font-weight:500;">Encuadra la hoja o la flor</div><div id="scanSub" style="font-size:12.5px; color:rgba(255,255,255,0.6); margin-top:2px;">Se añadirá a tu ruta botánica</div></div>
+    <div style="display: flex; align-items: center; justify-content: center; padding: 10px 0 40px; position:relative;">
+      <button id="shutter" onclick="capture()" style="width:74px; height:74px; border-radius:37px; background:#fff; border:4px solid #79C08A; transition:border-color 0.3s ease;"></button>
+    </div>
+  </section>
+
+  <!-- 3. FICHA DE PLANTA -->
+  <section id="scr-ficha" class="screen">
+    <div id="achievementBanner" style="display:none; padding:10px 20px; background:#2B6942; align-items:center; gap:8px;">
+      <span style="font-size:18.5px;">🏆</span><span style="font-size:14px; font-weight:600; color:#fff;">¡Nuevo logro guardado! Información desbloqueada en tu colección.</span>
+    </div>
+    <div style="width: 100%; height: 260px; background: #79A15F; position: relative; flex-shrink: 0;">
+      <div class="tappable" onclick="back()" style="position:absolute; top:24px; left:16px; width:36px; height:36px; border-radius:18px; background:rgba(255,255,255,0.85); display:flex; align-items:center; justify-content:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1F2937" stroke-width="2.4"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></div>
+      <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; opacity:0.5;"><svg width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.2"><path d="M12 22V12M12 12c0-4 3-7 7-7 0 4-3 7-7 7Zm0 0C12 8 9 5 5 5c0 4 3 7 7 7Z"/></svg></div>
+    </div>
+    <div style="flex: 1; padding: 16px 20px 20px; display: flex; flex-direction: column; gap: 12px; overflow: hidden;">
+      <div><div style="font-size:23px; font-weight:700; color:#1F2937;">Jacaranda mimosifolia</div><div style="font-size:14px; color:#6B7273;">Jacaranda · Bignoniaceae</div></div>
+      <div style="display:flex; gap:8px;"><div style="padding:5px 11px; border-radius:20px; background:#E7EEDD; font-size:12.5px; color:#3D6144; font-weight:500;">Floración: abr–jun</div></div>
+      <div style="font-size:15px; line-height:1.5; color:#48504D;">Árbol ornamental de gran porte, popular en Valencia por su floración azul-violeta en primavera.</div>
+      <div style="display:flex; align-items:center; gap:10px; padding:12px 14px; border-radius:14px; background:#fff; border:1px solid #E8E8E3;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2B6942" stroke-width="1.8"><path d="M12 3 2 8l10 5 10-5-10-5Z"/><path d="M6 10.5V16c0 1.1 2.7 2 6 2s6-.9 6-2v-5.5"/></svg>
+        <div><div style="font-size:11.5px; color:#9AA0A0; text-transform:uppercase; font-weight:600;">Fuente verificada</div><div style="font-size:14px; color:#1F2937; font-weight:500;">Jardín Botánico · Universitat de València</div></div>
+      </div>
+      <div style="flex:1;"></div>
+      <button onclick="back()" style="width:100%; padding:14px; border-radius:14px; background:#2B6942; border:none; color:#fff; font-family:'Inter'; font-size:16px; font-weight:600;">Volver</button>
+    </div>
+  </section>
+
+  <!-- FICHA DE MONUMENTO / CALLE -->
+  <section id="scr-monumento" class="screen">
+    <div id="achievementBannerMon" style="display:none; padding:10px 20px; background:#B8863B; align-items:center; gap:8px;">
+      <span style="font-size:18.5px;">🏆</span><span style="font-size:14px; font-weight:600; color:#fff;">¡Nuevo logro guardado! Punto histórico desbloqueado.</span>
+    </div>
+    <div style="width: 100%; height: 260px; background: #A8895A; position: relative; flex-shrink: 0;">
+      <div class="tappable" onclick="back()" style="position:absolute; top:24px; left:16px; width:36px; height:36px; border-radius:18px; background:rgba(255,255,255,0.85); display:flex; align-items:center; justify-content:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1F2937" stroke-width="2.4"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></div>
+      <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; opacity:0.5;"><svg width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.2"><path d="M10 22h12M11.5 22V10M15.5 22V10M19.5 22V10M9.5 10 15.5 4l6 6"/></svg></div>
+    </div>
+    <div style="flex: 1; padding: 16px 20px 20px; display: flex; flex-direction: column; gap: 12px; overflow: hidden;">
+      <div><div style="font-size:23px; font-weight:700; color:#1F2937;">Torres de Serranos</div><div style="font-size:14px; color:#6B7273;">Puerta gótica · siglo XIV</div></div>
+      <div style="display:flex; gap:8px;"><div style="padding:5px 11px; border-radius:20px; background:#F3E9DA; font-size:12.5px; color:#8A5F24; font-weight:500;">Monumento histórico</div></div>
+      <div style="font-size:15px; line-height:1.5; color:#48504D;">Antigua puerta de la muralla medieval de Valencia, construida en 1392. Servía de acceso ceremonial a la ciudad y hoy es uno de los símbolos más reconocibles del centro histórico.</div>
+      <div style="display:flex; align-items:center; gap:10px; padding:12px 14px; border-radius:14px; background:#fff; border:1px solid #E8E8E3;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B8863B" stroke-width="1.8"><path d="M12 3 2 8l10 5 10-5-10-5Z"/><path d="M6 10.5V16c0 1.1 2.7 2 6 2s6-.9 6-2v-5.5"/></svg>
+        <div><div style="font-size:11.5px; color:#9AA0A0; text-transform:uppercase; font-weight:600;">Importancia cultural</div><div style="font-size:14px; color:#1F2937; font-weight:500;">Ayuntamiento de València · Patrimonio histórico</div></div>
+      </div>
+      <div style="flex:1;"></div>
+      <button onclick="back()" style="width:100%; padding:14px; border-radius:14px; background:#B8863B; border:none; color:#fff; font-family:'Inter'; font-size:16px; font-weight:600;">Volver</button>
+    </div>
+  </section>
+
+  <!-- 4. BÚSQUEDA -->
+  <section id="scr-busqueda" class="screen">
+    <div style="padding: 24px 20px 0; font-size: 16px; font-weight: 600; color: #1F2937;">9:41</div>
+    <div style="padding: 16px 20px 12px;"><div style="padding:12px 14px; border-radius:14px; background:#fff; border:2px solid #2B6942; display:flex; align-items:center; gap:10px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2B6942" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg><span style="font-size:15px; color:#1F2937;">jacar</span></div></div>
+    <div style="display:flex; gap:8px; padding:0 20px 14px;"><div class="chip active">Floración</div><div class="chip">Familia</div><div class="chip">Zona</div></div>
+    <div style="flex: 1; padding: 4px 20px 8px; overflow: hidden;">
+      <div class="tappable" onclick="nav('ficha')" style="display:flex; align-items:center; gap:12px; padding:10px; border-radius:14px; background:#fff; border:1px solid #E8E8E3;"><div style="width:44px; height:44px; border-radius:12px; background:#E7EEDD; display:flex; align-items:center; justify-content:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2B6942" stroke-width="1.8"><path d="M12 22V12M12 12c0-4 3-7 7-7 0 4-3 7-7 7Zm0 0C12 8 9 5 5 5c0 4 3 7 7 7Z"/></svg></div><div><div style="font-size:15px; color:#1F2937;"><b>Jacar</b>anda mimosifolia</div><div style="font-size:12.5px; color:#6B7273;">Floración abr–jun</div></div></div>
+    </div>
+    <div class="navbar">
+      <div class="nav-item tappable" onclick="nav('home')" style="color:#6B7273;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9Z"/></svg><span style="font-size:10.5px;">Inicio</span></div>
+      <div class="nav-item tappable" onclick="nav('mapa')" style="color:#6B7273;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22V12M12 12c0-4 3-7 7-7 0 4-3 7-7 7Zm0 0C12 8 9 5 5 5c0 4 3 7 7 7Z"/></svg><span style="font-size:10.5px;">Mapa</span></div>
+      <div class="nav-item tappable" onclick="nav('identificar')" style="color:#6B7273;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8Z"/></svg><span style="font-size:10.5px;">Escanear</span></div>
+      <div class="nav-item tappable" onclick="nav('rutas')" style="color:#6B7273;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 2 8l10 5 10-5-10-5Z"/></svg><span style="font-size:10.5px;">Rutas</span></div>
+      <div class="nav-item tappable" onclick="nav('buscar')" style="color:#2B6942;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg><span style="font-size:10.5px; font-weight:600;">Buscar</span></div>
+    </div>
+  </section>
+
+  <!-- 5. MAPA -->
+  <section id="scr-mapa" class="screen">
+    <div style="padding: 24px 20px 0; font-size: 16px; font-weight: 600; color: #1F2937;">9:41</div>
+    <div style="padding: 12px 20px 8px;"><div style="font-size:22px; font-weight:700; color:#1F2937;">Plantas en el mapa</div></div>
+    <div style="flex: 1; background: #DCE8D3; position: relative; overflow: hidden;">
+      <svg width="100%" height="100%" viewBox="0 0 390 480" preserveAspectRatio="xMidYMid slice" style="position:absolute; inset:0;"><path d="M0 340 Q100 300 195 335 T390 320 V480 H0 Z" fill="#C7DBB9"/><path d="M0 0 H390 V120 Q280 160 195 120 T0 150 Z" fill="#CFE0C5"/><path d="M0 200 L390 210" stroke="#B9CFAE" stroke-width="14" opacity="0.5"/></svg>
+      <div class="tappable" onclick="pinTap('Jacaranda mimosifolia','80 m · Parc Central', this)" style="position:absolute; left:85px; top:78px;">
+        <svg width="34" height="44" viewBox="0 0 34 44"><path d="M17 0C7.6 0 0 7.6 0 17c0 12.5 17 27 17 27s17-14.5 17-27C34 7.6 26.4 0 17 0Z" fill="#2B6942"/><circle cx="17" cy="17" r="12" fill="#fff"/><path d="M17 24v-9M17 15c0-3.5 2.8-6 6-6 0 3.5-2.5 6-6 6Zm0 0c0-3.5-2.8-6-6-6 0 3.5 2.5 6 6 6Z" stroke="#2B6942" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>
+      </div>
+      <div class="tappable" onclick="pinTap('Hibiscus rosa-sinensis','140 m · Jardín del Turia', this)" style="position:absolute; left:205px; top:138px;">
+        <svg width="30" height="39" viewBox="0 0 34 44"><path d="M17 0C7.6 0 0 7.6 0 17c0 12.5 17 27 17 27s17-14.5 17-27C34 7.6 26.4 0 17 0Z" fill="#6B9C7A"/><circle cx="17" cy="17" r="12" fill="#fff"/><circle cx="17" cy="14" r="3.4" fill="none" stroke="#6B9C7A" stroke-width="1.6"/><path d="M17 17.5v6.5" stroke="#6B9C7A" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </div>
+      <div class="tappable" onclick="pinTap('Washingtonia filifera','260 m · Paseo Marítimo', this)" style="position:absolute; left:145px; top:238px;">
+        <svg width="30" height="39" viewBox="0 0 34 44"><path d="M17 0C7.6 0 0 7.6 0 17c0 12.5 17 27 17 27s17-14.5 17-27C34 7.6 26.4 0 17 0Z" fill="#6B9C7A"/><circle cx="17" cy="17" r="12" fill="#fff"/><path d="M17 25v-11M17 14c0-3.5 2.8-6 6-6 0 3.5-2.5 6-6 6Zm0 0c0-3.5-2.8-6-6-6 0 3.5 2.5 6 6 6Z" stroke="#6B9C7A" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>
+      </div>
+      <!-- punto histórico/cultural cercano -->
+      <div class="tappable" style="position:absolute; left:210px; top:78px; display:flex; flex-direction:column; align-items:center;">
+        <svg width="30" height="39" viewBox="0 0 34 44"><path d="M17 0C7.6 0 0 7.6 0 17c0 12.5 17 27 17 27s17-14.5 17-27C34 7.6 26.4 0 17 0Z" fill="#B8863B"/><circle cx="17" cy="17" r="12" fill="#fff"/><path d="M11 22h12M13 22v-7M17 22v-7M21 22v-7M12 15l5-4.5 5 4.5" stroke="#B8863B" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div style="background:#fff; border-radius:8px; padding:3px 7px; font-size:10.5px; font-weight:600; color:#1F2937; box-shadow:0 2px 6px rgba(0,0,0,0.1); margin-top:2px; white-space:nowrap;">Torres de Serranos</div>
+      </div>
+    </div>
+    <div class="tappable" onclick="nav('ficha')" style="position:absolute; left:16px; right:16px; bottom:96px; background:#fff; border-radius:16px; padding:14px; display:flex; align-items:center; gap:12px; box-shadow:0 8px 24px rgba(0,0,0,0.14);">
+      <div style="width:50px; height:50px; border-radius:12px; background:#E7EEDD; display:flex; align-items:center; justify-content:center;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2B6942" stroke-width="1.8"><path d="M12 22V12M12 12c0-4 3-7 7-7 0 4-3 7-7 7Zm0 0C12 8 9 5 5 5c0 4 3 7 7 7Z"/></svg></div>
+      <div style="flex:1;"><div id="mapCardName" style="font-size:16px; font-weight:600; color:#1F2937;">Jacaranda mimosifolia</div><div id="mapCardDesc" style="font-size:12.5px; color:#6B7273;">80 m · Parc Central</div></div>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9AA0A0" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg>
+    </div>
+    <div class="navbar" style="position:relative; z-index:3;">
+      <div class="nav-item tappable" onclick="nav('home')" style="color:#6B7273;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9Z"/></svg><span style="font-size:10.5px;">Inicio</span></div>
+      <div class="nav-item tappable" onclick="nav('mapa')" style="color:#2B6942;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22V12M12 12c0-4 3-7 7-7 0 4-3 7-7 7Zm0 0C12 8 9 5 5 5c0 4 3 7 7 7Z"/></svg><span style="font-size:10.5px; font-weight:600;">Mapa</span></div>
+      <div class="nav-item tappable" onclick="nav('identificar')" style="color:#6B7273;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8Z"/></svg><span style="font-size:10.5px;">Escanear</span></div>
+      <div class="nav-item tappable" onclick="nav('rutas')" style="color:#6B7273;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 2 8l10 5 10-5-10-5Z"/></svg><span style="font-size:10.5px;">Rutas</span></div>
+      <div class="nav-item tappable" onclick="nav('buscar')" style="color:#6B7273;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg><span style="font-size:10.5px;">Buscar</span></div>
+    </div>
+  </section>
+
+  <!-- 6. RUTAS -->
+  <section id="scr-rutas" class="screen">
+    <div style="padding: 24px 20px 0; font-size: 16px; font-weight: 600; color: #1F2937;">9:41</div>
+    <div style="padding: 16px 20px 14px;"><div style="font-size:24px; font-weight:700; color:#1F2937;">Rutas botánicas</div><div style="font-size:14px; color:#6B7273;">Paseos guiados por la flora de Valencia</div></div>
+    <div style="flex: 1; padding: 0 20px 8px; display: flex; flex-direction: column; gap: 16px; overflow: hidden;">
+      <div class="route-card tappable" onclick="openRoute('turia')" style="border-radius:16px; background:#fff; border:1px solid #E8E8E3; overflow:hidden;">
+        <div style="height:100px; background:#8FB672;"></div>
+        <div style="padding:12px 14px;"><div style="font-size:16px; font-weight:600; color:#1F2937;">Jardín del Turia</div><div style="font-size:12.5px; color:#6B7273;">2.4 km · 40 min · 8 paradas</div><div style="display:inline-flex; padding:4px 10px; border-radius:20px; background:#E7EEDD; margin-top:8px; font-size:11.5px; color:#3D6144; font-weight:500;">Contexto histórico · s. XIX</div></div>
+      </div>
+      <div class="route-card tappable" onclick="openRoute('central')" style="border-radius:16px; background:#fff; border:1px solid #E8E8E3; overflow:hidden;">
+        <div style="height:100px; background:#D68A98;"></div>
+        <div style="padding:12px 14px;"><div style="font-size:16px; font-weight:600; color:#1F2937;">Parc Central en flor</div><div style="font-size:12.5px; color:#6B7273;">1.1 km · 20 min · 5 paradas</div><div style="display:inline-flex; padding:4px 10px; border-radius:20px; background:#E7EEDD; margin-top:8px; font-size:11.5px; color:#3D6144; font-weight:500;">Contexto cultural · fallas</div></div>
+      </div>
+    </div>
+    <div class="navbar">
+      <div class="nav-item tappable" onclick="nav('home')" style="color:#6B7273;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9Z"/></svg><span style="font-size:10.5px;">Inicio</span></div>
+      <div class="nav-item tappable" onclick="nav('mapa')" style="color:#6B7273;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22V12M12 12c0-4 3-7 7-7 0 4-3 7-7 7Zm0 0C12 8 9 5 5 5c0 4 3 7 7 7Z"/></svg><span style="font-size:10.5px;">Mapa</span></div>
+      <div class="nav-item tappable" onclick="nav('identificar')" style="color:#6B7273;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8Z"/></svg><span style="font-size:10.5px;">Escanear</span></div>
+      <div class="nav-item tappable" onclick="nav('rutas')" style="color:#2B6942;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 2 8l10 5 10-5-10-5Z"/></svg><span style="font-size:10.5px; font-weight:600;">Rutas</span></div>
+      <div class="nav-item tappable" onclick="nav('buscar')" style="color:#6B7273;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg><span style="font-size:10.5px;">Buscar</span></div>
+    </div>
+  </section>
+
+  <!-- RUTA EN EL MAPA (trazado con paradas de flora y puntos histórico-culturales) -->
+  <section id="scr-ruta-mapa" class="screen">
+    <div style="padding: 24px 20px 0; display:flex; align-items:center; gap:12px;">
+      <div class="tappable" onclick="back()" style="width:34px; height:34px; border-radius:17px; background:#fff; border:1px solid #E8E8E3; display:flex; align-items:center; justify-content:center; flex-shrink:0;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1F2937" stroke-width="2.4"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></div>
+      <div><div id="routeTitle" style="font-size:19.5px; font-weight:700; color:#1F2937;">Jardín del Turia</div><div id="routeSub" style="font-size:12.5px; color:#6B7273;">2.4 km · 40 min · 8 paradas</div></div>
+    </div>
+    <div style="display:flex; gap:14px; padding:10px 20px 0; font-size:11.5px; color:#6B7273;">
+      <div style="display:flex; align-items:center; gap:4px;"><span style="width:9px; height:9px; border-radius:5px; background:#2B6942; display:inline-block;"></span>Parada de flora</div>
+      <div style="display:flex; align-items:center; gap:4px;"><span style="width:9px; height:9px; border-radius:5px; background:#B8863B; display:inline-block;"></span>Punto histórico/cultural</div>
+    </div>
+    <div style="flex: 1; margin-top: 10px; background: #DCE8D3; position: relative; overflow: hidden;">
+      <svg width="100%" height="100%" viewBox="0 0 390 480" preserveAspectRatio="xMidYMid slice" style="position:absolute; inset:0;"><path d="M0 340 Q100 300 195 335 T390 320 V480 H0 Z" fill="#C7DBB9"/><path d="M0 0 H390 V120 Q280 160 195 120 T0 150 Z" fill="#CFE0C5"/></svg>
+      <svg id="routePath" width="100%" height="100%" viewBox="0 0 390 480" style="position:absolute; inset:0; pointer-events:none;"></svg>
+      <div id="routeMapLayer" style="position:absolute; inset:0;"></div>
+    </div>
+    <div style="padding: 14px 20px 24px;">
+      <button onclick="nav('logros')" style="width:100%; padding:14px; border-radius:14px; background:#2B6942; border:none; color:#fff; font-family:'Inter'; font-size:16px; font-weight:600;">Comenzar ruta</button>
+    </div>
+  </section>
+  <section id="scr-idioma" class="screen">
+    <div style="padding: 24px 20px 0; font-size: 16px; font-weight: 600; color: #1F2937;">9:41</div>
+    <div style="padding: 16px 20px 18px; display: flex; align-items: center; gap: 12px;">
+      <div class="tappable" onclick="back()" style="width:34px; height:34px; border-radius:17px; background:#fff; border:1px solid #E8E8E3; display:flex; align-items:center; justify-content:center;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1F2937" stroke-width="2.4"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></div>
+      <div style="font-size:22px; font-weight:700; color:#1F2937;">Ajustes</div>
+    </div>
+    <div style="flex: 1; padding: 0 20px; display: flex; flex-direction: column; gap: 10px;">
+      <div class="lang-row tappable selected" onclick="langPick(this)" style="display:flex; align-items:center; gap:14px; padding:15px; border-radius:14px; background:#fff; border:1.5px solid #E8E8E3;"><div class="radio on"></div><div style="flex:1;"><div style="font-size:16px; font-weight:600; color:#1F2937;">Español</div></div></div>
+      <div class="lang-row tappable" onclick="langPick(this)" style="display:flex; align-items:center; gap:14px; padding:15px; border-radius:14px; background:#fff; border:1.5px solid #E8E8E3;"><div class="radio"></div><div style="flex:1;"><div style="font-size:16px; font-weight:600; color:#1F2937;">Valencià</div></div></div>
+      <div class="lang-row tappable" onclick="langPick(this)" style="display:flex; align-items:center; gap:14px; padding:15px; border-radius:14px; background:#fff; border:1.5px solid #E8E8E3;"><div class="radio"></div><div style="flex:1;"><div style="font-size:16px; font-weight:600; color:#1F2937;">English</div></div></div>
+      <div style="margin-top:10px; font-size:12.5px; font-weight:600; color:#6B7273; text-transform:uppercase;">Otras opciones</div>
+      <div class="tappable" onclick="nav('offline')" style="display:flex; align-items:center; gap:12px; padding:14px; border-radius:14px; background:#fff; border:1px solid #E8E8E3;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2B6942" stroke-width="1.8"><path d="M17.5 19H6a4 4 0 0 1-1-7.87A5.5 5.5 0 0 1 15.9 8.5H17a3.5 3.5 0 0 1 .5 6.96V19Z"/></svg><span style="font-size:15px; color:#1F2937; font-weight:500;">Modo offline</span></div>
+      <div class="tappable" onclick="nav('notificacion')" style="display:flex; align-items:center; gap:12px; padding:14px; border-radius:14px; background:#fff; border:1px solid #E8E8E3;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2B6942" stroke-width="1.8"><path d="M12 22V12M12 12c0-4 3-7 7-7 0 4-3 7-7 7Zm0 0C12 8 9 5 5 5c0 4 3 7 7 7Z"/></svg><span style="font-size:15px; color:#1F2937; font-weight:500;">Ver notificación pasiva (demo)</span></div>
+      <div class="tappable" onclick="volverAModos()" style="display:flex; align-items:center; gap:12px; padding:14px; border-radius:14px; background:#fff; border:1px solid #E8E8E3;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2B6942" stroke-width="1.8"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg><span style="font-size:15px; color:#1F2937; font-weight:500;">Cambiar de modo / perfil</span></div>
+    </div>
+    <div style="padding: 16px 20px 24px;"><button onclick="back()" style="width:100%; padding:14px; border-radius:14px; background:#2B6942; border:none; color:#fff; font-family:'Inter'; font-size:16px; font-weight:600;">Guardar</button></div>
+  </section>
+
+  <!-- 8. LOGROS -->
+  <section id="scr-logros" class="screen">
+    <div style="padding: 24px 20px 0; font-size: 16px; font-weight: 600; color: #1F2937; display:flex; justify-content:space-between;"><span>9:41</span><span class="tappable" onclick="back()" style="font-size:14px; color:#6B7273;">Cerrar</span></div>
+    <div style="padding: 8px 20px 14px;"><div style="font-size:24px; font-weight:700; color:#1F2937;">Tus logros</div><div style="font-size:14px; color:#6B7273;">Cada tramo desbloquea algo real, no solo una insignia</div></div>
+    <div style="margin: 0 20px 16px; padding: 14px; border-radius: 14px; background: #fff; border: 1px solid #E8E8E3;">
+      <div style="display:flex; justify-content:space-between; font-size:14px; font-weight:600; color:#1F2937; margin-bottom:8px;"><span>Ruta: Jardín del Turia</span><span style="color:#2B6942;">5/8 paradas</span></div>
+      <div style="width:100%; height:8px; border-radius:4px; background:#E7EEDD;"><div style="width:62%; height:100%; background:#2B6942; border-radius:4px;"></div></div>
+    </div>
+    <div style="padding: 0 20px; display: flex; flex-direction: column; gap: 10px; flex:1;">
+      <div style="display:flex; align-items:center; gap:12px; padding:12px; border-radius:14px; background:#fff; border:1px solid #E8E8E3;"><div style="width:44px; height:44px; border-radius:12px; background:#E7EEDD; display:flex; align-items:center; justify-content:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2B6942" stroke-width="1.8"><path d="M12 3 2 8l10 5 10-5-10-5Z"/></svg></div><div style="flex:1;"><div style="font-size:15px; font-weight:600; color:#1F2937;">Ficha ampliada</div><div style="font-size:12.5px; color:#6B7273;">Historia completa</div></div><div style="font-size:11.5px; font-weight:600; color:#2B6942; background:#E7EEDD; padding:4px 9px; border-radius:20px;">Desbloqueado</div></div>
+    </div>
+    <div style="margin: 12px 20px 24px;"><button onclick="back()" style="width:100%; padding:14px; border-radius:14px; background:#2B6942; border:none; color:#fff; font-family:'Inter'; font-size:16px; font-weight:600;">Volver a la ruta</button></div>
+  </section>
+
+  <!-- 9. OFFLINE -->
+  <section id="scr-offline" class="screen">
+    <div style="padding: 24px 20px 0; font-size: 16px; font-weight: 600; color: #1F2937; display:flex; justify-content:space-between;"><span>9:41</span><span class="tappable" onclick="back()" style="font-size:14px; color:#6B7273;">Cerrar</span></div>
+    <div style="padding: 8px 20px 14px;"><div style="font-size:24px; font-weight:700; color:#1F2937;">Modo offline</div><div style="font-size:14px; color:#6B7273;">Descarga una zona y camina sin conexión</div></div>
+    <div style="margin: 0 20px 16px; padding: 14px; border-radius: 14px; background: #2B6942; display:flex; align-items:center; gap:12px;"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8"><path d="M17.5 19H6a4 4 0 0 1-1-7.87A5.5 5.5 0 0 1 15.9 8.5H17a3.5 3.5 0 0 1 .5 6.96V19Z"/></svg><div><div style="font-size:15px; font-weight:600; color:#fff;">128 MB descargados</div><div style="font-size:12.5px; color:#D8E7D3;">1 de 3 zonas disponible</div></div></div>
+    <div style="padding: 0 20px; display: flex; flex-direction: column; gap: 10px; flex:1;">
+      <div style="display:flex; align-items:center; gap:12px; padding:12px; border-radius:14px; background:#fff; border:1px solid #E8E8E3;"><div style="flex:1;"><div style="font-size:15px; font-weight:600; color:#1F2937;">Jardín del Turia</div><div style="font-size:12.5px; color:#6B7273;">128 MB · descargado</div></div><div style="width:28px; height:28px; border-radius:14px; background:#E7EEDD; display:flex; align-items:center; justify-content:center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2B6942" stroke-width="2.6"><path d="M5 12l5 5L20 7"/></svg></div></div>
+      <div style="display:flex; align-items:center; gap:12px; padding:12px; border-radius:14px; background:#fff; border:1px solid #E8E8E3;"><div style="flex:1;"><div style="font-size:15px; font-weight:600; color:#1F2937;">Parc Central</div><div style="font-size:12.5px; color:#6B7273;">96 MB · sin descargar</div></div><button style="border:none; padding:7px 13px; border-radius:20px; background:#2B6942; color:#fff; font-family:'Inter'; font-size:12.5px; font-weight:600;">Descargar</button></div>
+    </div>
+    <div style="margin: 12px 20px 24px;"><button onclick="back()" style="width:100%; padding:14px; border-radius:14px; background:#fff; border:1px solid #E8E8E3; color:#1F2937; font-family:'Inter'; font-size:16px; font-weight:600;">Volver</button></div>
+  </section>
+
+  <!-- 10. NOTIFICACIÓN -->
+  <section id="scr-notificacion" class="screen" style="background:#14251a;">
+    <div style="padding: 60px 20px 0; text-align: center;"><div style="font-size:17px; font-weight:600; color:#fff;">9:41</div><div style="font-size:62px; font-weight:300; color:#fff; margin-top:6px;">9:41</div></div>
+    <div style="flex:1;"></div>
+    <div style="margin: 0 14px 16px; padding: 14px; border-radius: 18px; background: rgba(255,255,255,0.14); display: flex; gap: 12px;">
+      <div style="width:38px; height:38px; border-radius:10px; background:#2B6942; display:flex; align-items:center; justify-content:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8"><path d="M12 22V12M12 12c0-4 3-7 7-7 0 4-3 7-7 7Zm0 0C12 8 9 5 5 5c0 4 3 7 7 7Z"/></svg></div>
+      <div style="flex:1;"><div style="display:flex; justify-content:space-between;"><span style="font-size:14px; font-weight:600; color:#fff;">Nature MAPS</span><span style="font-size:11.5px; color:rgba(255,255,255,0.55);">ahora</span></div><div style="font-size:15px; color:#fff; margin-top:3px;">Estás cerca del Jardín del Turia — aquí crecen jacarandás centenarias.</div></div>
+    </div>
+    <div style="margin: 0 20px 24px; font-size:12.5px; color:rgba(255,255,255,0.55);">Llega sola, sin abrir ni buscar la app — cero fricción de uso.</div>
+    <div style="padding: 0 20px 24px;"><button onclick="back()" style="width:100%; padding:14px; border-radius:14px; background:rgba(255,255,255,0.15); border:none; color:#fff; font-family:'Inter'; font-size:16px; font-weight:600;">Volver</button></div>
+  </section>
+
+</div>
+</div>
+
+<script>
+  const screens = ['encuesta','home-gamer','home-descubridor','home-educativo','plantas-cercanas','identificar','ficha','monumento','busqueda','mapa','rutas','ruta-mapa','idioma','logros','offline','notificacion'];
+  let homeTarget = 'home-gamer';
+  let historyStack = [];
+
+  let toastShown = false;
+  function show(id) {
+    screens.forEach(s => document.getElementById('scr-' + s).classList.remove('active'));
+    document.getElementById('scr-' + id).classList.add('active');
+    if (!toastShown && ['home-gamer','home-descubridor','home-educativo'].includes(id)) {
+      toastShown = true;
+      setTimeout(() => { document.getElementById('settingsToast').style.display = 'block'; }, 700);
+    }
+  }
+  function closeToast() {
+    document.getElementById('settingsToast').style.display = 'none';
+    document.querySelectorAll('.settings-dot').forEach(d => d.style.display = 'none');
+  }
+  function openSettings() {
+    closeToast();
+    nav('idioma');
+  }
+  function nav(id) {
+    const map = { home: homeTarget, mapa: 'mapa', identificar: 'identificar', rutas: 'rutas', buscar: 'busqueda', ficha: 'ficha', idioma: 'idioma', logros: 'logros', offline: 'offline', notificacion: 'notificacion' };
+    const current = screens.find(s => document.getElementById('scr-' + s).classList.contains('active'));
+    historyStack.push(current);
+    show(map[id] || id);
+  }
+  function back() {
+    show(historyStack.pop() || homeTarget);
+  }
+  function goHome() { show(homeTarget); }
+  function flipCard(el) {
+    el.classList.add('flipped');
+    setTimeout(() => { nav('ficha'); }, 480);
+    setTimeout(() => { el.classList.remove('flipped'); }, 900);
+  }
+  function volverAModos() {
+    document.querySelectorAll('#scr-encuesta .opt').forEach(o => { o.classList.remove('selected'); o.style.borderColor = '#E8E8E3'; o.querySelector('.check').style.display = 'none'; });
+    historyStack = [];
+    show('encuesta');
+  }
+
+  const routeData = {
+    turia: {
+      title: 'Jardín del Turia', sub: '2.4 km · 40 min · 8 paradas',
+      plants: [[70,90],[150,140],[110,230],[210,280]],
+      landmarks: [{p:[255,100], label:'Torres de Serranos'},{p:[55,300], label:'Puente de las Flores'}]
+    },
+    central: {
+      title: 'Parc Central en flor', sub: '1.1 km · 20 min · 5 paradas',
+      plants: [[90,100],[180,150],[130,240]],
+      landmarks: [{p:[250,190], label:'Antigua Estación del Nord'}]
+    }
+  };
+  function plantPinHTML(x, y, num) {
+    return `<div class="tappable" style="position:absolute; left:${x-15}px; top:${y-38}px;">
+      <svg width="30" height="38" viewBox="0 0 30 38"><path d="M15 0C6.7 0 0 6.7 0 15c0 9.5 15 23 15 23s15-13.5 15-23C30 6.7 23.3 0 15 0Z" fill="#2B6942"/><circle cx="15" cy="14" r="9.5" fill="#fff"/><text x="15" y="18" font-size="10" font-weight="700" fill="#2B6942" text-anchor="middle" font-family="Inter, sans-serif">${num}</text></svg>
+    </div>`;
+  }
+  function landmarkPinHTML(x, y, label) {
+    return `<div class="tappable" style="position:absolute; left:${x-15}px; top:${y-38}px; display:flex; flex-direction:column; align-items:center;">
+      <svg width="30" height="38" viewBox="0 0 30 38"><path d="M15 0C6.7 0 0 6.7 0 15c0 9.5 15 23 15 23s15-13.5 15-23C30 6.7 23.3 0 15 0Z" fill="#B8863B"/><circle cx="15" cy="14" r="9.5" fill="#fff"/><path d="M10 19h10M11.5 19v-6M15 19v-6M18.5 19v-6M10.5 13l4.5-4 4.5 4" stroke="#B8863B" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div style="background:#fff; border-radius:7px; padding:3px 7px; font-size:10.5px; font-weight:600; color:#1F2937; box-shadow:0 2px 6px rgba(0,0,0,0.12); white-space:nowrap; margin-top:2px;">${label}</div>
+    </div>`;
+  }
+  function openRoute(key) {
+    const r = routeData[key];
+    document.getElementById('routeTitle').textContent = r.title;
+    document.getElementById('routeSub').textContent = r.sub;
+    const layer = document.getElementById('routeMapLayer');
+    layer.innerHTML = r.plants.map((p,i) => plantPinHTML(p[0], p[1], i+1)).join('')
+      + r.landmarks.map(l => landmarkPinHTML(l.p[0], l.p[1], l.label)).join('');
+    const path = r.plants.map(p => p.join(',')).join(' L ');
+    document.getElementById('routePath').innerHTML = `<path d="M ${path}" stroke="#2B6942" stroke-width="2.5" stroke-dasharray="6 6" fill="none" opacity="0.7"/>`;
+    nav('ruta-mapa');
+  }
+  function chooseProfile(target, el) {
+    homeTarget = target;
+    document.querySelectorAll('#scr-encuesta .opt').forEach(o => { o.classList.remove('selected'); o.style.borderColor = '#E8E8E3'; o.querySelector('.check').style.display = 'none'; });
+    el.classList.add('selected'); el.style.borderColor = '#2B6942'; el.querySelector('.check').style.display = 'block';
+    setTimeout(() => show(target), 280);
+  }
+  function discoverPin(x, y, mini) {
+    if (mini) return `<div class="tappable" onclick="nav('ficha')" style="position:absolute; left:${x-8}px; top:${y-8}px; width:16px; height:16px; border-radius:8px; background:#fff; border:2px solid #6B9C7A;"></div>`;
+    return `<div class="tappable" onclick="nav('ficha')" style="position:absolute; left:${x-15}px; top:${y-38}px;"><svg width="30" height="38" viewBox="0 0 30 38"><path d="M15 0C6.7 0 0 6.7 0 15c0 9.5 15 23 15 23s15-13.5 15-23C30 6.7 23.3 0 15 0Z" fill="#6B9C7A"/><circle cx="15" cy="14" r="9.5" fill="#fff"/><circle cx="15" cy="14" r="4" fill="#6B9C7A"/></svg></div>`;
+  }
+  function discoverLandmark(x, y, label) {
+    return `<div class="tappable" style="position:absolute; left:${x-15}px; top:${y-38}px; display:flex; flex-direction:column; align-items:center;"><svg width="30" height="38" viewBox="0 0 30 38"><path d="M15 0C6.7 0 0 6.7 0 15c0 9.5 15 23 15 23s15-13.5 15-23C30 6.7 23.3 0 15 0Z" fill="#B8863B"/><circle cx="15" cy="14" r="9.5" fill="#fff"/><path d="M10 19h10M11.5 19v-6M15 19v-6M18.5 19v-6M10.5 13l4.5-4 4.5 4" stroke="#B8863B" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><div style="background:#fff; border-radius:7px; padding:3px 7px; font-size:10.5px; font-weight:600; color:#1F2937; box-shadow:0 2px 6px rgba(0,0,0,0.12); white-space:nowrap; margin-top:2px;">${label}</div></div>`;
+  }
+  function discoverComment(x, y, text) {
+    return `<div class="tappable" onclick="nav('ficha')" style="position:absolute; left:${x-15}px; top:${y-38}px; display:flex; align-items:flex-start; gap:4px;"><svg width="27" height="34" viewBox="0 0 30 38"><path d="M15 0C6.7 0 0 6.7 0 15c0 9.5 15 23 15 23s15-13.5 15-23C30 6.7 23.3 0 15 0Z" fill="#6B9C7A"/><circle cx="15" cy="14" r="9.5" fill="#fff"/><circle cx="15" cy="12" r="3" fill="none" stroke="#6B9C7A" stroke-width="1.4"/><path d="M15 15v5.5" stroke="#6B9C7A" stroke-width="1.4" stroke-linecap="round"/></svg><div style="background:#fff; border-radius:8px; padding:4px 8px; font-size:10.5px; color:#1F2937; box-shadow:0 2px 6px rgba(0,0,0,0.08); max-width:96px; margin-top:6px;">${text}</div></div>`;
+  }
+  function renderDiscoverMap(historia) {
+    const layer = document.getElementById('discoverLayer');
+    if (!layer) return;
+    if (historia) {
+      layer.innerHTML = discoverPin(100,86) + discoverComment(215,136,'"Preciosa en primavera" — Marta') + discoverPin(150,246)
+        + discoverLandmark(300,190,'Torres de Serranos') + discoverLandmark(70,300,'Puente de las Flores');
+    } else {
+      layer.innerHTML = discoverPin(100,86,true) + discoverPin(215,136,true) + discoverPin(150,246,true);
+    }
+  }
+  function setPill(historia) {
+    const h = document.getElementById('pillHistoria'), e = document.getElementById('pillEsencial');
+    if (historia) { h.style.background = '#DCEEE9'; h.style.color = '#1F7A6C'; e.style.background = 'transparent'; e.style.color = '#9AA0A0'; }
+    else { e.style.background = '#DCEEE9'; e.style.color = '#1F7A6C'; h.style.background = 'transparent'; h.style.color = '#9AA0A0'; }
+    renderDiscoverMap(historia);
+  }
+  renderDiscoverMap(true);
+  let scanMode = 'planta';
+  function setScanMode(mode) {
+    scanMode = mode;
+    const p = document.getElementById('scanPlant'), m = document.getElementById('scanMonument');
+    const hint = document.getElementById('scanHint'), sub = document.getElementById('scanSub');
+    const bg = document.getElementById('scanBg'), frame = document.getElementById('scanFrame'), shutter = document.getElementById('shutter');
+    const color = mode === 'planta' ? '#79C08A' : '#D9A85C';
+    frame.querySelectorAll('path').forEach(pth => pth.setAttribute('stroke', color));
+    shutter.style.borderColor = color;
+    bg.style.background = mode === 'planta'
+      ? 'radial-gradient(circle at 50% 40%, rgba(43,105,66,0.35), transparent 60%)'
+      : 'radial-gradient(circle at 50% 40%, rgba(184,134,59,0.35), transparent 60%)';
+    if (mode === 'planta') {
+      p.style.background = '#fff'; p.style.color = '#1F2937';
+      m.style.background = 'transparent'; m.style.color = '#fff';
+      hint.textContent = 'Encuadra la hoja o la flor';
+      sub.textContent = 'Se añadirá a tu ruta botánica';
+    } else {
+      m.style.background = '#fff'; m.style.color = '#1F2937';
+      p.style.background = 'transparent'; p.style.color = '#fff';
+      hint.textContent = 'Encuadra el monumento o la calle';
+      sub.textContent = 'Te diremos qué es y su importancia cultural';
+    }
+  }
+  function capture() {
+    const f = document.getElementById('flash'); f.classList.remove('on'); void f.offsetWidth; f.classList.add('on');
+    setTimeout(() => {
+      if (scanMode === 'monumento') {
+        nav('monumento');
+        const b = document.getElementById('achievementBannerMon');
+        b.style.display = 'flex';
+        setTimeout(() => { b.style.display = 'none'; }, 3200);
+      } else {
+        nav('ficha');
+        const b = document.getElementById('achievementBanner');
+        b.style.display = 'flex';
+        setTimeout(() => { b.style.display = 'none'; }, 3200);
+      }
+    }, 350);
+  }
+  function pinTap(name, desc, el) {
+    document.querySelectorAll('.pin').forEach(p => p.classList.remove('active'));
+    el.classList.add('active');
+    document.getElementById('mapCardName').textContent = name;
+    document.getElementById('mapCardDesc').textContent = desc;
+  }
+  function langPick(el) {
+    document.querySelectorAll('.lang-row').forEach(r => { r.classList.remove('selected'); r.querySelector('.radio').classList.remove('on'); });
+    el.classList.add('selected'); el.querySelector('.radio').classList.add('on');
+  }
+  document.querySelectorAll('.chip').forEach(c => c.addEventListener('click', () => c.classList.toggle('active')));
+
+</script>
+</body></html>
