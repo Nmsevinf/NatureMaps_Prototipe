@@ -47,6 +47,99 @@
   .settings-toast .row { display: flex; justify-content: space-between; align-items: center; }
   .settings-toast button { background: #2B6942; color: #fff; border: none; padding: 7px 12px; border-radius: 10px; font-family: 'Inter'; font-size: 12.5px; font-weight: 600; }
   .settings-toast .close { color: rgba(255,255,255,0.6); font-size: 12.5px; padding: 7px; }
+
+  /* ===== Añadidos v2: componentes compartidos ===== */
+  .sb { padding: 24px 20px 0; font-size: 16px; font-weight: 600; color: #1F2937; flex-shrink: 0; }
+  .topbar { padding: 14px 20px 12px; display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+  .backbtn { width: 34px; height: 34px; border-radius: 17px; background: #fff; border: 1px solid #E8E8E3; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .ttl { font-size: 22px; font-weight: 700; color: #1F2937; line-height: 1.25; text-wrap: balance; }
+  .sub { font-size: 13px; color: #6B7273; margin-top: 2px; line-height: 1.4; }
+  .scroll { flex: 1; overflow-y: auto; padding: 0 20px 16px; display: flex; flex-direction: column; gap: 12px; }
+  .scroll::-webkit-scrollbar { width: 0; }
+  .card { background: #fff; border: 1px solid #E8E8E3; border-radius: 14px; padding: 14px; }
+  .row { display: flex; align-items: center; gap: 12px; }
+  .grow { flex: 1; min-width: 0; }
+  .lbl { font-size: 11.5px; font-weight: 700; color: #6B7273; text-transform: uppercase; letter-spacing: .04em; }
+  .btn { width: 100%; padding: 14px; border-radius: 14px; border: none; font-family: 'Inter', system-ui, sans-serif; font-size: 15.5px; font-weight: 600; }
+  .btn-pri { background: #2B6942; color: #fff; }
+  .btn-sec { background: #fff; color: #1F2937; border: 1px solid #E8E8E3; }
+  .btn-sm { width: auto; padding: 8px 13px; font-size: 12.5px; border-radius: 20px; }
+  .foot { padding: 12px 20px 24px; display: flex; flex-direction: column; gap: 10px; flex-shrink: 0; }
+  .pill { display: inline-flex; align-items: center; gap: 5px; padding: 5px 11px; border-radius: 20px; background: #E7EEDD; font-size: 12.5px; color: #3D6144; font-weight: 500; }
+  .tag-ok { font-size: 11.5px; font-weight: 600; color: #2B6942; background: #E7EEDD; padding: 4px 9px; border-radius: 20px; white-space: nowrap; }
+  .tag-lock { font-size: 11.5px; font-weight: 600; color: #8A8F90; background: #F1F1EE; padding: 4px 9px; border-radius: 20px; white-space: nowrap; }
+  .ico { width: 44px; height: 44px; border-radius: 12px; background: #E7EEDD; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .bar { width: 100%; height: 8px; border-radius: 4px; background: #E7EEDD; overflow: hidden; }
+  .bar > div { height: 100%; background: #2B6942; border-radius: 4px; transition: width .4s ease; }
+  .field { display: flex; flex-direction: column; gap: 5px; }
+  .field span { font-size: 12px; font-weight: 600; color: #48504D; }
+  .field input, .field select, .field textarea { font-family: 'Inter', system-ui, sans-serif; font-size: 14.5px; padding: 11px 12px; border-radius: 11px; border: 1px solid #D8D8D2; background: #fff; color: #1F2937; width: 100%; }
+  .field input:focus, .field select:focus, .field textarea:focus { outline: 2px solid #2B6942; outline-offset: 0; border-color: #2B6942; }
+  .toggle { width: 46px; height: 28px; border-radius: 14px; background: #D8D8D2; border: none; position: relative; flex-shrink: 0; padding: 0; }
+  .toggle::after { content: ''; position: absolute; top: 3px; left: 3px; width: 22px; height: 22px; border-radius: 11px; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.2); transition: transform .2s ease; }
+  .toggle[aria-pressed="true"] { background: #2B6942; }
+  .toggle[aria-pressed="true"]::after { transform: translateX(18px); }
+  .set-row { display: flex; align-items: center; gap: 12px; padding: 14px; background: #fff; border: 1px solid #E8E8E3; border-radius: 14px; }
+  .set-row .t { font-size: 15px; font-weight: 600; color: #1F2937; }
+  .set-row .d { font-size: 12.5px; color: #6B7273; margin-top: 1px; line-height: 1.35; }
+  .chev { color: #9AA0A0; flex-shrink: 0; }
+  button:focus-visible, .tappable:focus-visible, input:focus-visible { outline: 2px solid #2B6942; outline-offset: 2px; }
+
+  /* Toast y banner de aviso dentro del teléfono */
+  .app-toast { position: absolute; left: 50%; bottom: 104px; transform: translateX(-50%) translateY(12px); background: #1F2937; color: #fff; font-size: 13px; font-weight: 500; padding: 10px 16px; border-radius: 20px; z-index: 60; opacity: 0; pointer-events: none; transition: opacity .25s ease, transform .25s ease; max-width: 86%; text-align: center; }
+  .app-toast.on { opacity: 1; transform: translateX(-50%) translateY(0); }
+  .push { position: absolute; left: 10px; right: 10px; top: 10px; z-index: 70; background: rgba(255,255,255,0.97); border-radius: 18px; padding: 12px 14px; box-shadow: 0 14px 34px rgba(0,0,0,0.28); display: flex; gap: 11px; transform: translateY(-140%); transition: transform .45s cubic-bezier(.2,.9,.3,1.1); }
+  .push.on { transform: translateY(0); }
+
+  /* Permisos */
+  .perm-hero { height: 290px; background: #DCE8D3; position: relative; overflow: hidden; flex-shrink: 0; }
+  .perm-body { flex: 1; padding: 22px 22px 0; display: flex; flex-direction: column; gap: 12px; }
+  .perm-body h2 { font-size: 23px; line-height: 1.25; margin: 0; color: #1F2937; text-wrap: balance; }
+  .perm-body p { font-size: 14.5px; line-height: 1.5; color: #48504D; margin: 0; }
+  .privacy { display: flex; gap: 10px; align-items: center; padding: 11px 13px; border-radius: 12px; background: #fff; border: 1px solid #E8E8E3; font-size: 13px; color: #1F2937; line-height: 1.35; }
+
+  /* IA: analizando */
+  .scan-photo { width: 230px; height: 230px; border-radius: 22px; background: linear-gradient(160deg,#4E7E45,#8DB36F 60%,#B79BE0); position: relative; overflow: hidden; margin: 0 auto; box-shadow: 0 0 0 3px rgba(121,192,138,.5); }
+  .scan-line { position: absolute; left: 0; right: 0; height: 3px; background: #B6F0C3; box-shadow: 0 0 14px 4px rgba(182,240,195,.7); animation: scanmove 1.4s ease-in-out infinite alternate; }
+  @keyframes scanmove { from { top: 6%; } to { top: 92%; } }
+  .step { display: flex; align-items: center; gap: 10px; font-size: 14px; color: rgba(255,255,255,.55); transition: color .3s ease; }
+  .step .dot { width: 20px; height: 20px; border-radius: 10px; border: 2px solid rgba(255,255,255,.35); flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 11px; color: #14251a; }
+  .step.doing { color: #fff; }
+  .step.doing .dot { border-color: #79C08A; border-top-color: transparent; animation: spin .8s linear infinite; }
+  .step.done { color: #D8EEDC; }
+  .step.done .dot { background: #79C08A; border-color: #79C08A; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* Resultado IA */
+  .conf { font-variant-numeric: tabular-nums; font-weight: 800; color: #2B6942; }
+  .alt-row { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-top: 1px solid #F0F0EC; font-size: 14px; color: #48504D; }
+  .alt-row .pct { margin-left: auto; font-variant-numeric: tabular-nums; color: #6B7273; font-weight: 600; }
+
+  /* Ficha */
+  .src-card { display: flex; gap: 11px; align-items: flex-start; padding: 11px 12px; border-radius: 12px; background: #fff; border: 1px solid #E8E8E3; }
+  .src-card a { color: #2B6942; font-size: 12px; font-weight: 600; text-decoration: none; word-break: break-all; }
+  .lang-seg { display: flex; background: #F1F1EE; border-radius: 20px; padding: 3px; gap: 2px; }
+  .lang-seg button { border: none; background: transparent; padding: 5px 11px; border-radius: 16px; font-family: 'Inter'; font-size: 12px; font-weight: 600; color: #6B7273; }
+  .lang-seg button.on { background: #fff; color: #2B6942; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+  .fav.on svg path { fill: #E85D5D; stroke: #E85D5D; }
+
+  /* Test */
+  .opt-btn { width: 100%; text-align: left; padding: 14px 15px; border-radius: 14px; background: #fff; border: 2px solid #DBEEFF; font-family: 'Inter'; font-size: 15px; font-weight: 600; color: #1F2937; }
+  .opt-btn.ok { border-color: #2B9E5A; background: #E6F6EC; }
+  .opt-btn.ko { border-color: #E85D5D; background: #FDECEC; }
+  .opt-btn:disabled { cursor: default; }
+  .stat { flex: 1; background: #fff; border: 1px solid #DBEEFF; border-radius: 14px; padding: 12px; text-align: center; }
+  .stat b { display: block; font-size: 22px; color: #1F2937; font-variant-numeric: tabular-nums; }
+  .stat span { font-size: 11.5px; color: #5C7A94; }
+  .hbar { height: 8px; border-radius: 4px; background: #E7F0F6; overflow: hidden; }
+  .hbar > div { height: 100%; background: #2F8FE0; border-radius: 4px; }
+  .chk { display: flex; align-items: center; gap: 10px; padding: 11px 12px; background: #fff; border: 1px solid #E8E8E3; border-radius: 12px; font-size: 14px; color: #1F2937; }
+  .chk input { width: 18px; height: 18px; accent-color: #2F8FE0; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .scan-line, .step.doing .dot { animation: none; }
+    .push, .app-toast, .flip-card-inner { transition: none; }
+  }
 </style>
 
 
@@ -117,13 +210,13 @@
         <span class="settings-dot"></span>
       </button>
     </div>
-    <div style="padding: 12px 20px 0;"><span class="badge-mode" style="background:#6C4CE0;">🎮 MODO AVENTURA</span> <span class="tappable" onclick="volverAModos()" style="font-size:11.5px; color:#8B7BB8; text-decoration:underline; margin-left:6px;">Cambiar</span></div>
+    <div style="padding: 12px 20px 0;"><span class="badge-mode" style="background:#6C4CE0;">🎮 MODO AVENTURA</span> <span class="tappable" onclick="volverAModos()" style="font-size:11.5px; color:#8B7BB8; text-decoration:underline; margin-left:6px;">Cambiar</span><button class="tappable" onclick="nav('logros')" style="float:right; border:1.5px solid #6C4CE0; background:#fff; color:#6C4CE0; font-family:'Inter'; font-size:12px; font-weight:700; padding:4px 10px; border-radius:12px;">🏆 Tus logros</button></div>
     <div style="margin: 10px 20px 0; padding: 16px; border-radius: 16px; background: linear-gradient(135deg,#6C4CE0,#9B6BEF); display: flex; align-items: center; gap: 12px; box-shadow:0 8px 20px rgba(108,76,224,0.3);">
       <div style="width: 46px; height: 46px; border-radius: 23px; background: rgba(255,255,255,0.22); display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; color: #fff; border:2px solid rgba(255,255,255,0.4);">Nv.6</div>
       <div style="flex:1;">
         <div style="font-size:16px; font-weight:700; color:#fff;">Tu colección</div>
-        <div style="font-size:12.5px; color:#E4DBFF;">12 / 40 especies capturadas</div>
-        <div style="width:100%; height:6px; border-radius:3px; background:rgba(255,255,255,0.28); margin-top:6px;"><div style="width:30%; height:100%; background:#FFC94D; border-radius:3px;"></div></div>
+        <div style="font-size:12.5px; color:#E4DBFF;"><span class="js-count">12</span> / 40 especies capturadas</div>
+        <div style="width:100%; height:6px; border-radius:3px; background:rgba(255,255,255,0.28); margin-top:6px;"><div class="js-bar" style="width:30%; height:100%; background:#FFC94D; border-radius:3px;"></div></div>
       </div>
       <span style="font-size:23px;">⚡</span>
     </div>
@@ -260,7 +353,7 @@
           </div>
         </div>
         <div style="margin-top:10px; display:flex; flex-direction:column; gap:8px;">
-          <div style="display:flex; gap:8px; align-items:flex-start;"><span style="width:19px; height:19px; border-radius:10px; background:#FF9D3D; color:#fff; font-size:11.5px; font-weight:800; display:flex; align-items:center; justify-content:center; flex-shrink:0;">1</span><span style="font-size:13px; color:#3E5C73; font-weight:500;">Sigue el camino marcado hasta la parada 5</span></div>
+          <div style="display:flex; gap:8px; align-items:flex-start;"><span style="width:19px; height:19px; border-radius:10px; background:#FF9D3D; color:#fff; font-size:11.5px; font-weight:800; display:flex; align-items:center; justify-content:center; flex-shrink:0;">1</span><span class="tappable" onclick="nav('mapa-ruta-edu')" style="font-size:13px; color:#2F8FE0; font-weight:600; text-decoration:underline;">🗺️ Ver mapa de la ruta — sigue el camino hasta la parada 5</span></div>
           <div style="display:flex; gap:8px; align-items:flex-start;"><span style="width:19px; height:19px; border-radius:10px; background:#FF9D3D; color:#fff; font-size:11.5px; font-weight:800; display:flex; align-items:center; justify-content:center; flex-shrink:0;">2</span><span style="font-size:13px; color:#3E5C73; font-weight:500;">Busca la planta que se parece a la foto</span></div>
           <div style="display:flex; gap:8px; align-items:flex-start;"><span style="width:19px; height:19px; border-radius:10px; background:#FF9D3D; color:#fff; font-size:11.5px; font-weight:800; display:flex; align-items:center; justify-content:center; flex-shrink:0;">3</span><span style="font-size:13px; color:#3E5C73; font-weight:500;">Haz una foto para validarla y añadirla a tu ficha</span></div>
         </div>
@@ -278,36 +371,15 @@
           <div style="border-radius:16px; background:#F4F8FB; border:2px dashed #C3D9E8; padding:6px; text-align:center;"><div style="width:100%; aspect-ratio:1; border-radius:12px; background:#E7F0F6; display:flex; align-items:center; justify-content:center;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#8FADC2" stroke-width="1.8"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div><div style="font-size:11px; font-weight:700; color:#8FADC2; margin-top:4px;">1 pend.</div></div>
         </div>
       </div>
-      <div style="border-radius:20px; background:linear-gradient(135deg,#2F8FE0,#57B4F0); padding:16px;">
+      <div class="tappable" onclick="startTest()" style="border-radius:20px; background:linear-gradient(135deg,#2F8FE0,#57B4F0); padding:16px;">
         <div style="display:flex; justify-content:space-between;"><div style="font-size:15.5px; font-weight:800; color:#fff;">📝 Test final</div><div style="font-size:14.5px; font-weight:800; color:#fff;">9/10 aciertos</div></div>
         <div style="width:100%; height:9px; border-radius:5px; background:rgba(255,255,255,0.3); margin-top:8px;"><div style="width:90%; height:100%; background:#FFD166; border-radius:5px;"></div></div>
-        <div style="display:flex; align-items:center; gap:8px; margin-top:8px;"><span style="font-size:19.5px;">🏆</span><div style="font-size:14px; color:#EAF6FF; font-weight:600;">320 puntos por biodiversidad encontrada</div></div>
+        <div style="display:flex; align-items:center; gap:8px; margin-top:8px;"><span style="font-size:19.5px;">🏆</span><div style="font-size:14px; color:#EAF6FF; font-weight:600;">320 puntos · toca para hacer el test</div></div>
       </div>
     </div>
-    <div style="padding: 0 20px 24px;"><button onclick="nav('home')" style="width:100%; padding:14px; border-radius:16px; background:#fff; border:2px solid #DBEEFF; color:#2F8FE0; font-family:'Inter'; font-size:16px; font-weight:700;">Volver</button></div>
+    <div style="padding: 0 20px 24px;"><button onclick="nav('resumen-clase')" style="width:100%; padding:14px; border-radius:16px; background:#fff; border:2px solid #DBEEFF; color:#2F8FE0; font-family:'Inter'; font-size:16px; font-weight:700;">Ver resumen de la clase</button></div>
   </section>
 
-  <!-- 1. PLANTAS CERCANAS -->
-  <section id="scr-plantas-cercanas" class="screen">
-    <div style="padding: 24px 20px 0; font-size: 16px; font-weight: 600; color: #1F2937;">9:41</div>
-    <div style="padding: 16px 20px 10px;"><div style="font-size:24px; font-weight:700; color:#1F2937;">Plantas cercanas</div><div style="font-size:14px; color:#6B7273;">8 especies a menos de 300 m</div></div>
-    <div class="tappable" onclick="nav('buscar')" style="margin: 0 20px 14px; padding: 12px 14px; border-radius: 14px; background: #fff; border: 1px solid #E8E8E3; display: flex; align-items: center; gap: 10px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6B7273" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg><span style="font-size:15px; color:#9AA0A0;">Buscar una planta...</span></div>
-    <div class="tappable" onclick="nav('mapa')" style="margin: 0 20px 14px; height: 100px; border-radius: 14px; background: #DCE8D3; position: relative; overflow: hidden;">
-      <div style="position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:12px; height:12px; border-radius:6px; background:#2B6942; border:2px solid #fff;"></div>
-    </div>
-    <div style="padding: 0 20px 6px; font-size: 14px; font-weight: 600; color: #1F2937;">Lista</div>
-    <div style="flex: 1; padding: 4px 20px 8px; display: flex; flex-direction: column; gap: 10px; overflow: hidden;">
-      <div class="tappable" onclick="nav('ficha')" style="display:flex; align-items:center; gap:12px; padding:10px; border-radius:14px; background:#fff; border:1px solid #E8E8E3;"><div style="width:44px; height:44px; border-radius:12px; background:#E7EEDD; display:flex; align-items:center; justify-content:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2B6942" stroke-width="1.8"><path d="M12 22V12M12 12c0-4 3-7 7-7 0 4-3 7-7 7Zm0 0C12 8 9 5 5 5c0 4 3 7 7 7Z"/></svg></div><div style="flex:1;"><div style="font-size:15px; font-weight:600; color:#1F2937;">Jacaranda mimosifolia</div><div style="font-size:12.5px; color:#6B7273;">80 m · Parc Central</div></div></div>
-      <div class="tappable" onclick="nav('ficha')" style="display:flex; align-items:center; gap:12px; padding:10px; border-radius:14px; background:#fff; border:1px solid #E8E8E3;"><div style="width:44px; height:44px; border-radius:12px; background:#E7EEDD; display:flex; align-items:center; justify-content:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2B6942" stroke-width="1.8"><circle cx="12" cy="9" r="4"/><path d="M12 13v7"/></svg></div><div style="flex:1;"><div style="font-size:15px; font-weight:600; color:#1F2937;">Hibiscus rosa-sinensis</div><div style="font-size:12.5px; color:#6B7273;">140 m · Jardín del Turia</div></div></div>
-    </div>
-    <div class="navbar">
-      <div class="nav-item tappable" onclick="nav('home')" style="color:#2B6942;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9Z"/></svg><span style="font-size:10.5px; font-weight:600;">Inicio</span></div>
-      <div class="nav-item tappable" onclick="nav('mapa')" style="color:#6B7273;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22V12M12 12c0-4 3-7 7-7 0 4-3 7-7 7Zm0 0C12 8 9 5 5 5c0 4 3 7 7 7Z"/></svg><span style="font-size:10.5px;">Mapa</span></div>
-      <div class="nav-item tappable" onclick="nav('identificar')" style="color:#6B7273;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8Z"/></svg><span style="font-size:10.5px;">Escanear</span></div>
-      <div class="nav-item tappable" onclick="nav('rutas')" style="color:#6B7273;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 2 8l10 5 10-5-10-5Z"/></svg><span style="font-size:10.5px;">Rutas</span></div>
-      <div class="nav-item tappable" onclick="nav('buscar')" style="color:#6B7273;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg><span style="font-size:10.5px;">Buscar</span></div>
-    </div>
-  </section>
 
   <!-- 2. IDENTIFICAR -->
   <section id="scr-identificar" class="screen" style="background:#14251a;">
@@ -327,32 +399,13 @@
       <svg id="scanFrame" width="220" height="220" viewBox="0 0 260 260" fill="none"><path d="M8 40V16a8 8 0 0 1 8-8h24" stroke="#79C08A" stroke-width="3" stroke-linecap="round"/><path d="M252 40V16a8 8 0 0 0-8-8h-24" stroke="#79C08A" stroke-width="3" stroke-linecap="round"/><path d="M8 220v24a8 8 0 0 0 8 8h24" stroke="#79C08A" stroke-width="3" stroke-linecap="round"/><path d="M252 220v24a8 8 0 0 1-8 8h-24" stroke="#79C08A" stroke-width="3" stroke-linecap="round"/></svg>
     </div>
     <div style="text-align: center; padding: 0 40px 12px; position:relative;"><div id="scanHint" style="font-size:15px; color:#fff; font-weight:500;">Encuadra la hoja o la flor</div><div id="scanSub" style="font-size:12.5px; color:rgba(255,255,255,0.6); margin-top:2px;">Se añadirá a tu ruta botánica</div></div>
-    <div style="display: flex; align-items: center; justify-content: center; padding: 10px 0 40px; position:relative;">
-      <button id="shutter" onclick="capture()" style="width:74px; height:74px; border-radius:37px; background:#fff; border:4px solid #79C08A; transition:border-color 0.3s ease;"></button>
+    <div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 40px 40px; position:relative;">
+      <button class="tappable" onclick="startAnalysis(true)" aria-label="Elegir de la galería" style="width:48px; height:48px; border-radius:12px; background:rgba(255,255,255,0.15); border:none; display:flex; align-items:center; justify-content:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="m21 16-5-5-8 8"/></svg></button>
+      <button id="shutter" onclick="capture()" aria-label="Hacer foto" style="width:74px; height:74px; border-radius:37px; background:#fff; border:4px solid #79C08A; transition:border-color 0.3s ease;"></button>
+      <button class="tappable" onclick="toast('Cámara frontal / trasera')" aria-label="Girar cámara" style="width:48px; height:48px; border-radius:12px; background:rgba(255,255,255,0.15); border:none; display:flex; align-items:center; justify-content:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8"><path d="M3 12a9 9 0 0 1 15.5-6.2L21 8M21 3v5h-5M21 12a9 9 0 0 1-15.5 6.2L3 16M3 21v-5h5"/></svg></button>
     </div>
   </section>
 
-  <!-- 3. FICHA DE PLANTA -->
-  <section id="scr-ficha" class="screen">
-    <div id="achievementBanner" style="display:none; padding:10px 20px; background:#2B6942; align-items:center; gap:8px;">
-      <span style="font-size:18.5px;">🏆</span><span style="font-size:14px; font-weight:600; color:#fff;">¡Nuevo logro guardado! Información desbloqueada en tu colección.</span>
-    </div>
-    <div style="width: 100%; height: 260px; background: #79A15F; position: relative; flex-shrink: 0;">
-      <div class="tappable" onclick="back()" style="position:absolute; top:24px; left:16px; width:36px; height:36px; border-radius:18px; background:rgba(255,255,255,0.85); display:flex; align-items:center; justify-content:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1F2937" stroke-width="2.4"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></div>
-      <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; opacity:0.5;"><svg width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.2"><path d="M12 22V12M12 12c0-4 3-7 7-7 0 4-3 7-7 7Zm0 0C12 8 9 5 5 5c0 4 3 7 7 7Z"/></svg></div>
-    </div>
-    <div style="flex: 1; padding: 16px 20px 20px; display: flex; flex-direction: column; gap: 12px; overflow: hidden;">
-      <div><div style="font-size:23px; font-weight:700; color:#1F2937;">Jacaranda mimosifolia</div><div style="font-size:14px; color:#6B7273;">Jacaranda · Bignoniaceae</div></div>
-      <div style="display:flex; gap:8px;"><div style="padding:5px 11px; border-radius:20px; background:#E7EEDD; font-size:12.5px; color:#3D6144; font-weight:500;">Floración: abr–jun</div></div>
-      <div style="font-size:15px; line-height:1.5; color:#48504D;">Árbol ornamental de gran porte, popular en Valencia por su floración azul-violeta en primavera.</div>
-      <div style="display:flex; align-items:center; gap:10px; padding:12px 14px; border-radius:14px; background:#fff; border:1px solid #E8E8E3;">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2B6942" stroke-width="1.8"><path d="M12 3 2 8l10 5 10-5-10-5Z"/><path d="M6 10.5V16c0 1.1 2.7 2 6 2s6-.9 6-2v-5.5"/></svg>
-        <div><div style="font-size:11.5px; color:#9AA0A0; text-transform:uppercase; font-weight:600;">Fuente verificada</div><div style="font-size:14px; color:#1F2937; font-weight:500;">Jardín Botánico · Universitat de València</div></div>
-      </div>
-      <div style="flex:1;"></div>
-      <button onclick="back()" style="width:100%; padding:14px; border-radius:14px; background:#2B6942; border:none; color:#fff; font-family:'Inter'; font-size:16px; font-weight:600;">Volver</button>
-    </div>
-  </section>
 
   <!-- FICHA DE MONUMENTO / CALLE -->
   <section id="scr-monumento" class="screen">
@@ -372,31 +425,16 @@
         <div><div style="font-size:11.5px; color:#9AA0A0; text-transform:uppercase; font-weight:600;">Importancia cultural</div><div style="font-size:14px; color:#1F2937; font-weight:500;">Ayuntamiento de València · Patrimonio histórico</div></div>
       </div>
       <div style="flex:1;"></div>
-      <button onclick="back()" style="width:100%; padding:14px; border-radius:14px; background:#B8863B; border:none; color:#fff; font-family:'Inter'; font-size:16px; font-weight:600;">Volver</button>
+      <button onclick="nav('mapa')" style="width:100%; padding:14px; border-radius:14px; background:#B8863B; border:none; color:#fff; font-family:'Inter'; font-size:16px; font-weight:600;">📍 Ver en el mapa</button>
+      <button onclick="back()" style="width:100%; padding:13px; border-radius:14px; background:#fff; border:1px solid #E8E8E3; color:#1F2937; font-family:'Inter'; font-size:15px; font-weight:600;">Volver</button>
     </div>
   </section>
 
-  <!-- 4. BÚSQUEDA -->
-  <section id="scr-busqueda" class="screen">
-    <div style="padding: 24px 20px 0; font-size: 16px; font-weight: 600; color: #1F2937;">9:41</div>
-    <div style="padding: 16px 20px 12px;"><div style="padding:12px 14px; border-radius:14px; background:#fff; border:2px solid #2B6942; display:flex; align-items:center; gap:10px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2B6942" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg><span style="font-size:15px; color:#1F2937;">jacar</span></div></div>
-    <div style="display:flex; gap:8px; padding:0 20px 14px;"><div class="chip active">Floración</div><div class="chip">Familia</div><div class="chip">Zona</div></div>
-    <div style="flex: 1; padding: 4px 20px 8px; overflow: hidden;">
-      <div class="tappable" onclick="nav('ficha')" style="display:flex; align-items:center; gap:12px; padding:10px; border-radius:14px; background:#fff; border:1px solid #E8E8E3;"><div style="width:44px; height:44px; border-radius:12px; background:#E7EEDD; display:flex; align-items:center; justify-content:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2B6942" stroke-width="1.8"><path d="M12 22V12M12 12c0-4 3-7 7-7 0 4-3 7-7 7Zm0 0C12 8 9 5 5 5c0 4 3 7 7 7Z"/></svg></div><div><div style="font-size:15px; color:#1F2937;"><b>Jacar</b>anda mimosifolia</div><div style="font-size:12.5px; color:#6B7273;">Floración abr–jun</div></div></div>
-    </div>
-    <div class="navbar">
-      <div class="nav-item tappable" onclick="nav('home')" style="color:#6B7273;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9Z"/></svg><span style="font-size:10.5px;">Inicio</span></div>
-      <div class="nav-item tappable" onclick="nav('mapa')" style="color:#6B7273;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22V12M12 12c0-4 3-7 7-7 0 4-3 7-7 7Zm0 0C12 8 9 5 5 5c0 4 3 7 7 7Z"/></svg><span style="font-size:10.5px;">Mapa</span></div>
-      <div class="nav-item tappable" onclick="nav('identificar')" style="color:#6B7273;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8Z"/></svg><span style="font-size:10.5px;">Escanear</span></div>
-      <div class="nav-item tappable" onclick="nav('rutas')" style="color:#6B7273;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 2 8l10 5 10-5-10-5Z"/></svg><span style="font-size:10.5px;">Rutas</span></div>
-      <div class="nav-item tappable" onclick="nav('buscar')" style="color:#2B6942;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg><span style="font-size:10.5px; font-weight:600;">Buscar</span></div>
-    </div>
-  </section>
 
   <!-- 5. MAPA -->
   <section id="scr-mapa" class="screen">
     <div style="padding: 24px 20px 0; font-size: 16px; font-weight: 600; color: #1F2937;">9:41</div>
-    <div style="padding: 12px 20px 8px;"><div style="font-size:22px; font-weight:700; color:#1F2937;">Plantas en el mapa</div></div>
+    <div style="padding: 12px 20px 8px; display:flex; justify-content:space-between; align-items:center;"><div style="font-size:22px; font-weight:700; color:#1F2937;">Plantas en el mapa</div><button class="chip tappable" onclick="nav('plantas-cercanas')">☰ Lista</button></div>
     <div style="flex: 1; background: #DCE8D3; position: relative; overflow: hidden;">
       <svg width="100%" height="100%" viewBox="0 0 390 480" preserveAspectRatio="xMidYMid slice" style="position:absolute; inset:0;"><path d="M0 340 Q100 300 195 335 T390 320 V480 H0 Z" fill="#C7DBB9"/><path d="M0 0 H390 V120 Q280 160 195 120 T0 150 Z" fill="#CFE0C5"/><path d="M0 200 L390 210" stroke="#B9CFAE" stroke-width="14" opacity="0.5"/></svg>
       <div class="tappable" onclick="pinTap('Jacaranda mimosifolia','80 m · Parc Central', this)" style="position:absolute; left:85px; top:78px;">
@@ -409,7 +447,7 @@
         <svg width="30" height="39" viewBox="0 0 34 44"><path d="M17 0C7.6 0 0 7.6 0 17c0 12.5 17 27 17 27s17-14.5 17-27C34 7.6 26.4 0 17 0Z" fill="#6B9C7A"/><circle cx="17" cy="17" r="12" fill="#fff"/><path d="M17 25v-11M17 14c0-3.5 2.8-6 6-6 0 3.5-2.5 6-6 6Zm0 0c0-3.5-2.8-6-6-6 0 3.5 2.5 6 6 6Z" stroke="#6B9C7A" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>
       </div>
       <!-- punto histórico/cultural cercano -->
-      <div class="tappable" style="position:absolute; left:210px; top:78px; display:flex; flex-direction:column; align-items:center;">
+      <div class="tappable" onclick="nav('monumento')" style="position:absolute; left:210px; top:78px; display:flex; flex-direction:column; align-items:center;">
         <svg width="30" height="39" viewBox="0 0 34 44"><path d="M17 0C7.6 0 0 7.6 0 17c0 12.5 17 27 17 27s17-14.5 17-27C34 7.6 26.4 0 17 0Z" fill="#B8863B"/><circle cx="17" cy="17" r="12" fill="#fff"/><path d="M11 22h12M13 22v-7M17 22v-7M21 22v-7M12 15l5-4.5 5 4.5" stroke="#B8863B" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
         <div style="background:#fff; border-radius:8px; padding:3px 7px; font-size:10.5px; font-weight:600; color:#1F2937; box-shadow:0 2px 6px rgba(0,0,0,0.1); margin-top:2px; white-space:nowrap;">Torres de Serranos</div>
       </div>
@@ -428,28 +466,6 @@
     </div>
   </section>
 
-  <!-- 6. RUTAS -->
-  <section id="scr-rutas" class="screen">
-    <div style="padding: 24px 20px 0; font-size: 16px; font-weight: 600; color: #1F2937;">9:41</div>
-    <div style="padding: 16px 20px 14px;"><div style="font-size:24px; font-weight:700; color:#1F2937;">Rutas botánicas</div><div style="font-size:14px; color:#6B7273;">Paseos guiados por la flora de Valencia</div></div>
-    <div style="flex: 1; padding: 0 20px 8px; display: flex; flex-direction: column; gap: 16px; overflow: hidden;">
-      <div class="route-card tappable" onclick="openRoute('turia')" style="border-radius:16px; background:#fff; border:1px solid #E8E8E3; overflow:hidden;">
-        <div style="height:100px; background:#8FB672;"></div>
-        <div style="padding:12px 14px;"><div style="font-size:16px; font-weight:600; color:#1F2937;">Jardín del Turia</div><div style="font-size:12.5px; color:#6B7273;">2.4 km · 40 min · 8 paradas</div><div style="display:inline-flex; padding:4px 10px; border-radius:20px; background:#E7EEDD; margin-top:8px; font-size:11.5px; color:#3D6144; font-weight:500;">Contexto histórico · s. XIX</div></div>
-      </div>
-      <div class="route-card tappable" onclick="openRoute('central')" style="border-radius:16px; background:#fff; border:1px solid #E8E8E3; overflow:hidden;">
-        <div style="height:100px; background:#D68A98;"></div>
-        <div style="padding:12px 14px;"><div style="font-size:16px; font-weight:600; color:#1F2937;">Parc Central en flor</div><div style="font-size:12.5px; color:#6B7273;">1.1 km · 20 min · 5 paradas</div><div style="display:inline-flex; padding:4px 10px; border-radius:20px; background:#E7EEDD; margin-top:8px; font-size:11.5px; color:#3D6144; font-weight:500;">Contexto cultural · fallas</div></div>
-      </div>
-    </div>
-    <div class="navbar">
-      <div class="nav-item tappable" onclick="nav('home')" style="color:#6B7273;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9Z"/></svg><span style="font-size:10.5px;">Inicio</span></div>
-      <div class="nav-item tappable" onclick="nav('mapa')" style="color:#6B7273;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22V12M12 12c0-4 3-7 7-7 0 4-3 7-7 7Zm0 0C12 8 9 5 5 5c0 4 3 7 7 7Z"/></svg><span style="font-size:10.5px;">Mapa</span></div>
-      <div class="nav-item tappable" onclick="nav('identificar')" style="color:#6B7273;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8Z"/></svg><span style="font-size:10.5px;">Escanear</span></div>
-      <div class="nav-item tappable" onclick="nav('rutas')" style="color:#2B6942;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 2 8l10 5 10-5-10-5Z"/></svg><span style="font-size:10.5px; font-weight:600;">Rutas</span></div>
-      <div class="nav-item tappable" onclick="nav('buscar')" style="color:#6B7273;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg><span style="font-size:10.5px;">Buscar</span></div>
-    </div>
-  </section>
 
   <!-- RUTA EN EL MAPA (trazado con paradas de flora y puntos histórico-culturales) -->
   <section id="scr-ruta-mapa" class="screen">
@@ -470,49 +486,8 @@
       <button onclick="nav('logros')" style="width:100%; padding:14px; border-radius:14px; background:#2B6942; border:none; color:#fff; font-family:'Inter'; font-size:16px; font-weight:600;">Comenzar ruta</button>
     </div>
   </section>
-  <section id="scr-idioma" class="screen">
-    <div style="padding: 24px 20px 0; font-size: 16px; font-weight: 600; color: #1F2937;">9:41</div>
-    <div style="padding: 16px 20px 18px; display: flex; align-items: center; gap: 12px;">
-      <div class="tappable" onclick="back()" style="width:34px; height:34px; border-radius:17px; background:#fff; border:1px solid #E8E8E3; display:flex; align-items:center; justify-content:center;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1F2937" stroke-width="2.4"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></div>
-      <div style="font-size:22px; font-weight:700; color:#1F2937;">Ajustes</div>
-    </div>
-    <div style="flex: 1; padding: 0 20px; display: flex; flex-direction: column; gap: 10px;">
-      <div class="lang-row tappable selected" onclick="langPick(this)" style="display:flex; align-items:center; gap:14px; padding:15px; border-radius:14px; background:#fff; border:1.5px solid #E8E8E3;"><div class="radio on"></div><div style="flex:1;"><div style="font-size:16px; font-weight:600; color:#1F2937;">Español</div></div></div>
-      <div class="lang-row tappable" onclick="langPick(this)" style="display:flex; align-items:center; gap:14px; padding:15px; border-radius:14px; background:#fff; border:1.5px solid #E8E8E3;"><div class="radio"></div><div style="flex:1;"><div style="font-size:16px; font-weight:600; color:#1F2937;">Valencià</div></div></div>
-      <div class="lang-row tappable" onclick="langPick(this)" style="display:flex; align-items:center; gap:14px; padding:15px; border-radius:14px; background:#fff; border:1.5px solid #E8E8E3;"><div class="radio"></div><div style="flex:1;"><div style="font-size:16px; font-weight:600; color:#1F2937;">English</div></div></div>
-      <div style="margin-top:10px; font-size:12.5px; font-weight:600; color:#6B7273; text-transform:uppercase;">Otras opciones</div>
-      <div class="tappable" onclick="nav('offline')" style="display:flex; align-items:center; gap:12px; padding:14px; border-radius:14px; background:#fff; border:1px solid #E8E8E3;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2B6942" stroke-width="1.8"><path d="M17.5 19H6a4 4 0 0 1-1-7.87A5.5 5.5 0 0 1 15.9 8.5H17a3.5 3.5 0 0 1 .5 6.96V19Z"/></svg><span style="font-size:15px; color:#1F2937; font-weight:500;">Modo offline</span></div>
-      <div class="tappable" onclick="nav('notificacion')" style="display:flex; align-items:center; gap:12px; padding:14px; border-radius:14px; background:#fff; border:1px solid #E8E8E3;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2B6942" stroke-width="1.8"><path d="M12 22V12M12 12c0-4 3-7 7-7 0 4-3 7-7 7Zm0 0C12 8 9 5 5 5c0 4 3 7 7 7Z"/></svg><span style="font-size:15px; color:#1F2937; font-weight:500;">Ver notificación pasiva (demo)</span></div>
-      <div class="tappable" onclick="volverAModos()" style="display:flex; align-items:center; gap:12px; padding:14px; border-radius:14px; background:#fff; border:1px solid #E8E8E3;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2B6942" stroke-width="1.8"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg><span style="font-size:15px; color:#1F2937; font-weight:500;">Cambiar de modo / perfil</span></div>
-    </div>
-    <div style="padding: 16px 20px 24px;"><button onclick="back()" style="width:100%; padding:14px; border-radius:14px; background:#2B6942; border:none; color:#fff; font-family:'Inter'; font-size:16px; font-weight:600;">Guardar</button></div>
-  </section>
 
-  <!-- 8. LOGROS -->
-  <section id="scr-logros" class="screen">
-    <div style="padding: 24px 20px 0; font-size: 16px; font-weight: 600; color: #1F2937; display:flex; justify-content:space-between;"><span>9:41</span><span class="tappable" onclick="back()" style="font-size:14px; color:#6B7273;">Cerrar</span></div>
-    <div style="padding: 8px 20px 14px;"><div style="font-size:24px; font-weight:700; color:#1F2937;">Tus logros</div><div style="font-size:14px; color:#6B7273;">Cada tramo desbloquea algo real, no solo una insignia</div></div>
-    <div style="margin: 0 20px 16px; padding: 14px; border-radius: 14px; background: #fff; border: 1px solid #E8E8E3;">
-      <div style="display:flex; justify-content:space-between; font-size:14px; font-weight:600; color:#1F2937; margin-bottom:8px;"><span>Ruta: Jardín del Turia</span><span style="color:#2B6942;">5/8 paradas</span></div>
-      <div style="width:100%; height:8px; border-radius:4px; background:#E7EEDD;"><div style="width:62%; height:100%; background:#2B6942; border-radius:4px;"></div></div>
-    </div>
-    <div style="padding: 0 20px; display: flex; flex-direction: column; gap: 10px; flex:1;">
-      <div style="display:flex; align-items:center; gap:12px; padding:12px; border-radius:14px; background:#fff; border:1px solid #E8E8E3;"><div style="width:44px; height:44px; border-radius:12px; background:#E7EEDD; display:flex; align-items:center; justify-content:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2B6942" stroke-width="1.8"><path d="M12 3 2 8l10 5 10-5-10-5Z"/></svg></div><div style="flex:1;"><div style="font-size:15px; font-weight:600; color:#1F2937;">Ficha ampliada</div><div style="font-size:12.5px; color:#6B7273;">Historia completa</div></div><div style="font-size:11.5px; font-weight:600; color:#2B6942; background:#E7EEDD; padding:4px 9px; border-radius:20px;">Desbloqueado</div></div>
-    </div>
-    <div style="margin: 12px 20px 24px;"><button onclick="back()" style="width:100%; padding:14px; border-radius:14px; background:#2B6942; border:none; color:#fff; font-family:'Inter'; font-size:16px; font-weight:600;">Volver a la ruta</button></div>
-  </section>
 
-  <!-- 9. OFFLINE -->
-  <section id="scr-offline" class="screen">
-    <div style="padding: 24px 20px 0; font-size: 16px; font-weight: 600; color: #1F2937; display:flex; justify-content:space-between;"><span>9:41</span><span class="tappable" onclick="back()" style="font-size:14px; color:#6B7273;">Cerrar</span></div>
-    <div style="padding: 8px 20px 14px;"><div style="font-size:24px; font-weight:700; color:#1F2937;">Modo offline</div><div style="font-size:14px; color:#6B7273;">Descarga una zona y camina sin conexión</div></div>
-    <div style="margin: 0 20px 16px; padding: 14px; border-radius: 14px; background: #2B6942; display:flex; align-items:center; gap:12px;"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8"><path d="M17.5 19H6a4 4 0 0 1-1-7.87A5.5 5.5 0 0 1 15.9 8.5H17a3.5 3.5 0 0 1 .5 6.96V19Z"/></svg><div><div style="font-size:15px; font-weight:600; color:#fff;">128 MB descargados</div><div style="font-size:12.5px; color:#D8E7D3;">1 de 3 zonas disponible</div></div></div>
-    <div style="padding: 0 20px; display: flex; flex-direction: column; gap: 10px; flex:1;">
-      <div style="display:flex; align-items:center; gap:12px; padding:12px; border-radius:14px; background:#fff; border:1px solid #E8E8E3;"><div style="flex:1;"><div style="font-size:15px; font-weight:600; color:#1F2937;">Jardín del Turia</div><div style="font-size:12.5px; color:#6B7273;">128 MB · descargado</div></div><div style="width:28px; height:28px; border-radius:14px; background:#E7EEDD; display:flex; align-items:center; justify-content:center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2B6942" stroke-width="2.6"><path d="M5 12l5 5L20 7"/></svg></div></div>
-      <div style="display:flex; align-items:center; gap:12px; padding:12px; border-radius:14px; background:#fff; border:1px solid #E8E8E3;"><div style="flex:1;"><div style="font-size:15px; font-weight:600; color:#1F2937;">Parc Central</div><div style="font-size:12.5px; color:#6B7273;">96 MB · sin descargar</div></div><button style="border:none; padding:7px 13px; border-radius:20px; background:#2B6942; color:#fff; font-family:'Inter'; font-size:12.5px; font-weight:600;">Descargar</button></div>
-    </div>
-    <div style="margin: 12px 20px 24px;"><button onclick="back()" style="width:100%; padding:14px; border-radius:14px; background:#fff; border:1px solid #E8E8E3; color:#1F2937; font-family:'Inter'; font-size:16px; font-weight:600;">Volver</button></div>
-  </section>
 
   <!-- 10. NOTIFICACIÓN -->
   <section id="scr-notificacion" class="screen" style="background:#14251a;">
@@ -520,10 +495,448 @@
     <div style="flex:1;"></div>
     <div style="margin: 0 14px 16px; padding: 14px; border-radius: 18px; background: rgba(255,255,255,0.14); display: flex; gap: 12px;">
       <div style="width:38px; height:38px; border-radius:10px; background:#2B6942; display:flex; align-items:center; justify-content:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8"><path d="M12 22V12M12 12c0-4 3-7 7-7 0 4-3 7-7 7Zm0 0C12 8 9 5 5 5c0 4 3 7 7 7Z"/></svg></div>
-      <div style="flex:1;"><div style="display:flex; justify-content:space-between;"><span style="font-size:14px; font-weight:600; color:#fff;">Nature MAPS</span><span style="font-size:11.5px; color:rgba(255,255,255,0.55);">ahora</span></div><div style="font-size:15px; color:#fff; margin-top:3px;">Estás cerca del Jardín del Turia — aquí crecen jacarandás centenarias.</div></div>
+      <div style="flex:1;"><div style="display:flex; justify-content:space-between;"><span style="font-size:14px; font-weight:600; color:#fff;">Nature MAPS</span><span style="font-size:11.5px; color:rgba(255,255,255,0.55);">ahora</span></div><div style="font-size:15px; color:#fff; margin-top:3px;">Estás cerca del Jardín del Turia — aquí crecen jacarandás centenarias con más de 150 años de historia.</div></div>
     </div>
     <div style="margin: 0 20px 24px; font-size:12.5px; color:rgba(255,255,255,0.55);">Llega sola, sin abrir ni buscar la app — cero fricción de uso.</div>
     <div style="padding: 0 20px 24px;"><button onclick="back()" style="width:100%; padding:14px; border-radius:14px; background:rgba(255,255,255,0.15); border:none; color:#fff; font-family:'Inter'; font-size:16px; font-weight:600;">Volver</button></div>
+  </section>
+
+
+  <!-- ===================== AÑADIDOS v2 (Figma + guion oral) ===================== -->
+  <div class="app-toast" id="appToast" role="status" aria-live="polite"></div>
+  <div class="push tappable" id="pushBanner" onclick="pushTap()">
+    <div style="width:38px; height:38px; border-radius:10px; background:#2B6942; display:flex; align-items:center; justify-content:center; flex-shrink:0;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8"><path d="M12 22V12M12 12c0-4 3-7 7-7 0 4-3 7-7 7Zm0 0C12 8 9 5 5 5c0 4 3 7 7 7Z"/></svg></div>
+    <div class="grow"><div style="display:flex; justify-content:space-between;"><span style="font-size:13.5px; font-weight:700; color:#1F2937;">Nature MAPS</span><span style="font-size:11.5px; color:#6B7273;">ahora</span></div>
+      <div style="font-size:13.5px; color:#1F2937; margin-top:2px; line-height:1.35;">Estás cerca del Jardín del Turia — aquí crecen jacarandás centenarias con más de 150 años de historia.</div></div>
+  </div>
+
+  <!-- 1.1.2.1 PERMISO DE UBICACIÓN -->
+  <section id="scr-permiso-ubicacion" class="screen">
+    <div class="perm-hero">
+      <svg viewBox="0 0 390 290" preserveAspectRatio="xMidYMid slice" width="100%" height="100%" style="position:absolute; inset:0;" aria-hidden="true"><path d="M0 70 Q120 40 210 80 T390 60 V0 H0Z" fill="#E3EDDB"/><path d="M0 200 Q110 170 200 205 T390 190 V290 H0Z" fill="#C7DBB9"/><path d="M0 140 L390 158" stroke="#C3D7B5" stroke-width="12"/><circle cx="195" cy="150" r="30" fill="#2B6942" opacity=".16"/><rect x="185" y="140" width="20" height="20" rx="6" fill="#2B6942" stroke="#fff" stroke-width="3"/><rect x="66" y="74" width="16" height="16" rx="5" fill="#fff" stroke="#6B9C7A" stroke-width="2"/><rect x="250" y="64" width="16" height="16" rx="5" fill="#fff" stroke="#B8863B" stroke-width="2"/><rect x="278" y="200" width="16" height="16" rx="5" fill="#fff" stroke="#6B9C7A" stroke-width="2"/></svg>
+    </div>
+    <div class="perm-body">
+      <h2>Descubre qué plantas tienes cerca</h2>
+      <p>Con tu ubicación te mostramos los árboles y plantas que hay a tu alrededor. Solo la usamos mientras la app está abierta.</p>
+      <div class="privacy"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2B6942" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>No guardamos ni compartimos dónde estás</div>
+    </div>
+    <div class="foot">
+      <button class="btn btn-sec" style="border:1.5px solid #2B6942; color:#2B6942;" onclick="locDecision('lista')">Ver Plantas cercanas</button>
+      <button class="btn btn-pri" onclick="locDecision('permitir')">Permitir ubicación</button>
+      <button class="btn btn-sec" onclick="locDecision('no')">Ahora no · ver el centro de Valencia</button>
+    </div>
+  </section>
+
+  <!-- 1.1.2 MAPA "CAZA DE ESPECIES" -->
+  <section id="scr-mapa-caza" class="screen">
+    <div class="sb">9:41</div>
+    <div style="padding:10px 20px 0; display:flex; align-items:center; gap:8px;"><span class="badge-mode">AVENTURA</span><span class="tappable" onclick="volverAModos()" style="font-size:11.5px; color:#6B7273; text-decoration:underline;">Cambiar</span></div>
+    <div style="padding:8px 20px 12px; display:flex; align-items:center; justify-content:space-between; gap:10px;">
+      <div><div class="ttl">Caza de especies</div><div class="sub"><span class="js-count">12</span> / 40 capturadas para tu herbario</div></div>
+      <button class="tappable" onclick="nav('logros')" aria-label="Ver logros" style="width:48px; height:48px; border-radius:24px; background:#2B6942; color:#fff; font-weight:700; font-size:14px; border:none; font-family:'Inter';">Nv.6</button>
+    </div>
+    <div style="flex:1; background:#DCE8D3; position:relative; overflow:hidden;">
+      <svg width="100%" height="100%" viewBox="0 0 390 520" preserveAspectRatio="xMidYMid slice" style="position:absolute; inset:0;" aria-hidden="true"><path d="M0 170 Q120 120 200 160 T390 150 V0 H0Z" fill="#CFE0C5"/><path d="M0 430 Q110 400 200 435 T390 420 V520 H0Z" fill="#C7DBB9"/></svg>
+      <div style="position:absolute; left:16px; right:16px; top:14px; background:#fff; border-radius:12px; padding:9px 12px;"><div class="bar"><div class="js-bar" style="width:30%;"></div></div></div>
+      <div id="cazaPins" style="position:absolute; inset:0;"></div>
+      <div id="cazaCard" class="card" style="position:absolute; left:16px; right:16px; bottom:16px; box-shadow:0 8px 24px rgba(0,0,0,.12);"></div>
+    </div>
+    <div class="navbar" data-nav="mapa"></div>
+  </section>
+
+  <!-- 1.1.2.2 PLANTAS CERCANAS -->
+  <section id="scr-plantas-cercanas" class="screen">
+    <div class="sb">9:41</div>
+    <div class="topbar"><button class="backbtn tappable" onclick="back()" aria-label="Volver"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1F2937" stroke-width="2.4"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button><div><div class="ttl">Plantas cercanas</div><div class="sub">6 especies a menos de 300 m</div></div></div>
+    <div style="display:flex; gap:8px; padding:0 20px 12px; overflow-x:auto;" id="cercaChips">
+      <button class="chip active" data-sort="dist">Distancia: menor a mayor</button><button class="chip" data-sort="flor">Floración</button><button class="chip" data-sort="fam">Familia</button>
+    </div>
+    <div class="scroll" id="cercaList" style="gap:9px;"></div>
+    <div class="navbar" data-nav="buscar"></div>
+  </section>
+
+  <!-- 1.1.3.A.0 PERMISO DE CÁMARA -->
+  <section id="scr-permiso-camara" class="screen">
+    <div class="sb" style="display:flex; align-items:center; gap:10px;"><button class="backbtn tappable" onclick="back()" aria-label="Volver"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1F2937" stroke-width="2.4"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button></div>
+    <div class="perm-body" style="align-items:center; text-align:center; padding-top:40px;">
+      <div style="width:96px; height:96px; border-radius:24px; background:#E7EEDD; display:flex; align-items:center; justify-content:center;"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#2B6942" stroke-width="1.7"><path d="M4 8h3l2-3h6l2 3h3v11H4Z"/><circle cx="12" cy="13" r="3.5"/></svg></div>
+      <h2 style="margin-top:12px;">Necesitamos tu cámara para reconocer plantas</h2>
+      <p>Haz una foto a la hoja, la flor o el fruto y te diremos qué especie es. Solo usamos la foto para identificarla; no se publica.</p>
+      <div class="privacy" style="width:100%; text-align:left;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2B6942" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg>Puedes cambiarlo cuando quieras en Ajustes</div>
+      <div class="privacy" style="width:100%; text-align:left;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2B6942" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg>Sin cámara, puedes elegir una foto de la galería</div>
+    </div>
+    <div class="foot">
+      <button class="btn btn-pri" onclick="camDecision('permitir')">Permitir cámara</button>
+      <button class="btn" style="background:#8A5F24; color:#fff;" onclick="camDecision('no')">No permitir cámara</button>
+      <button class="btn btn-sec" onclick="camDecision('galeria')">Elegir de la galería</button>
+    </div>
+  </section>
+
+  <!-- 1.1.3.A.0.1 CÁMARA DENEGADA -->
+  <section id="scr-camara-denegada" class="screen" style="background:#14251a;">
+    <div style="padding:24px 20px 0; display:flex; justify-content:space-between; align-items:center;">
+      <button class="tappable" onclick="back()" aria-label="Volver" style="width:36px; height:36px; border-radius:18px; background:rgba(255,255,255,0.15); border:none; display:flex; align-items:center; justify-content:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
+      <div style="display:flex; background:rgba(255,255,255,0.15); border-radius:20px; padding:3px;"><span style="padding:6px 12px; border-radius:16px; background:#fff; font-size:12px; font-weight:600; color:#1F2937;">Planta</span><span style="padding:6px 12px; font-size:12px; color:#fff;">Monumento o calle</span></div>
+      <span style="width:36px;"></span>
+    </div>
+    <div style="flex:1; display:flex; align-items:center; justify-content:center; padding:0 26px;">
+      <div style="background:#fff; border-radius:18px; padding:20px; text-align:center; display:flex; flex-direction:column; gap:10px; align-items:center;">
+        <div style="width:44px; height:44px; border-radius:12px; background:#FDF3DE; display:flex; align-items:center; justify-content:center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#B8863B" stroke-width="1.8"><path d="M4 8h3l2-3h6l2 3h3v11H4Z"/><path d="M3 3l18 18"/></svg></div>
+        <div style="font-size:17px; font-weight:700; color:#1F2937;">La cámara está desactivada</div>
+        <div style="font-size:13.5px; color:#48504D; line-height:1.45;">Sin permiso no podemos hacer la foto. Actívala en los ajustes del móvil o sube una foto que ya tengas.</div>
+        <button class="btn btn-pri" onclick="camDecision('ajustesMovil')">Abrir ajustes del móvil</button>
+        <button class="btn btn-sec" onclick="camDecision('galeria')">Elegir de la galería</button>
+      </div>
+    </div>
+    <div style="display:flex; justify-content:center; padding:10px 0 40px;"><div style="width:74px; height:74px; border-radius:37px; background:rgba(255,255,255,.25); border:4px solid rgba(255,255,255,.3);"></div></div>
+  </section>
+
+  <!-- 1.1.3.A.2 ANALIZANDO FOTO -->
+  <section id="scr-analizando" class="screen" style="background:#14251a;">
+    <div style="padding:24px 20px 0; display:flex; justify-content:space-between; align-items:center;">
+      <button class="tappable" onclick="cancelAnalysis()" aria-label="Cancelar" style="width:36px; height:36px; border-radius:18px; background:rgba(255,255,255,0.15); border:none; color:#fff; font-size:18px;">×</button>
+      <span style="font-size:12.5px; color:rgba(255,255,255,.7);">Paso 2 de 2</span>
+    </div>
+    <div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:22px; padding:0 30px;">
+      <div class="scan-photo" id="anPhoto"><div class="scan-line"></div><svg width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.85)" stroke-width="1.2" style="position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);"><path d="M12 22V12M12 12c0-4 3-7 7-7 0 4-3 7-7 7Zm0 0C12 8 9 5 5 5c0 4 3 7 7 7Z"/></svg></div>
+      <div style="text-align:center;"><div id="anTitle" style="font-size:19px; font-weight:700; color:#fff;">Analizando tu foto…</div><div id="anSub" style="font-size:13.5px; color:rgba(255,255,255,.7); margin-top:5px; line-height:1.45;">Comparando con miles de especies. Suele tardar unos segundos.</div></div>
+      <div style="width:100%; height:6px; border-radius:3px; background:rgba(255,255,255,.18); overflow:hidden;"><div id="anBar" style="height:100%; width:0%; background:#79C08A; border-radius:3px;"></div></div>
+      <div style="width:100%; display:flex; flex-direction:column; gap:10px;">
+        <div class="step" id="st1"><span class="dot"></span>Foto recibida</div>
+        <div class="step" id="st2"><span class="dot"></span>Enviando a la API de Pl@ntNet</div>
+        <div class="step" id="st3"><span class="dot"></span>Cruzando con el inventario de arbolado de València</div>
+      </div>
+    </div>
+    <div style="padding:0 20px 28px; display:flex; flex-direction:column; gap:10px; align-items:center;">
+      <div style="display:flex; align-items:center; gap:8px; padding:7px 12px; border-radius:10px; background:rgba(255,255,255,.1); font-size:12px; color:#D8EEDC;"><b style="background:#fff; color:#2B6942; border-radius:4px; padding:1px 5px; font-size:10.5px;">Pl@ntNet</b>Identificación con Pl@ntNet</div>
+      <button class="btn" onclick="cancelAnalysis()" style="background:rgba(255,255,255,.12); color:#fff;">Cancelar</button>
+    </div>
+  </section>
+
+  <!-- 1.1.3.A.3 RESULTADO -->
+  <section id="scr-resultado" class="screen">
+    <div style="height:150px; background:#79A15F; position:relative; flex-shrink:0; display:flex; align-items:center; justify-content:center;" id="resHero">
+      <button class="backbtn tappable" onclick="go('identificar')" aria-label="Repetir foto" style="position:absolute; top:24px; left:16px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1F2937" stroke-width="2.4"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
+      <svg width="58" height="58" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.3" opacity=".85"><path d="M12 22V12M12 12c0-4 3-7 7-7 0 4-3 7-7 7Zm0 0C12 8 9 5 5 5c0 4 3 7 7 7Z"/></svg>
+      <span style="position:absolute; left:16px; bottom:10px; font-size:11px; font-weight:700; color:#fff; background:rgba(0,0,0,.25); padding:3px 8px; border-radius:10px;">Tu foto</span>
+    </div>
+    <div class="scroll" style="padding-top:16px;" id="resBody"></div>
+  </section>
+
+  <!-- 1.1.3.A.4 SIN RED / LÍMITE DIARIO -->
+  <section id="scr-sin-red" class="screen">
+    <div class="sb">9:41</div>
+    <div class="topbar"><button class="backbtn tappable" onclick="go('identificar')" aria-label="Volver"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1F2937" stroke-width="2.4"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button><div class="ttl">No se pudo identificar</div></div>
+    <div class="scroll" id="sinRedBody"></div>
+    <div style="padding:10px 20px 24px; text-align:center; font-size:12px; color:#6B7273;">Reconocimiento con <u>Pl@ntNet</u></div>
+  </section>
+
+  <!-- FICHA DE PLANTA (1.1.A.1 / 1.1.3.A.1.B, traducida) -->
+  <section id="scr-ficha" class="screen">
+    <div id="achievementBanner" style="display:none; padding:10px 20px; background:#2B6942; align-items:center; gap:8px; flex-shrink:0;">
+      <span style="font-size:18px;">🏆</span><span style="font-size:13.5px; font-weight:600; color:#fff;">¡Nuevo logro guardado! Información desbloqueada en tu colección.</span>
+    </div>
+    <div id="fHero" style="width:100%; height:210px; background:#79A15F; position:relative; flex-shrink:0;">
+      <button class="tappable" onclick="back()" aria-label="Volver" style="position:absolute; top:22px; left:16px; width:36px; height:36px; border-radius:18px; background:rgba(255,255,255,0.9); border:none; display:flex; align-items:center; justify-content:center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1F2937" stroke-width="2.4"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
+      <div class="lang-seg" style="position:absolute; top:24px; left:50%; transform:translateX(-50%);" id="fLang"><button data-l="es">ES</button><button data-l="en">EN</button><button data-l="va">VAL</button></div>
+      <button class="tappable fav" id="favBtn" onclick="toggleFav()" aria-label="Guardar en favoritos" style="position:absolute; top:22px; right:16px; width:36px; height:36px; border-radius:18px; background:rgba(255,255,255,0.9); border:none; display:flex; align-items:center; justify-content:center;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#1F2937" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8Z"/></svg></button>
+      <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; opacity:.55;"><svg width="88" height="88" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.2"><path d="M12 22V12M12 12c0-4 3-7 7-7 0 4-3 7-7 7Zm0 0C12 8 9 5 5 5c0 4 3 7 7 7Z"/></svg></div>
+    </div>
+    <div class="scroll" style="padding-top:16px;" id="fBody"></div>
+    <div class="foot" style="padding-top:8px;"><button class="btn btn-pri" id="fMapBtn" onclick="nav('mapa')">📍 Ver en el mapa</button></div>
+  </section>
+
+  <!-- 1.1.3.A.1.B.1 PORTAL DE DATOS -->
+  <section id="scr-portal-datos" class="screen">
+    <div class="sb">9:41</div>
+    <div style="margin:10px 16px 0; display:flex; align-items:center; gap:8px; padding:8px 10px; border-radius:12px; background:#F1F1EE; flex-shrink:0;">
+      <button class="tappable" onclick="back()" aria-label="Volver" style="border:none; background:transparent; padding:0; display:flex;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1F2937" stroke-width="2.4"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6B7273" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+      <span style="font-size:12.5px; color:#48504D; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">valencia.opendatasoft.com/arbratge-urba</span>
+    </div>
+    <div style="margin:10px 16px 0; padding:8px 12px; border-radius:10px; background:#E7EEDD; font-size:12.5px; color:#2B6942; font-weight:600; flex-shrink:0;" id="pdVerified">✓ Fuente verificada desde la ficha de Jacaranda mimosifolia</div>
+    <div class="scroll" style="padding-top:14px;">
+      <div class="row"><div style="width:30px; height:30px; border-radius:8px; background:#1F2937; color:#fff; font-size:11px; font-weight:700; display:flex; align-items:center; justify-content:center;">AJT</div><div style="font-size:13.5px; font-weight:600; color:#1F2937;">Ajuntament de València · Portal de Dades Obertes</div></div>
+      <div><div style="font-size:20px; font-weight:700; color:#1F2937;">Inventari d'Arbratge Urbà</div><div class="sub">Conjunto de datos · Actualizado 09/2026 · Licencia CC-BY 4.0</div></div>
+      <div class="lbl">Registro consultado</div>
+      <div class="card" style="padding:0;" id="pdTable"></div>
+      <button class="btn btn-sec" onclick="toast('La descarga del CSV no está disponible en el prototipo')">⤓ Descargar dataset completo (CSV)</button>
+      <div style="font-size:12px; color:#6B7273; line-height:1.45;">Datos publicados por el Ajuntament de València bajo licencia abierta CC-BY 4.0. Nature MAPS enlaza directamente a este registro para que puedas verificar la fuente original.</div>
+      <div style="font-size:11.5px; color:#9AA0A0;">Registro de ejemplo para el prototipo.</div>
+    </div>
+    <div class="foot"><button class="btn btn-pri" onclick="back()">← Volver a la ficha de la planta</button></div>
+  </section>
+
+  <!-- 1.1.A.2 FICHA SIN DATOS / ERROR -->
+  <section id="scr-ficha-sin-datos" class="screen">
+    <div style="height:180px; background:#E7EEDD; position:relative; flex-shrink:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px;">
+      <button class="backbtn tappable" onclick="back()" aria-label="Volver" style="position:absolute; top:22px; left:16px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1F2937" stroke-width="2.4"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#6B9C7A" stroke-width="1.5"><path d="M12 22V12M12 12c0-4 3-7 7-7 0 4-3 7-7 7Zm0 0C12 8 9 5 5 5c0 4 3 7 7 7Z"/></svg>
+      <span style="font-size:12.5px; color:#6B7273;">Sin foto disponible</span>
+    </div>
+    <div class="scroll" style="padding-top:16px;" id="sdBody"></div>
+    <div class="foot"><button class="btn btn-sec" onclick="nav('mapa')">Volver al mapa</button></div>
+  </section>
+
+  <!-- 1.1.4 RUTAS BOTÁNICAS (editable) -->
+  <section id="scr-rutas" class="screen">
+    <div class="sb">9:41</div>
+    <div class="topbar" style="justify-content:space-between;">
+      <div class="row" style="gap:12px;"><button class="backbtn tappable" onclick="back()" aria-label="Volver"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1F2937" stroke-width="2.4"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button><div><div class="ttl">Rutas botánicas</div><div class="sub" id="rutasSub">Paseos guiados por la flora de Valencia</div></div></div>
+      <div class="lang-seg" id="rutasMode"><button data-m="ver" class="on">Ver</button><button data-m="editar">Editar</button></div>
+    </div>
+    <div class="scroll" id="rutasList"></div>
+    <div class="navbar" data-nav="rutas"></div>
+  </section>
+
+  <!-- 1.1.5 BÚSQUEDA IA -->
+  <section id="scr-busqueda" class="screen">
+    <div class="sb">9:41</div>
+    <div style="padding:12px 20px 0; flex-shrink:0;">
+      <label class="row" style="padding:11px 14px; border-radius:14px; background:#fff; border:2px solid #A64D87; gap:8px;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#A64D87" stroke-width="2"><path d="M12 2l1.6 4.4L18 8l-4.4 1.6L12 14l-1.6-4.4L6 8l4.4-1.6L12 2Z"/><path d="M19 14l.9 2.4L22 17l-2.1.6L19 20l-.9-2.4L16 17l2.1-.6L19 14Z"/></svg>
+        <input id="searchInput" type="search" value="flor roja" aria-label="Buscar planta o edificio" placeholder="Describe lo que ves: flor roja, hoja grande…" style="border:none; outline:none; font-family:'Inter'; font-size:14.5px; color:#1F2937; flex:1; min-width:0; background:transparent;">
+      </label>
+      <div style="display:inline-flex; margin-top:8px; padding:4px 10px; border-radius:14px; background:#F2E4EC; font-size:11.5px; font-weight:700; color:#A64D87;">✨ Búsqueda por IA · describe lo que ves</div>
+      <div style="display:flex; gap:8px; margin-top:10px;" id="searchTabs"><button class="chip active" data-t="plantas">🌿 Plantas</button><button class="chip" data-t="edificios">🏛️ Edificios</button></div>
+      <div class="row tappable" onclick="nav('plantas-cercanas')" style="margin-top:12px; padding:10px; border-radius:14px; background:#fff; border:1px solid #E8E8E3;">
+        <div style="width:52px; height:52px; border-radius:10px; background:#DCE8D3; position:relative; flex-shrink:0;"><span style="position:absolute; left:20px; top:24px; width:9px; height:9px; border-radius:5px; background:#2B6942; border:2px solid #fff;"></span><span style="position:absolute; left:10px; top:12px; width:7px; height:7px; border-radius:4px; background:#2B6942;"></span><span style="position:absolute; left:36px; top:18px; width:7px; height:7px; border-radius:4px; background:#6B9C7A;"></span></div>
+        <div class="grow"><div style="font-size:13px; font-weight:700; color:#1F2937;">6 especies cerca de ti</div><div style="font-size:11.5px; color:#6B7273;">A menos de 300 m, aunque no coincidan con tu búsqueda</div></div>
+        <svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m9 18 6-6-6-6"/></svg>
+      </div>
+      <div class="lbl" style="margin-top:14px;" id="searchCount">4 coincidencias por color e imagen</div>
+    </div>
+    <div class="scroll" style="padding-top:10px;"><div id="searchGrid" style="display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:10px;"></div>
+      <div style="text-align:center; font-size:11.5px; color:#9AA0A0; line-height:1.5;">Describe color, forma o estilo — por ejemplo "flor morada", "hoja en abanico" o "edificio con arcos" — y la IA busca en el catálogo de Nature MAPS.</div></div>
+    <div class="navbar" data-nav="buscar"></div>
+  </section>
+
+  <!-- 1.1.6 LOGROS -->
+  <section id="scr-logros" class="screen">
+    <div class="sb" style="display:flex; justify-content:space-between;"><span>9:41</span><button class="tappable" onclick="back()" style="border:none; background:none; font-family:'Inter'; font-size:14px; color:#6B7273;">Cerrar</button></div>
+    <div style="padding:8px 20px 14px; flex-shrink:0;"><div class="ttl" style="font-size:24px;">Tus logros</div><div class="sub" style="font-size:14px;">Cada tramo desbloquea algo real, no solo una insignia</div></div>
+    <div class="scroll" id="logrosBody"></div>
+  </section>
+
+  <!-- 1.6 AJUSTES -->
+  <section id="scr-ajustes" class="screen">
+    <div class="sb">9:41</div>
+    <div class="topbar"><button class="backbtn tappable" onclick="back()" aria-label="Volver"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1F2937" stroke-width="2.4"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button><div class="ttl">Ajustes</div></div>
+    <div class="scroll" style="gap:8px;">
+      <div class="lbl">General</div>
+      <div class="set-row tappable" onclick="nav('lang')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2B6942" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg><div class="grow"><div class="t">Idioma</div><div class="d" id="ajLang">Español</div></div><svg class="chev" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m9 18 6-6-6-6"/></svg></div>
+      <div class="set-row" style="background:#E7EEDD; border:1.5px solid #2B6942;">
+        <div style="width:38px; height:38px; border-radius:10px; background:#2B6942; display:flex; align-items:center; justify-content:center; flex-shrink:0;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></div>
+        <div class="grow"><div class="t">Notificaciones Pasivas</div><div class="d" style="color:#3D6144;">Avisos al pasar cerca de una planta con historia</div></div>
+        <button class="toggle" id="notifToggle" aria-pressed="true" aria-label="Notificaciones pasivas" onclick="toggleNotif()"></button>
+      </div>
+      <div class="row" style="padding:2px 4px; gap:14px; flex-wrap:wrap;">
+        <button class="tappable" onclick="nav('notificacion')" style="border:none; background:none; padding:0; font-family:'Inter'; font-size:12.5px; color:#6B7273; text-decoration:underline;">Ver ejemplo de esta notificación</button>
+        <button class="tappable" onclick="demoPush()" style="border:none; background:none; padding:0; font-family:'Inter'; font-size:12.5px; color:#2B6942; font-weight:600; text-decoration:underline;">Probar aviso al pasear (demo)</button>
+      </div>
+      <div class="set-row tappable" onclick="nav('fuentes')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2B6942" stroke-width="1.8"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5Z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/></svg><div class="grow"><div class="t">Fuentes y Licencias</div></div><svg class="chev" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m9 18 6-6-6-6"/></svg></div>
+      <div class="set-row tappable" onclick="nav('offline')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2B6942" stroke-width="1.8"><path d="M17.5 19H6a4 4 0 0 1-1-7.87A5.5 5.5 0 0 1 15.9 8.5H17a3.5 3.5 0 0 1 .5 6.96V19Z"/></svg><div class="grow"><div class="t">Modo offline</div><div class="d" id="ajOffline">1 de 3 zonas descargada</div></div><svg class="chev" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m9 18 6-6-6-6"/></svg></div>
+      <div class="set-row tappable" onclick="volverAModos()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2B6942" stroke-width="1.8"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg><div class="grow"><div class="t">Cambiar de modo / perfil</div></div><svg class="chev" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m9 18 6-6-6-6"/></svg></div>
+      <div class="lbl" style="margin-top:10px;">Vistas avanzadas</div>
+      <div class="set-row tappable" onclick="nav('login-profesor')"><div style="width:38px; height:38px; border-radius:10px; background:#F2E4EC; display:flex; align-items:center; justify-content:center; flex-shrink:0;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#A64D87" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></div><div class="grow"><div class="t" style="font-size:14.5px;">Vista Profesor</div><div class="d">Requiere iniciar sesión con contraseña</div></div><svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
+      <div class="set-row tappable" onclick="nav('login-admin')"><div style="width:38px; height:38px; border-radius:10px; background:#1F2937; display:flex; align-items:center; justify-content:center; flex-shrink:0;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1"/></svg></div><div class="grow"><div class="t" style="font-size:14.5px;">Vista Administrador</div><div class="d">Requiere iniciar sesión con contraseña</div></div><svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
+      <div class="lbl" style="margin-top:10px;">Demo para la presentación</div>
+      <div class="card" style="display:flex; flex-direction:column; gap:8px;">
+        <div style="font-size:13.5px; font-weight:600; color:#1F2937;">Simular la identificación con IA</div>
+        <div class="lang-seg" id="simSeg" style="align-self:flex-start; flex-wrap:wrap;"><button data-s="ok" class="on">Normal</button><button data-s="offline">Sin conexión</button><button data-s="limite">Límite diario</button></div>
+        <div style="font-size:12px; color:#6B7273; line-height:1.4;">Sirve para enseñar las pantallas de error sin cortar la conexión del móvil.</div>
+      </div>
+    </div>
+    <div class="foot"><button class="btn btn-pri" onclick="back()">Guardar</button></div>
+  </section>
+
+  <!-- 1.6.A IDIOMA -->
+  <section id="scr-idioma" class="screen">
+    <div class="sb">9:41</div>
+    <div class="topbar"><button class="backbtn tappable" onclick="back()" aria-label="Volver"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1F2937" stroke-width="2.4"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button><div><div class="ttl">Idioma</div><div class="sub">Ajustes · Idioma</div></div></div>
+    <div class="scroll" style="gap:10px;" id="langList">
+      <div class="lang-row tappable" data-l="es" onclick="langPick(this)" style="display:flex; align-items:center; gap:14px; padding:15px; border-radius:14px; background:#fff; border:1.5px solid #E8E8E3;"><div class="radio"></div><div class="grow"><div style="font-size:16px; font-weight:600; color:#1F2937;">Español</div><div class="d" style="font-size:12px; color:#6B7273;">Idioma predeterminado</div></div><b style="font-size:12px; color:#6B7273;">ES</b></div>
+      <div class="lang-row tappable" data-l="va" onclick="langPick(this)" style="display:flex; align-items:center; gap:14px; padding:15px; border-radius:14px; background:#fff; border:1.5px solid #E8E8E3;"><div class="radio"></div><div class="grow"><div style="font-size:16px; font-weight:600; color:#1F2937;">Valencià</div><div style="font-size:12px; color:#6B7273;">Català (Valencia)</div></div><b style="font-size:12px; color:#6B7273;">VAL</b></div>
+      <div class="lang-row tappable" data-l="en" onclick="langPick(this)" style="display:flex; align-items:center; gap:14px; padding:15px; border-radius:14px; background:#fff; border:1.5px solid #E8E8E3;"><div class="radio"></div><div class="grow"><div style="font-size:16px; font-weight:600; color:#1F2937;">English</div><div style="font-size:12px; color:#6B7273;">English</div></div><b style="font-size:12px; color:#6B7273;">GB</b></div>
+      <div class="lang-row tappable" data-l="fr" onclick="langPick(this)" style="display:flex; align-items:center; gap:14px; padding:15px; border-radius:14px; background:#fff; border:1.5px solid #E8E8E3;"><div class="radio"></div><div class="grow"><div style="font-size:16px; font-weight:600; color:#1F2937;">Français</div><div style="font-size:12px; color:#6B7273;">Français</div></div><b style="font-size:12px; color:#6B7273;">FR</b></div>
+      <div style="font-size:12.5px; color:#6B7273; line-height:1.45;">El idioma cambia los textos de la app y también las fichas de las plantas. Abre una ficha para verlo.</div>
+    </div>
+    <div class="foot"><button class="btn btn-pri" onclick="back()">Guardar</button></div>
+  </section>
+
+  <!-- 1.6.F FUENTES Y LICENCIAS -->
+  <section id="scr-fuentes" class="screen">
+    <div class="sb">9:41</div>
+    <div class="topbar"><button class="backbtn tappable" onclick="back()" aria-label="Volver"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1F2937" stroke-width="2.4"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button><div><div class="ttl">Fuentes y licencias</div><div class="sub">De dónde sale cada dato que ves en Nature MAPS</div></div></div>
+    <div class="scroll">
+      <div class="src-card"><div class="ico" style="width:38px; height:38px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2B6942" stroke-width="1.8"><path d="M12 21s7-6.3 7-11.5A7 7 0 0 0 5 9.5C5 14.7 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.2"/></svg></div><div class="grow"><div style="font-size:14px; font-weight:700; color:#1F2937;">Inventario de Arbolado</div><div style="font-size:12.5px; color:#48504D; line-height:1.4;">Ubicación y especie de cada árbol del mapa. Ajuntament de València · Datos abiertos.</div><div style="font-size:11.5px; color:#6B7273; margin-top:2px;">Licencia CC-BY 4.0 · Actualizado 09/2026</div></div></div>
+      <div class="src-card"><div class="ico" style="width:38px; height:38px;"><b style="font-size:9.5px; color:#2B6942;">Pl@nt</b></div><div class="grow"><div style="font-size:14px; font-weight:700; color:#1F2937;">Pl@ntNet</div><div style="font-size:12.5px; color:#48504D; line-height:1.4;">Reconocimiento de plantas por foto, porcentaje de certeza y especies alternativas.</div><a href="https://plantnet.org" target="_blank" rel="noopener">plantnet.org ↗</a></div></div>
+      <div class="src-card"><div class="ico" style="width:38px; height:38px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2B6942" stroke-width="1.8"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12.5V17c0 1.1 2.7 2 6 2s6-.9 6-2v-4.5"/></svg></div><div class="grow"><div style="font-size:14px; font-weight:700; color:#1F2937;">Textos de las fichas</div><div style="font-size:12.5px; color:#48504D; line-height:1.4;">Descripciones revisadas a partir de fuentes botánicas. Cada ficha indica su fuente.</div></div></div>
+      <div class="src-card"><div class="ico" style="width:38px; height:38px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2B6942" stroke-width="1.8"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2Z"/><path d="M9 4v14M15 6v14"/></svg></div><div class="grow"><div style="font-size:14px; font-weight:700; color:#1F2937;">Mapa base</div><div style="font-size:12.5px; color:#48504D; line-height:1.4;">Proveedor de mapas y sus colaboradores.</div></div></div>
+    </div>
+    <div class="foot"><button class="btn btn-pri" onclick="back()">Volver a Ajustes</button></div>
+  </section>
+
+  <!-- 1.6.C MODO OFFLINE -->
+  <section id="scr-offline" class="screen">
+    <div class="sb" style="display:flex; justify-content:space-between;"><span>9:41</span><button class="tappable" onclick="back()" style="border:none; background:none; font-family:'Inter'; font-size:14px; color:#6B7273;">Volver</button></div>
+    <div style="padding:8px 20px 14px; flex-shrink:0;"><div class="ttl" style="font-size:24px;">Modo offline</div><div class="sub" style="font-size:14px;">Descarga una zona y camina sin conexión</div></div>
+    <div class="scroll" id="offBody"></div>
+    <div style="margin:0 20px 24px; padding:12px 14px; border-radius:12px; background:#fff; border:1px solid #E8E8E3; font-size:12.5px; color:#6B7273; line-height:1.45;">Sin datos ni wifi en el parque: la ficha, el mapa y las rutas de una zona descargada funcionan sin conexión.</div>
+  </section>
+
+  <!-- 1.3.1 MAPA DE LA RUTA (ALUMNO) -->
+  <section id="scr-mapa-ruta-edu" class="screen" style="background:#EAF6FF;">
+    <div class="sb">9:41</div>
+    <div style="padding:10px 20px 0; flex-shrink:0;"><span class="badge-mode" style="background:#2F8FE0;">🎒 MODO EDUCATIVO</span></div>
+    <div style="padding:8px 20px 10px; flex-shrink:0;"><div class="ttl">Mapa de la ruta</div><div class="sub" style="color:#5C7A94;">Jardín de las Hespérides · 5/6 paradas descubiertas</div></div>
+    <div style="height:290px; background:#DCE8D3; position:relative; flex-shrink:0; overflow:hidden;">
+      <svg width="100%" height="100%" viewBox="0 0 390 290" preserveAspectRatio="xMidYMid slice" style="position:absolute; inset:0;" aria-hidden="true"><path d="M0 210 Q100 180 195 210 T390 200 V290 H0Z" fill="#C7DBB9"/><path d="M50 240 C 90 200, 70 150, 120 130 S 200 160, 230 110 S 300 60, 340 70" stroke="#2F8FE0" stroke-width="3" stroke-dasharray="7 7" fill="none"/></svg>
+      <div id="eduPins" style="position:absolute; inset:0;"></div>
+    </div>
+    <div style="display:flex; gap:12px; padding:10px 20px; font-size:11.5px; color:#5C7A94; flex-wrap:wrap; flex-shrink:0;"><span class="row" style="gap:5px;"><i style="width:10px; height:10px; border-radius:5px; background:#2B9E5A; display:inline-block;"></i>Descubierta</span><span class="row" style="gap:5px;"><i style="width:10px; height:10px; border-radius:5px; background:#F2A53A; display:inline-block;"></i>Siguiente parada</span><span class="row" style="gap:5px;"><i style="width:10px; height:10px; border-radius:5px; background:#B5BFC6; display:inline-block;"></i>Por descubrir</span></div>
+    <div class="scroll" style="gap:8px;">
+      <div class="card" style="border:2px solid #F2A53A;"><div style="font-size:14.5px; font-weight:700; color:#1F2937;">Parada 5 · Ficus microcarpa</div><div style="font-size:12.5px; color:#8A5F24;">Tu misión actual — ¡síguela hasta aquí!</div></div>
+      <div class="card" style="opacity:.7;"><div style="font-size:14px; font-weight:600; color:#1F2937;">Parada 6 · Laurel</div><div style="font-size:12.5px; color:#6B7273;">Se desbloquea al completar la parada 5</div></div>
+      <div class="lbl">Ya descubiertas</div>
+      <div class="card tappable" onclick="openFicha('jacaranda')"><div style="font-size:14px; font-weight:600; color:#1F2937;">Parada 1 · Jacaranda mimosifolia</div></div>
+    </div>
+    <div class="foot"><button class="btn" style="background:#FF9D3D; color:#fff; font-weight:800;" onclick="back()">Volver a mi misión</button></div>
+  </section>
+
+  <!-- 1.3.2.A / 1.3.2.B TEST FINAL -->
+  <section id="scr-test" class="screen" style="background:#EAF6FF;">
+    <div class="sb" style="display:flex; justify-content:space-between; align-items:center;"><span>9:41</span><button class="tappable" onclick="back()" style="border:none; background:none; font-family:'Inter'; font-size:14px; color:#5C7A94;">Salir</button></div>
+    <div style="padding:10px 20px 0; flex-shrink:0;">
+      <div style="display:flex; justify-content:space-between; font-size:13px; font-weight:700; color:#2F8FE0;"><span id="qNum">Pregunta 1 de 5</span><span id="qScore">0 aciertos</span></div>
+      <div class="hbar" style="margin-top:8px;"><div id="qBar" style="width:20%;"></div></div>
+    </div>
+    <div class="scroll" style="padding-top:16px;" id="qBody"></div>
+    <div class="foot"><button class="btn" id="qNext" style="background:#2F8FE0; color:#fff;" onclick="nextQ()" disabled>Siguiente pregunta</button></div>
+  </section>
+
+  <section id="scr-test-fin" class="screen" style="background:#EAF6FF;">
+    <div class="sb">9:41</div>
+    <div class="scroll" style="justify-content:center; align-items:center; text-align:center; gap:14px;">
+      <div style="font-size:58px;">🏆</div>
+      <div class="ttl" style="font-size:26px;">¡Test completado!</div>
+      <div id="finScore" style="font-size:40px; font-weight:800; color:#2F8FE0; font-variant-numeric:tabular-nums;">0/5</div>
+      <div id="finPts" style="font-size:15px; color:#3E5C73; font-weight:600;">aciertos</div>
+      <div style="font-size:13px; color:#5C7A94; line-height:1.45; max-width:280px;">Tu profesora verá el resultado agregado de la clase, sin tu nombre.</div>
+    </div>
+    <div class="foot">
+      <button class="btn" style="background:#2F8FE0; color:#fff;" onclick="nav('resumen-clase')">Ver resumen de la clase</button>
+      <button class="btn btn-sec" onclick="goHome()">Volver a la ruta</button>
+    </div>
+  </section>
+
+  <!-- 1.3.3 RESUMEN DE LA CLASE -->
+  <section id="scr-resumen-clase" class="screen" style="background:#EAF6FF;">
+    <div class="sb">9:41</div>
+    <div style="padding:10px 20px 0; flex-shrink:0;"><span class="badge-mode" style="background:#2F8FE0;">🎒 MODO EDUCATIVO</span></div>
+    <div style="padding:8px 20px 10px; flex-shrink:0;"><div class="ttl">Resumen de la clase</div><div class="sub" style="color:#5C7A94;">4ºB · CEIP Jardín del Turia · Ruta: Jardín de las Hespérides</div></div>
+    <div class="scroll">
+      <div style="border-radius:18px; background:linear-gradient(135deg,#2F8FE0,#57B4F0); padding:16px; color:#fff;">
+        <div style="display:flex; justify-content:space-between; align-items:baseline;"><span style="font-size:14px; font-weight:600;">Ruta completada por la clase</span><b style="font-size:24px;">78%</b></div>
+        <div style="height:9px; border-radius:5px; background:rgba(255,255,255,.3); margin-top:8px;"><div style="width:78%; height:100%; background:#FFD166; border-radius:5px;"></div></div>
+        <div style="font-size:12.5px; margin-top:8px; color:#EAF6FF;">De media, el grupo ha llegado a la parada 4 de 6</div>
+      </div>
+      <div style="display:flex; gap:8px;"><div class="stat"><b>92%</b><span>Participación</span></div><div class="stat"><b id="rcMedia">8.4/10</b><span>Nota media del test</span></div></div>
+      <div style="display:flex; gap:8px;"><div class="stat"><b>6/6</b><span>Especies descubiertas por el grupo</span></div><div class="stat"><b>64%</b><span>Ya completó la ruta entera</span></div></div>
+      <div class="card" style="border-color:#DBEEFF;">
+        <div style="font-size:14px; font-weight:700; color:#1F2937; margin-bottom:10px;">🃏 Especies descubiertas por la clase</div>
+        <div style="display:flex; flex-direction:column; gap:8px; font-size:13px; color:#3E5C73;">
+          <div><div style="display:flex; justify-content:space-between;"><span>Jacaranda</span><b>100%</b></div><div class="hbar"><div style="width:100%;"></div></div></div>
+          <div><div style="display:flex; justify-content:space-between;"><span>Hibisco</span><b>96%</b></div><div class="hbar"><div style="width:96%;"></div></div></div>
+          <div><div style="display:flex; justify-content:space-between;"><span>Palmera</span><b>88%</b></div><div class="hbar"><div style="width:88%;"></div></div></div>
+          <div><div style="display:flex; justify-content:space-between;"><span>Ficus</span><b>78%</b></div><div class="hbar"><div style="width:78%;"></div></div></div>
+          <div><div style="display:flex; justify-content:space-between;"><span>Laurel</span><b>41%</b></div><div class="hbar"><div style="width:41%;"></div></div></div>
+        </div>
+        <div style="font-size:11.5px; color:#5C7A94; margin-top:8px;">% de la clase que ha validado cada especie</div>
+      </div>
+      <div style="font-size:12px; color:#5C7A94; line-height:1.45; padding:10px 12px; border-radius:12px; background:#fff; border:1px dashed #C3D9E8;">🔒 Este resumen muestra solo datos agregados de la clase — no se identifica a ningún alumno concreto.</div>
+    </div>
+    <div class="foot"><button class="btn" style="background:#2F8FE0; color:#fff;" onclick="goHome()">Volver a pantalla principal</button></div>
+  </section>
+
+  <!-- 1.6.D LOGIN PROFESOR -->
+  <section id="scr-login-profesor" class="screen">
+    <div class="sb">9:41</div>
+    <div class="topbar"><button class="backbtn tappable" onclick="back()" aria-label="Volver"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1F2937" stroke-width="2.4"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button><span class="badge-mode" style="background:#C46686;">👩‍🏫 ACCESO PROFESOR</span></div>
+    <form class="scroll" style="gap:14px; padding-top:10px;" onsubmit="event.preventDefault(); loginProfe();">
+      <div><div class="ttl" style="font-size:24px;">Iniciar sesión</div><div class="sub" style="font-size:14px;">Entra con tu cuenta docente para configurar rutas educativas y las plantas que fotografiarán tus alumnos.</div></div>
+      <label class="field"><span>Correo docente</span><input id="profEmail" type="email" value="ana.profesora@ceipjardin.edu.es" autocomplete="off"></label>
+      <label class="field"><span>Contraseña</span><input id="profPass" type="password" value="prototipo" autocomplete="off"></label>
+      <button type="button" class="tappable" onclick="toast('Te enviaremos un enlace para restablecerla (demo)')" style="align-self:flex-start; border:none; background:none; padding:0; font-family:'Inter'; font-size:13px; color:#A64D87; text-decoration:underline;">¿Olvidaste tu contraseña?</button>
+      <div style="font-size:12.5px; color:#6B7273; line-height:1.45; padding:10px 12px; border-radius:12px; background:#fff; border:1px solid #E8E8E3;">Este acceso es independiente de la cuenta de usuario con la que, más adelante, podrás registrarte para guardar tus preferencias y rutas favoritas.</div>
+      <div style="flex:1;"></div>
+      <button type="submit" class="btn" style="background:#C46686; color:#fff;">Acceder como Profesor</button>
+    </form>
+  </section>
+
+  <!-- 1.6.D.1 CONFIGURAR RUTA EDUCATIVA -->
+  <section id="scr-config-ruta" class="screen">
+    <div class="sb" style="display:flex; justify-content:space-between; align-items:center;"><button class="backbtn tappable" onclick="back()" aria-label="Volver"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1F2937" stroke-width="2.4"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button><span class="badge-mode" style="background:#C46686;">👩‍🏫 VISTA PROFESOR</span></div>
+    <div style="padding:12px 20px 6px; flex-shrink:0;"><div class="ttl">Configurar ruta educativa</div><div class="sub">4ºB · CEIP Jardín del Turia · Profesora Ana</div></div>
+    <div class="scroll" style="padding-top:8px;">
+      <div style="font-size:14px; font-weight:600; color:#1F2937;">📚 Conocimiento de la asignatura</div>
+      <div id="materialCard" class="card row"><div style="width:40px; height:40px; border-radius:10px; background:#F7E6E0; display:flex; align-items:center; justify-content:center; flex-shrink:0;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B3452C" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></div><div class="grow"><div style="font-size:13.5px; font-weight:600; color:#1F2937;">Ciencias Naturales — Tema 4</div><div style="font-size:11.5px; color:#6B7273;">Ecosistemas y biodiversidad · adjuntado</div></div></div>
+      <label class="tappable" style="width:100%; padding:11px; border-radius:12px; background:#fff; border:2px dashed #C46686; color:#C46686; font-size:13px; font-weight:600; display:flex; align-items:center; justify-content:center; gap:6px;">＋ Adjuntar material de la asignatura<input type="file" accept=".pdf,.doc,.docx" style="display:none;" onchange="attachMaterial(this)"></label>
+      <div style="font-size:14px; font-weight:600; color:#1F2937; margin-top:6px;">🌿 Plantas que debe fotografiar el estudiante</div>
+      <label class="chk"><input type="checkbox" checked> <span class="grow"><b>Jacaranda mimosifolia</b><br><small style="color:#6B7273;">Parada 2 · foto de referencia cargada</small></span></label>
+      <label class="chk"><input type="checkbox" checked> <span class="grow"><b>Hibiscus rosa-sinensis</b><br><small style="color:#6B7273;">Parada 4 · foto de referencia cargada</small></span></label>
+      <label class="chk"><input type="checkbox" checked> <span class="grow"><b>Ficus microcarpa</b><br><small style="color:#6B7273;">Parada 5 · foto de referencia cargada</small></span></label>
+      <label class="chk"><input type="checkbox" checked> <span class="grow"><b>Washingtonia filifera</b><br><small style="color:#6B7273;">Parada 3 · foto de referencia cargada</small></span></label>
+      <label class="chk"><input type="checkbox"> <span class="grow"><b>Laurus nobilis</b><br><small style="color:#6B7273;">Parada 6 · sin foto de referencia</small></span></label>
+    </div>
+    <div class="foot">
+      <button class="btn" style="background:#fff; border:2px solid #2B6942; color:#2B6942; font-weight:700;" onclick="nav('crear-test')">📝 Crear test final</button>
+      <button class="btn btn-pri" onclick="publishRoute()">Guardar y publicar ruta</button>
+    </div>
+  </section>
+
+  <!-- 1.6.D.2 CREAR TEST -->
+  <section id="scr-crear-test" class="screen">
+    <div class="sb" style="display:flex; justify-content:space-between; align-items:center;"><button class="backbtn tappable" onclick="back()" aria-label="Volver"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1F2937" stroke-width="2.4"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button><span class="badge-mode" style="background:#C46686;">👩‍🏫 VISTA PROFESOR</span></div>
+    <div style="padding:12px 20px 6px; flex-shrink:0;"><div class="ttl">Crear test final</div><div class="sub">Ruta: Jardín de las Hespérides · 4ºB</div></div>
+    <div class="scroll" style="padding-top:8px;" id="ctBody"></div>
+    <div class="foot"><button class="btn btn-pri" id="ctPublish" onclick="publishTest()">Publicar test</button></div>
+  </section>
+
+  <!-- 1.6.E LOGIN ADMINISTRADOR + 1.6.E.1 DASHBOARD -->
+  <section id="scr-login-admin" class="screen">
+    <div class="sb">9:41</div>
+    <div class="topbar"><button class="backbtn tappable" onclick="back()" aria-label="Volver"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1F2937" stroke-width="2.4"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button><span class="badge-mode" style="background:#1F2937;">⚙ ACCESO ADMINISTRADOR</span></div>
+    <form class="scroll" style="gap:14px; padding-top:10px;" onsubmit="event.preventDefault(); nav('dashboard-admin');">
+      <div><div class="ttl" style="font-size:24px;">Iniciar sesión</div><div class="sub" style="font-size:14px;">Acceso total a la configuración de Nature MAPS.</div></div>
+      <label class="field"><span>Correo corporativo</span><input id="admEmail" type="email" value="admin@naturemaps.app" autocomplete="off"></label>
+      <label class="field"><span>Contraseña</span><input id="admPass" type="password" value="prototipo" autocomplete="off"></label>
+      <div style="font-size:12.5px; color:#8A5F24; line-height:1.45; padding:10px 12px; border-radius:12px; background:#FDF3DE;">⚠️ El acceso queda registrado por motivos de seguridad y auditoría.</div>
+      <div style="flex:1;"></div>
+      <button type="submit" class="btn" style="background:#1F2937; color:#fff;">Acceder como Administrador</button>
+    </form>
+  </section>
+
+  <section id="scr-dashboard-admin" class="screen">
+    <div class="sb" style="display:flex; justify-content:space-between; align-items:center;"><span>9:41</span><span class="badge-mode" style="background:#1F2937;">⚙ ADMINISTRADOR</span></div>
+    <div style="padding:10px 20px 10px; flex-shrink:0;"><div class="ttl" style="font-size:24px;">Dashboard</div><div class="sub">Resumen general de Nature MAPS</div></div>
+    <div class="scroll">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+        <div class="card"><b style="font-size:22px; color:#1F2937;">1 240</b><div style="font-size:12px; color:#6B7273;">Usuarios activos</div><div style="font-size:11.5px; color:#2B6942; font-weight:600;">▲ 8% este mes</div></div>
+        <div class="card"><b style="font-size:22px; color:#1F2937;">3</b><div style="font-size:12px; color:#6B7273;">Rutas activas</div><div style="font-size:11.5px; color:#6B7273;">2 botánicas · 1 educativa</div></div>
+        <div class="card"><b style="font-size:22px; color:#1F2937;">32</b><div style="font-size:12px; color:#6B7273;">Plantas catalogadas</div><div style="font-size:11.5px; color:#2B6942; font-weight:600;">▲ 4 nuevas</div></div>
+        <div class="card"><b style="font-size:22px; color:#1F2937;">14</b><div style="font-size:12px; color:#6B7273;">Logros / insignias</div><div style="font-size:11.5px; color:#6B7273;">Modo Aventura</div></div>
+      </div>
+      <div class="card"><div style="font-size:13.5px; font-weight:700; color:#1F2937; margin-bottom:8px;">Uso por modo (últimos 30 días)</div>
+        <div style="display:flex; flex-direction:column; gap:7px; font-size:12.5px; color:#48504D;">
+          <div class="row"><span style="width:84px;">Aventura</span><div class="bar grow"><div style="width:46%;"></div></div><b style="width:34px; text-align:right;">46%</b></div>
+          <div class="row"><span style="width:84px;">Descubridor</span><div class="bar grow"><div style="width:38%; background:#6B9C7A;"></div></div><b style="width:34px; text-align:right;">38%</b></div>
+          <div class="row"><span style="width:84px;">Educativo</span><div class="bar grow"><div style="width:16%; background:#C46686;"></div></div><b style="width:34px; text-align:right;">16%</b></div>
+        </div></div>
+      <div class="card row"><div class="ico">✔</div><div><div style="font-size:14px; font-weight:600; color:#1F2937;">Media de aciertos en tests</div><div style="font-size:12px; color:#6B7273;">86% · 6 rutas educativas activas</div></div></div>
+      <button class="btn" style="background:#1F2937; color:#fff; text-align:left;" onclick="toast('La gestión de rutas, plantas, profesores, usuarios y modos está en el documento de navegación (1.6.E.2)')">⚙ Ir a Configuración<br><small style="font-weight:400; opacity:.75;">Rutas · Plantas · Profesores · Usuarios · Modos</small></button>
+    </div>
+    <div class="foot"><button class="btn btn-sec" onclick="goHome()">Salir del panel</button></div>
   </section>
 
 </div>
@@ -590,7 +1003,7 @@
     </div>`;
   }
   function landmarkPinHTML(x, y, label) {
-    return `<div class="tappable" style="position:absolute; left:${x-15}px; top:${y-38}px; display:flex; flex-direction:column; align-items:center;">
+    return `<div class="tappable" onclick="nav('monumento')" style="position:absolute; left:${x-15}px; top:${y-38}px; display:flex; flex-direction:column; align-items:center;">
       <svg width="30" height="38" viewBox="0 0 30 38"><path d="M15 0C6.7 0 0 6.7 0 15c0 9.5 15 23 15 23s15-13.5 15-23C30 6.7 23.3 0 15 0Z" fill="#B8863B"/><circle cx="15" cy="14" r="9.5" fill="#fff"/><path d="M10 19h10M11.5 19v-6M15 19v-6M18.5 19v-6M10.5 13l4.5-4 4.5 4" stroke="#B8863B" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
       <div style="background:#fff; border-radius:7px; padding:3px 7px; font-size:10.5px; font-weight:600; color:#1F2937; box-shadow:0 2px 6px rgba(0,0,0,0.12); white-space:nowrap; margin-top:2px;">${label}</div>
     </div>`;
@@ -617,7 +1030,7 @@
     return `<div class="tappable" onclick="nav('ficha')" style="position:absolute; left:${x-15}px; top:${y-38}px;"><svg width="30" height="38" viewBox="0 0 30 38"><path d="M15 0C6.7 0 0 6.7 0 15c0 9.5 15 23 15 23s15-13.5 15-23C30 6.7 23.3 0 15 0Z" fill="#6B9C7A"/><circle cx="15" cy="14" r="9.5" fill="#fff"/><circle cx="15" cy="14" r="4" fill="#6B9C7A"/></svg></div>`;
   }
   function discoverLandmark(x, y, label) {
-    return `<div class="tappable" style="position:absolute; left:${x-15}px; top:${y-38}px; display:flex; flex-direction:column; align-items:center;"><svg width="30" height="38" viewBox="0 0 30 38"><path d="M15 0C6.7 0 0 6.7 0 15c0 9.5 15 23 15 23s15-13.5 15-23C30 6.7 23.3 0 15 0Z" fill="#B8863B"/><circle cx="15" cy="14" r="9.5" fill="#fff"/><path d="M10 19h10M11.5 19v-6M15 19v-6M18.5 19v-6M10.5 13l4.5-4 4.5 4" stroke="#B8863B" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><div style="background:#fff; border-radius:7px; padding:3px 7px; font-size:10.5px; font-weight:600; color:#1F2937; box-shadow:0 2px 6px rgba(0,0,0,0.12); white-space:nowrap; margin-top:2px;">${label}</div></div>`;
+    return `<div class="tappable" onclick="nav('monumento')" style="position:absolute; left:${x-15}px; top:${y-38}px; display:flex; flex-direction:column; align-items:center;"><svg width="30" height="38" viewBox="0 0 30 38"><path d="M15 0C6.7 0 0 6.7 0 15c0 9.5 15 23 15 23s15-13.5 15-23C30 6.7 23.3 0 15 0Z" fill="#B8863B"/><circle cx="15" cy="14" r="9.5" fill="#fff"/><path d="M10 19h10M11.5 19v-6M15 19v-6M18.5 19v-6M10.5 13l4.5-4 4.5 4" stroke="#B8863B" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><div style="background:#fff; border-radius:7px; padding:3px 7px; font-size:10.5px; font-weight:600; color:#1F2937; box-shadow:0 2px 6px rgba(0,0,0,0.12); white-space:nowrap; margin-top:2px;">${label}</div></div>`;
   }
   function discoverComment(x, y, text) {
     return `<div class="tappable" onclick="nav('ficha')" style="position:absolute; left:${x-15}px; top:${y-38}px; display:flex; align-items:flex-start; gap:4px;"><svg width="27" height="34" viewBox="0 0 30 38"><path d="M15 0C6.7 0 0 6.7 0 15c0 9.5 15 23 15 23s15-13.5 15-23C30 6.7 23.3 0 15 0Z" fill="#6B9C7A"/><circle cx="15" cy="14" r="9.5" fill="#fff"/><circle cx="15" cy="12" r="3" fill="none" stroke="#6B9C7A" stroke-width="1.4"/><path d="M15 15v5.5" stroke="#6B9C7A" stroke-width="1.4" stroke-linecap="round"/></svg><div style="background:#fff; border-radius:8px; padding:4px 8px; font-size:10.5px; color:#1F2937; box-shadow:0 2px 6px rgba(0,0,0,0.08); max-width:96px; margin-top:6px;">${text}</div></div>`;
@@ -690,6 +1103,539 @@
     el.classList.add('selected'); el.querySelector('.radio').classList.add('on');
   }
   document.querySelectorAll('.chip').forEach(c => c.addEventListener('click', () => c.classList.toggle('active')));
+
+
+  /* ===================== AÑADIDOS v2: lógica de la demo ===================== */
+  screens.push('permiso-ubicacion','mapa-caza','permiso-camara','camara-denegada','analizando','resultado','sin-red',
+    'portal-datos','ficha-sin-datos','ajustes','fuentes','mapa-ruta-edu','test','test-fin','resumen-clase',
+    'login-profesor','config-ruta','crear-test','login-admin','dashboard-admin');
+
+  const S = {
+    lang: 'es', perms: { loc: false, cam: false }, captured: new Set(['jacaranda','palmera','hibisco']),
+    sim: 'ok', notif: true, scanTarget: 'jacaranda', nextTarget: null, fromScan: false, plant: 'jacaranda',
+    fav: new Set(), pending: null, rutasEdit: false, searchTab: 'plantas',
+    offline: [{ id:'turia', name:'Jardín del Turia', mb:128, done:true }, { id:'central', name:'Parc Central', mb:96, done:false }, { id:'botanico', name:'Jardín Botánico UV', mb:84, done:false }],
+    rutas: [{ id:'turia', name:'Jardín del Turia', meta:'2.4 km · 40 min · 8 paradas', tag:'Contexto histórico · s. XIX', color:'#8FB672' },
+            { id:'central', name:'Parc Central en flor', meta:'1.1 km · 20 min · 5 paradas', tag:'Contexto cultural · fallas', color:'#D68A98' },
+            { id:'palmeras', name:'Paseo de las Palmeras', meta:'3.0 km · 50 min · 10 paradas', tag:'Paseo marítimo', color:'#C79A5B' }]
+  };
+
+  const LEAF = '<path d="M12 22V12M12 12c0-4 3-7 7-7 0 4-3 7-7 7Zm0 0C12 8 9 5 5 5c0 4 3 7 7 7Z"/>';
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;' }[c]));
+
+  /* ---------- Datos de plantas (ES / EN / VAL) ---------- */
+  const PL = {
+    jacaranda: { sci:'Jacaranda mimosifolia', fam:'Bignoniaceae', loc:'Parc Central', color:'#79A15F', pct:82,
+      alts:[['Paulownia tomentosa',9],['Melia azedarach',5]],
+      com:{ es:'Jacaranda', en:'Blue jacaranda', va:'Xicranda' },
+      flor:{ es:'Floración: abr–jun', en:'Bloom: Apr–Jun', va:'Floració: abr–juny' },
+      desc:{ es:'Árbol ornamental de gran porte, popular en las avenidas de Valencia por su espectacular floración azul-violeta en primavera. Puede alcanzar hasta 15 metros de altura.',
+             en:'A large ornamental tree, popular along Valencia\'s avenues for its striking blue-violet blossom in spring. It can reach up to 15 metres in height.',
+             va:'Arbre ornamental de gran port, popular a les avingudes de València per la seua espectacular floració blau-violeta a la primavera. Pot arribar als 15 metres d\'altària.' },
+      cur:{ es:'Sus flores caídas tiñen las aceras de azul cada primavera, todo un símbolo de Valencia.',
+            en:'Its fallen flowers stain the pavements blue every spring — a true symbol of Valencia.',
+            va:'Les seues flors caigudes tenyixen les voreres de blau cada primavera, tot un símbol de València.' } },
+    hibisco: { sci:'Hibiscus rosa-sinensis', fam:'Malvaceae', loc:'Jardín del Turia', color:'#C0392B', pct:91,
+      alts:[['Hibiscus syriacus',5],['Malvaviscus arboreus',2]],
+      com:{ es:'Hibisco', en:'Chinese hibiscus', va:'Hibisc' },
+      flor:{ es:'Floración: may–oct', en:'Bloom: May–Oct', va:'Floració: maig–oct' },
+      desc:{ es:'Arbusto de flores grandes y vistosas, muy usado en jardines y parques de Valencia por su floración casi continua en los meses cálidos.',
+             en:'A shrub with large, showy flowers, widely planted in Valencia\'s gardens and parks for its almost continuous bloom in the warm months.',
+             va:'Arbust de flors grans i vistoses, molt utilitzat en jardins i parcs de València per la seua floració quasi contínua en els mesos càlids.' },
+      cur:{ es:'Cada flor dura abierta uno o dos días, pero la planta no deja de producir flores nuevas.',
+            en:'Each flower stays open for only a day or two, but the plant keeps producing new ones.',
+            va:'Cada flor dura oberta un o dos dies, però la planta no deixa de produir flors noves.' } },
+    palmera: { sci:'Washingtonia filifera', fam:'Arecaceae', loc:'Paseo Marítimo', color:'#8FB672', pct:93,
+      alts:[['Washingtonia robusta',5],['Chamaerops humilis',1]],
+      com:{ es:'Palmera de abanico', en:'California fan palm', va:'Palmera de ventall' },
+      flor:{ es:'Floración: may–jul', en:'Bloom: May–Jul', va:'Floració: maig–jul' },
+      desc:{ es:'Palmera de tronco grueso y hojas en forma de abanico, originaria del suroeste de Estados Unidos y muy plantada en los paseos del Mediterráneo.',
+             en:'A thick-trunked palm with fan-shaped leaves, native to the south-western United States and widely planted along Mediterranean promenades.',
+             va:'Palmera de tronc gros i fulles en forma de ventall, originària del sud-oest dels Estats Units i molt plantada als passejos del Mediterrani.' },
+      cur:{ es:'Si no se podan, las hojas secas forman una falda alrededor del tronco.',
+            en:'If left unpruned, the dry leaves form a skirt around the trunk.',
+            va:'Si no es poden, les fulles seques formen una falda al voltant del tronc.' } },
+    ficus: { sci:'Ficus microcarpa', fam:'Moraceae', loc:'Plaza del Ayuntamiento', color:'#4E7E45', pct:88,
+      alts:[['Ficus benjamina',7],['Ficus elastica',3]],
+      com:{ es:'Laurel de Indias', en:'Chinese banyan', va:'Llorer d\'Índies' },
+      flor:{ es:'Hoja perenne', en:'Evergreen', va:'Fulla perenne' },
+      desc:{ es:'Árbol de copa densa y hoja perenne, muy usado para dar sombra en plazas. Sus raíces aéreas pueden llegar al suelo y formar nuevos troncos.',
+             en:'An evergreen tree with a dense crown, often planted for shade in squares. Its aerial roots can reach the ground and form new trunks.',
+             va:'Arbre de copa densa i fulla perenne, molt utilitzat per a fer ombra a les places. Les seues arrels aèries poden arribar a terra i formar nous troncs.' },
+      cur:{ es:'Importancia cultural: plantado en 1900 junto al Ayuntamiento.',
+            en:'Cultural importance: planted in 1900 next to the City Hall.',
+            va:'Importància cultural: plantat el 1900 al costat de l\'Ajuntament.' } },
+    laurel: { sci:'Laurus nobilis', fam:'Lauraceae', loc:'Jardín del Turia', color:'#5E8C4A', pct:86,
+      alts:[['Prunus laurocerasus',8],['Viburnum tinus',4]],
+      com:{ es:'Laurel', en:'Bay laurel', va:'Llorer' },
+      flor:{ es:'Floración: feb–abr', en:'Bloom: Feb–Apr', va:'Floració: febr–abr' },
+      desc:{ es:'Árbol mediterráneo de hojas aromáticas, las mismas que se usan en la cocina.',
+             en:'A Mediterranean tree with aromatic leaves, the same ones used in cooking.',
+             va:'Arbre mediterrani de fulles aromàtiques, les mateixes que s\'utilitzen a la cuina.' },
+      cur:{ es:'En la antigua Grecia y Roma se hacían coronas de laurel para premiar a los vencedores.',
+            en:'In ancient Greece and Rome, laurel wreaths were used to crown the winners.',
+            va:'A l\'antiga Grècia i Roma es feien corones de llorer per a premiar els vencedors.' } }
+  };
+  const L = {
+    es:{ fam:'Familia', desc:'Descripción', cur:'Dato curioso', src:'Fuentes de información', map:'📍 Ver en el mapa',
+         attr:'El servicio de identificación de especies por imagen se basa en la API de reconocimiento de Pl@ntNet, actualizada regularmente y accesible en ',
+         pn:'Identificación por imagen · Consulta 06/10/2026', ajt:'Ajuntament de València', inv:'Inventario de arbolado · Versión 09/2026',
+         jb:'Jardí Botànic · Universitat de València', jbm:'Ficha botánica revisada' },
+    en:{ fam:'family', desc:'Description', cur:'Fun fact', src:'Information sources', map:'📍 View on map',
+         attr:'Photo-based species identification is powered by the Pl@ntNet recognition API, regularly updated and available at ',
+         pn:'Image identification · Checked 06/10/2026', ajt:'Ajuntament de València (City Council)', inv:'Tree inventory · Version 09/2026',
+         jb:'Jardí Botànic · University of Valencia', jbm:'Reviewed botanical profile' },
+    va:{ fam:'Família', desc:'Descripció', cur:'Dada curiosa', src:'Fonts d\'informació', map:'📍 Veure al mapa',
+         attr:'El servei d\'identificació d\'espècies per imatge es basa en l\'API de reconeixement de Pl@ntNet, actualitzada regularment i accessible en ',
+         pn:'Identificació per imatge · Consulta 06/10/2026', ajt:'Ajuntament de València', inv:'Inventari d\'arbratge · Versió 09/2026',
+         jb:'Jardí Botànic · Universitat de València', jbm:'Fitxa botànica revisada' }
+  };
+
+  /* ---------- Navegación ---------- */
+  function currentScreen() { return screens.find(s => document.getElementById('scr-' + s).classList.contains('active')); }
+  const ROUTES = { home:() => homeTarget, mapa:() => homeTarget === 'home-gamer' ? 'mapa-caza' : 'mapa', identificar:'identificar',
+    rutas:'rutas', buscar:'busqueda', ficha:'ficha', idioma:'ajustes', lang:'idioma', logros:'logros', offline:'offline', notificacion:'notificacion' };
+  function resolveRoute(id) { const r = ROUTES[id]; return typeof r === 'function' ? r() : (r || id); }
+  function nav(id) {
+    const cur = currentScreen();
+    let t = resolveRoute(id);
+    if (t === 'identificar') {
+      S.scanTarget = S.nextTarget || ((cur === 'home-gamer' || cur === 'home-educativo') ? 'ficus' : 'jacaranda');
+      S.nextTarget = null; S.eduScan = (cur === 'home-educativo');
+      if (!S.perms.cam) { S.pending = 'identificar'; t = 'permiso-camara'; }
+    }
+    if ((t === 'mapa' || t === 'mapa-caza') && !S.perms.loc) { S.pending = t; t = 'permiso-ubicacion'; }
+    if (cur && cur !== t) historyStack.push(cur);
+    hideSettingsTip(t); show(t); enter(t);
+  }
+  function hideSettingsTip(t) { if (!['home-gamer','home-descubridor','home-educativo'].includes(t)) document.getElementById('settingsToast').style.display = 'none'; }
+  function go(t) { hideSettingsTip(t); show(t); enter(t); }
+  function back() { const p = historyStack.pop() || homeTarget; show(p); enter(p); }
+  function goHome() { historyStack = []; go(homeTarget); }
+  function openSettings() { closeToast(); nav('ajustes'); }
+  function enter(t) {
+    const fn = { ficha:renderFicha, 'mapa-caza':renderCaza, busqueda:renderSearch, logros:renderLogros, test:renderQ,
+      offline:renderOffline, ajustes:renderAjustes, 'crear-test':renderCrear, rutas:renderRutas, 'plantas-cercanas':renderCerca,
+      'home-gamer':updateCounts, idioma:syncLangRows, 'mapa-ruta-edu':renderEduPins, 'portal-datos':renderPortal }[t];
+    if (fn) fn();
+    const sc = document.querySelector('#scr-' + t + ' .scroll'); if (sc && t !== 'test') sc.scrollTop = 0;
+  }
+
+  let toastTimer;
+  function toast(msg) {
+    const el = document.getElementById('appToast'); el.textContent = msg; el.classList.add('on');
+    clearTimeout(toastTimer); toastTimer = setTimeout(() => el.classList.remove('on'), 2600);
+  }
+
+  /* ---------- Barras de navegación reutilizables ---------- */
+  const NAVI = [['home','Inicio','<path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9Z"/>'],
+    ['mapa','Mapa', LEAF], ['identificar','Escanear','<path d="M4 8h3l2-3h6l2 3h3v11H4Z"/><circle cx="12" cy="13" r="3.5"/>'],
+    ['rutas','Rutas','<path d="M12 3 2 8l10 5 10-5-10-5Z"/>'], ['buscar','Buscar','<circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/>']];
+  document.querySelectorAll('.navbar[data-nav]').forEach(nb => {
+    nb.innerHTML = NAVI.map(([id, lbl, ic]) => `<div class="nav-item tappable" onclick="nav('${id}')" style="color:${id === nb.dataset.nav ? '#2B6942' : '#6B7273'};"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">${ic}</svg><span style="font-size:10.5px;${id === nb.dataset.nav ? ' font-weight:600;' : ''}">${lbl}</span></div>`).join('');
+  });
+
+  /* ---------- Permisos ---------- */
+  function locDecision(kind) {
+    S.perms.loc = true;
+    if (kind === 'lista') { go('plantas-cercanas'); return; }
+    go(S.pending || 'mapa-caza');
+    if (kind === 'no') toast('Mostrando el centro de Valencia');
+  }
+  function camDecision(kind) {
+    if (kind === 'permitir' || kind === 'ajustesMovil') { S.perms.cam = true; go('identificar'); if (kind === 'ajustesMovil') toast('Cámara activada en los ajustes del móvil'); }
+    else if (kind === 'no') go('camara-denegada');
+    else { scanMode = 'planta'; startAnalysis(true); }
+  }
+
+  /* ---------- Identificación con IA ---------- */
+  let anTimers = [];
+  function capture() {
+    const f = document.getElementById('flash'); f.classList.remove('on'); void f.offsetWidth; f.classList.add('on');
+    setTimeout(() => startAnalysis(false), 300);
+  }
+  function startAnalysis(fromGallery) {
+    anTimers.forEach(clearTimeout); anTimers = [];
+    const mon = scanMode === 'monumento';
+    go('analizando');
+    document.getElementById('anTitle').textContent = mon ? 'Analizando el monumento…' : 'Analizando tu foto…';
+    document.getElementById('anSub').textContent = fromGallery ? 'Foto elegida de la galería. Suele tardar unos segundos.' : 'Comparando con miles de especies. Suele tardar unos segundos.';
+    document.getElementById('st2').lastChild.textContent = mon ? 'Reconociendo el monumento' : 'Enviando a la API de Pl@ntNet';
+    document.getElementById('st3').lastChild.textContent = mon ? 'Buscando su ficha histórica' : 'Cruzando con el inventario de arbolado de València';
+    document.getElementById('anPhoto').style.background = mon ? 'linear-gradient(160deg,#8C6B3E,#C9A46A 60%,#E8D3A8)' : 'linear-gradient(160deg,#4E7E45,#8DB36F 60%,' + (S.scanTarget === 'jacaranda' ? '#B79BE0' : '#9CC27E') + ')';
+    const bar = document.getElementById('anBar'); bar.style.transition = 'none'; bar.style.width = '0%';
+    const steps = ['st1','st2','st3'].map(id => document.getElementById(id));
+    steps.forEach(s => s.className = 'step');
+    const fail = S.sim !== 'ok';
+    requestAnimationFrame(() => { bar.style.transition = 'width 2.4s linear'; bar.style.width = fail ? '55%' : '100%'; });
+    steps[0].className = 'step done';
+    steps[1].className = 'step doing';
+    anTimers.push(setTimeout(() => { if (fail) return; steps[1].className = 'step done'; steps[2].className = 'step doing'; }, 1100));
+    anTimers.push(setTimeout(() => {
+      if (fail) { renderSinRed(); go('sin-red'); return; }
+      steps[2].className = 'step done';
+      if (mon) { go('monumento'); flashBanner('achievementBannerMon'); }
+      else { renderResultado(); go('resultado'); }
+    }, 2500));
+  }
+  function cancelAnalysis() { anTimers.forEach(clearTimeout); anTimers = []; go('identificar'); }
+  function flashBanner(id) { const b = document.getElementById(id); b.style.display = 'flex'; setTimeout(() => { b.style.display = 'none'; }, 3200); }
+
+  function renderResultado() {
+    const k = S.scanTarget, p = PL[k];
+    document.getElementById('resHero').style.background = p.color;
+    document.getElementById('resBody').innerHTML = `
+      <div class="lbl">Especie más probable</div>
+      <div class="card" style="border:2px solid #2B6942;">
+        <div class="row"><div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2B6942" stroke-width="1.8">${LEAF}</svg></div>
+          <div class="grow"><div style="font-size:16px; font-weight:700; color:#1F2937;">${p.sci}</div><div style="font-size:12.5px; color:#6B7273;">${p.com.es} · ${p.fam}</div></div>
+          <div class="conf" style="font-size:22px;">${p.pct}%</div></div>
+        <div class="bar" style="margin-top:10px;"><div style="width:${p.pct}%;"></div></div>
+        <div style="font-size:11.5px; color:#6B7273; margin-top:4px;">Certeza alta</div>
+        <button class="btn btn-pri" style="margin-top:10px;" onclick="acceptResult()">Ver ficha</button>
+      </div>
+      <div class="lbl" style="margin-top:4px;">¿No es esta? Otras posibles</div>
+      <div class="card" style="padding:4px 14px;">${p.alts.map(([n, v]) => `<div class="alt-row tappable" onclick="openSinDatos('${n}')"><span style="font-style:italic;">${n}</span><span class="pct">${v}%</span><svg class="chev" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m9 18 6-6-6-6"/></svg></div>`).join('')}</div>
+      <button class="tappable" onclick="go('identificar')" style="border:none; background:none; font-family:'Inter'; font-size:13.5px; color:#2B6942; font-weight:600; text-decoration:underline;">Ninguna coincide: repetir foto</button>
+      <div class="row" style="padding:10px 12px; border-radius:12px; background:#F1F1EE; font-size:11.5px; color:#6B7273; line-height:1.4;"><b style="background:#fff; color:#2B6942; border-radius:4px; padding:2px 5px; font-size:10px;">Pl@ntNet</b><span>Resultados de <u>Pl@ntNet</u>. El % indica la certeza del reconocimiento.</span></div>`;
+  }
+  function acceptResult() {
+    const k = S.scanTarget, isNew = !S.captured.has(k);
+    S.captured.add(k); S.fromScan = true; S.plant = k;
+    go('ficha'); flashBanner('achievementBanner');
+    if (isNew) toast(S.eduScan ? '¡Ficha validada! Se añade a tus fichas de biodiversidad' : '+1 especie en tu herbario personal');
+  }
+  function renderSinRed() {
+    const off = S.sim === 'offline';
+    document.getElementById('sinRedBody').innerHTML = off ? `
+      <div class="lbl">Variante A · Sin conexión</div>
+      <div class="card" style="display:flex; flex-direction:column; gap:10px;">
+        <div class="row"><div class="ico" style="background:#F1F1EE;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#48504D" stroke-width="1.8"><path d="M2 8.8a15 15 0 0 1 4.2-2.7M22 8.8a15 15 0 0 0-9.3-3.8M5 12.5a10 10 0 0 1 3-1.8M19 12.5a10 10 0 0 0-2.7-1.7M8.5 16a5 5 0 0 1 7 0M12 20h.01M3 3l18 18"/></svg></div><b style="font-size:15px; color:#1F2937;">No hay conexión a internet</b></div>
+        <div style="font-size:13.5px; color:#48504D; line-height:1.45;">Hemos guardado tu foto. La identificaremos en cuanto vuelvas a tener red. Mientras, puedes seguir usando el mapa y las zonas descargadas.</div>
+        <div class="row" style="gap:8px;"><button class="btn btn-pri" style="flex:1;" onclick="startAnalysis(false)">Reintentar</button><button class="btn btn-sec" style="flex:1;" onclick="nav('offline')">Ver modo offline</button></div>
+      </div>` : `
+      <div class="lbl">Variante B · Límite diario alcanzado</div>
+      <div class="card" style="display:flex; flex-direction:column; gap:10px; background:#FDF3DE; border-color:#F1D9A6;">
+        <div class="row"><div class="ico" style="background:#fff;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8A5F24" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div><b style="font-size:15px; color:#8A5F24;">Hoy ya no quedan identificaciones</b></div>
+        <div style="font-size:13.5px; color:#8A5F24; line-height:1.45;">El servicio gratuito de reconocimiento tiene un límite diario. Vuelve a probar mañana o busca la planta por su nombre.</div>
+        <div class="row" style="gap:8px;"><button class="btn" style="flex:1; background:#8A5F24; color:#fff;" onclick="nav('buscar')">Buscar por nombre</button><button class="btn btn-sec" style="flex:1;" onclick="nav('plantas-cercanas')">Ver plantas cerca</button></div>
+      </div>`;
+  }
+
+  /* ---------- Fichas ---------- */
+  function openFicha(k) { S.plant = k; S.fromScan = false; nav('ficha'); }
+  function renderFicha() {
+    const p = PL[S.plant] || PL.jacaranda, l = S.lang, t = L[l];
+    document.getElementById('fHero').style.background = p.color;
+    document.querySelectorAll('#fLang button').forEach(b => b.classList.toggle('on', b.dataset.l === l));
+    document.getElementById('favBtn').classList.toggle('on', S.fav.has(S.plant));
+    document.getElementById('fMapBtn').textContent = t.map;
+    const famTxt = l === 'en' ? `${p.fam} ${t.fam}` : `${t.fam} ${p.fam}`;
+    const srcs = [];
+    if (S.fromScan) srcs.push({ ico:'🔍', n:'Pl@ntNet (CIRAD, INRAE, INRIA, IRD)', m:t.pn, url:'https://my.plantnet.org', u:'my.plantnet.org' });
+    srcs.push({ ico:'🏛', n:t.ajt, m:t.inv, u:'valencia.opendatasoft.com', portal:true });
+    if (!S.fromScan) srcs.push({ ico:'🎓', n:t.jb, m:t.jbm, url:'https://www.jardibotanic.org', u:'jardibotanic.org' });
+    document.getElementById('fBody').innerHTML = `
+      <div><div style="font-size:23px; font-weight:700; color:#1F2937;">${p.sci}</div><div style="font-size:13.5px; color:#6B7273;">${p.com[l]} · ${famTxt}</div></div>
+      <div style="display:flex; gap:8px; flex-wrap:wrap;"><span class="pill" style="background:#FBE7EE; color:#A64D5F;">🌸 ${p.flor[l]}</span><span class="pill">📍 ${p.loc}</span></div>
+      <div><div style="font-size:14.5px; font-weight:700; color:#1F2937; margin-bottom:4px;">${t.desc}</div><div style="font-size:14.5px; line-height:1.5; color:#48504D;">${p.desc[l]}</div></div>
+      <div style="padding:12px 14px; border-radius:14px; background:#FDF3DE; border:1px solid #F1D9A6; font-size:13.5px; color:#8A5F24; line-height:1.45;">💡 <b>${t.cur}:</b> ${p.cur[l]}</div>
+      ${S.fromScan ? `<div class="row" style="padding:10px 12px; border-radius:12px; background:#F1F1EE; font-size:11.5px; color:#6B7273; line-height:1.4; align-items:flex-start;"><b style="background:#fff; color:#2B6942; border-radius:4px; padding:2px 5px; font-size:10px; flex-shrink:0;">Pl@ntNet</b><span>${t.attr}<a href="https://my.plantnet.org/" target="_blank" rel="noopener" style="color:#2B6942; font-weight:600;">my.plantnet.org</a></span></div>` : ''}
+      <div><div style="font-size:14.5px; font-weight:700; color:#1F2937; margin-bottom:8px;">${t.src} <span style="font-size:12px; color:#2B6942; background:#E7EEDD; padding:2px 7px; border-radius:10px;">${srcs.length}</span></div>
+        <div style="display:flex; flex-direction:column; gap:8px;">${srcs.map(s => `<div class="src-card ${s.portal ? 'tappable' : ''}" ${s.portal ? 'onclick="nav(\'portal-datos\')"' : ''}><span style="font-size:16px;">${s.ico}</span><div class="grow"><div style="font-size:13.5px; font-weight:700; color:#1F2937;">${s.n}</div><div style="font-size:12px; color:#6B7273;">${s.m}</div>${s.portal ? `<span style="color:#2B6942; font-size:12px; font-weight:600;">${s.u} ↗</span>` : `<a href="${s.url}" target="_blank" rel="noopener">${s.u} ↗</a>`}</div></div>`).join('')}</div></div>`;
+  }
+  document.querySelectorAll('#fLang button').forEach(b => b.addEventListener('click', () => { S.lang = b.dataset.l; renderFicha(); }));
+  function toggleFav() { const k = S.plant; S.fav.has(k) ? S.fav.delete(k) : S.fav.add(k); renderFicha(); toast(S.fav.has(k) ? 'Guardada en favoritos' : 'Quitada de favoritos'); }
+  function renderPortal() {
+    const p = PL[S.plant] || PL.jacaranda;
+    document.getElementById('pdVerified').textContent = '✓ Fuente verificada desde la ficha de ' + p.sci;
+    const rows = [['ID árbol','VLC-04821'],['Especie',p.sci],['Ubicación',p.loc],['Altura','12 m'],['Diámetro tronco','38 cm'],['Estado fitosanitario','Sano']];
+    document.getElementById('pdTable').innerHTML = rows.map(([a, b], i) => `<div style="display:flex; justify-content:space-between; gap:10px; padding:10px 14px; font-size:13px; ${i ? 'border-top:1px solid #F0F0EC;' : ''}"><span style="color:#6B7273;">${a}</span><b style="color:#1F2937; text-align:right;">${b}</b></div>`).join('');
+  }
+  function openSinDatos(name, com) {
+    const err = S.sim === 'offline';
+    document.getElementById('sdBody').innerHTML = err ? `
+      <div class="lbl">Variante B · Error al cargar</div>
+      <div class="card" style="text-align:center; display:flex; flex-direction:column; gap:8px; align-items:center; padding:20px;">
+        <div style="width:32px; height:32px; border-radius:16px; border:2px solid #B8863B; color:#B8863B; font-weight:700; display:flex; align-items:center; justify-content:center;">!</div>
+        <b style="font-size:15px; color:#1F2937;">No hemos podido cargar la ficha</b><div style="font-size:13px; color:#6B7273;">Revisa tu conexión y vuelve a intentarlo.</div>
+        <button class="btn btn-pri btn-sm" onclick="S.sim='ok'; openSinDatos('${esc(name)}','${esc(com || '')}', true)">Reintentar</button></div>` : `
+      <div class="lbl">Variante A · Faltan datos</div>
+      <div><div style="font-size:22px; font-weight:700; color:#1F2937; font-style:italic;">${esc(name)}</div><div style="font-size:13px; color:#6B7273;">${com ? esc(com) + ' · ' : ''}familia no disponible</div></div>
+      <div class="card" style="font-size:13.5px; color:#48504D; line-height:1.45;">Aún no tenemos descripción de esta especie. Te mostramos lo que sabemos por el inventario municipal.</div>
+      <div class="src-card"><span>🎓</span><div><div class="lbl" style="font-size:10.5px;">Fuente</div><div style="font-size:13.5px; font-weight:600; color:#1F2937;">Inventario de Arbolado · Ajuntament de València</div></div></div>`;
+    if (!arguments[2]) nav('ficha-sin-datos');
+  }
+
+  /* ---------- Mapa "Caza de especies" ---------- */
+  const CAZA = [['jacaranda',95,90,true],['hibisco',215,160],['palmera',290,245],['ficus',150,270],['laurel',62,300]];
+  function updateCounts() {
+    const n = 9 + S.captured.size;
+    document.querySelectorAll('.js-count').forEach(e => e.textContent = n);
+    document.querySelectorAll('.js-bar').forEach(e => e.style.width = Math.round(n / 40 * 100) + '%');
+  }
+  function renderCaza() {
+    updateCounts();
+    document.getElementById('cazaPins').innerHTML = CAZA.map(([k, x, y, rare]) => {
+      const got = S.captured.has(k), col = rare ? '#E2B24A' : got ? '#4E8A5E' : '#B5BFC6';
+      return `<button class="tappable" onclick="cazaTap('${k}')" aria-label="${got ? PL[k].com.es : 'Especie por descubrir'}" style="position:absolute; left:${x - 17}px; top:${y - 44}px; border:none; background:none; padding:0; display:flex; flex-direction:column; align-items:center;">
+        <svg width="34" height="44" viewBox="0 0 34 44"><path d="M17 0C7.6 0 0 7.6 0 17c0 12.5 17 27 17 27s17-14.5 17-27C34 7.6 26.4 0 17 0Z" fill="${col}"/><circle cx="17" cy="17" r="11" fill="#fff"/>${got ? `<path d="M17 23v-8M17 15c0-3 2.4-5.5 5.5-5.5 0 3-2.4 5.5-5.5 5.5Zm0 0c0-3-2.4-5.5-5.5-5.5 0 3 2.4 5.5 5.5 5.5Z" stroke="${col}" stroke-width="1.6" fill="none"/>` : `<text x="17" y="21.5" font-size="12" font-weight="700" text-anchor="middle" fill="#8A959C" font-family="Inter">?</text>`}</svg>
+        ${rare ? '<span style="margin-top:2px; font-size:9.5px; font-weight:800; color:#fff; background:#B8863B; padding:2px 6px; border-radius:8px;">RARA</span>' : ''}</button>`;
+    }).join('');
+    cazaCard(null);
+  }
+  function cazaCard(k) {
+    const c = document.getElementById('cazaCard');
+    if (k && S.captured.has(k)) {
+      c.innerHTML = `<div class="row"><div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2B6942" stroke-width="1.8">${LEAF}</svg></div><div class="grow"><div style="font-size:15px; font-weight:700; color:#1F2937;">${PL[k].com.es}</div><div style="font-size:12.5px; color:#6B7273;">${PL[k].sci} · ya está en tu herbario</div></div><button class="btn btn-pri btn-sm" onclick="openFicha('${k}')">Ver ficha</button></div>`;
+    } else {
+      c.innerHTML = `<div class="row"><div class="ico" style="background:#F1F1EE; border:1.5px dashed #C9CFD2;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8A959C" stroke-width="1.8"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div><div class="grow"><div style="font-size:15px; font-weight:700; color:#1F2937;">+1 especie para tu herbario personal</div><div style="font-size:12.5px; color:#6B7273;">Acércate y haz foto para revelarla y guardarla</div></div></div>${k ? `<button class="btn btn-pri" style="margin-top:10px;" onclick="S.nextTarget='${k}'; nav('identificar')">📷 Hacer foto</button>` : ''}`;
+    }
+  }
+  function cazaTap(k) { cazaCard(k); }
+
+  /* ---------- Plantas cercanas ---------- */
+  const CERCA = [['Lavanda','Lavandula angustifolia','Jardín de la plaza',25,'jun',null],['Romero','Salvia rosmarinus','Sendero del parque',60,'feb',null],
+    ['Margarita','Bellis perennis','Pradera del parque',95,'mar',null],['Adelfa','Nerium oleander','Paseo de los jardines',140,'may',null],
+    ['Olivo','Olea europaea','Entrada del parque',210,'abr',null],['Jacaranda','Jacaranda mimosifolia','Parc Central',280,'abr','jacaranda']];
+  let cercaSort = 'dist';
+  function renderCerca() {
+    const list = [...CERCA].sort((a, b) => cercaSort === 'dist' ? a[3] - b[3] : cercaSort === 'flor' ? 'enefebmarabrmayjun'.indexOf(a[4]) - 'enefebmarabrmayjun'.indexOf(b[4]) : a[1].localeCompare(b[1]));
+    document.getElementById('cercaList').innerHTML = list.map(([n, sci, lug, d, , key]) => `<div class="row tappable card" style="padding:10px;" onclick="${key ? `openFicha('${key}')` : `openSinDatos('${sci}','${n}')`}"><div class="ico"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#2B6942" stroke-width="1.8">${LEAF}</svg></div><div class="grow"><div style="font-size:15px; font-weight:600; color:#1F2937;">${n}</div><div style="font-size:12.5px; color:#6B7273;">${lug}</div></div><div style="text-align:right;"><b style="font-size:14px; color:#2B6942; font-variant-numeric:tabular-nums;">${d} m</b><div style="font-size:11px; color:#6B7273;">de ti</div></div><svg class="chev" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m9 18 6-6-6-6"/></svg></div>`).join('');
+  }
+  document.querySelectorAll('#cercaChips .chip').forEach(c => c.addEventListener('click', () => {
+    document.querySelectorAll('#cercaChips .chip').forEach(x => x.classList.toggle('active', x === c)); cercaSort = c.dataset.sort; renderCerca();
+  }));
+
+  /* ---------- Búsqueda por IA ---------- */
+  const CAT = {
+    plantas: [['Hibiscus rosa-sinensis','#C0392B','roja rojo flor grande arbusto','hibisco'],['Bougainvillea glabra','#D6455B','roja fucsia morada rosa trepadora',null],
+      ['Punica granatum','#B3452C','roja naranja fruto granada',null],['Pelargonium','#E0574F','roja rosa maceta balcon geranio',null],
+      ['Jacaranda mimosifolia','#7E6BC4','morada azul violeta lila arbol primavera','jacaranda'],['Washingtonia filifera','#8FB672','palmera abanico hoja grande tronco','palmera'],
+      ['Ficus microcarpa','#4E7E45','sombra raices arbol grande plaza perenne','ficus'],['Laurus nobilis','#5E8C4A','aromatica hoja verde cocina laurel','laurel'],
+      ['Acacia dealbata','#E0B93B','amarilla pequeña mimosa invierno',null]],
+    edificios: [['Torres de Serranos','#A8895A','arcos gotica torre puerta muralla piedra','monumento'],['Estación del Nord','#C46A3A','modernista azulejos naranja estacion',null],
+      ['Mercado Central','#8C9A5B','cupula hierro cristal mercado modernista',null]]
+  };
+  function norm(s) { return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, ''); }
+  function renderSearch() {
+    const q = norm(document.getElementById('searchInput').value.trim());
+    const STOP = ['flor','flores','planta','plantas','arbol','arboles','con','que','una','edificio','edificios'];
+    const words = q.split(/\s+/).filter(w => w.length > 2 && !STOP.includes(w));
+    let res = CAT[S.searchTab].map(it => {
+      const hay = norm(it[0] + ' ' + it[2]);
+      const score = words.reduce((a, w) => a + (hay.includes(w.slice(0, Math.max(4, w.length - 1))) ? 1 : 0), 0);
+      return [it, score];
+    }).filter(([, s]) => !q || s > 0).sort((a, b) => b[1] - a[1]);
+    if (!q) res = res.slice(0, 6);
+    const pcts = [98, 91, 87, 82, 76, 71, 65, 60, 55];
+    document.getElementById('searchCount').textContent = res.length ? `${res.length} coincidencia${res.length > 1 ? 's' : ''} por color e imagen` : 'Sin coincidencias: prueba con un color o una forma';
+    document.getElementById('searchGrid').innerHTML = res.map(([it], i) => `<button class="tappable" onclick="${it[3] === 'monumento' ? "nav('monumento')" : it[3] ? `openFicha('${it[3]}')` : `openSinDatos('${it[0]}')`}" style="text-align:left; border-radius:14px; background:#fff; border:1px solid #E8E8E3; overflow:hidden; padding:0; font-family:'Inter';">
+      <div style="height:84px; background:${it[1]}; display:flex; align-items:center; justify-content:center;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.4">${S.searchTab === 'edificios' ? '<path d="M4 21h16M6 21V9M10 21V9M14 21V9M18 21V9M3 9l9-6 9 6"/>' : LEAF}</svg></div>
+      <div style="padding:8px 10px;"><div style="font-size:13px; font-weight:600; color:#1F2937;">${it[0]}</div><div style="font-size:11px; color:#6B7273;">${q ? pcts[i] + '% coincidencia' : 'Catálogo'}</div></div></button>`).join('');
+  }
+  document.getElementById('searchInput').addEventListener('input', renderSearch);
+  document.querySelectorAll('#searchTabs .chip').forEach(c => c.addEventListener('click', () => {
+    document.querySelectorAll('#searchTabs .chip').forEach(x => x.classList.toggle('active', x === c)); S.searchTab = c.dataset.t;
+    const inp = document.getElementById('searchInput'); if (S.searchTab === 'edificios' && inp.value === 'flor roja') inp.value = 'edificio con arcos';
+    if (S.searchTab === 'plantas' && inp.value === 'edificio con arcos') inp.value = 'flor roja';
+    renderSearch();
+  }));
+
+  /* ---------- Rutas (ver / editar) ---------- */
+  routeData.palmeras = { title:'Paseo de las Palmeras', sub:'3.0 km · 50 min · 10 paradas', plants:[[60,120],[130,170],[200,150],[270,210],[320,280]], landmarks:[{ p:[110,300], label:'Paseo Marítimo' }] };
+  function renderRutas() {
+    document.querySelectorAll('#rutasMode button').forEach(b => b.classList.toggle('on', (b.dataset.m === 'editar') === S.rutasEdit));
+    document.getElementById('rutasSub').textContent = S.rutasEdit ? 'Toca la papelera para eliminar una ruta' : 'Paseos guiados por la flora de Valencia';
+    document.getElementById('rutasList').innerHTML = S.rutas.map(r => `
+      <div class="route-card ${S.rutasEdit ? '' : 'tappable'}" ${S.rutasEdit ? '' : `onclick="openRoute('${r.id}')"`} style="border-radius:16px; background:#fff; border:1px solid #E8E8E3; overflow:hidden; display:flex;">
+        <div style="width:72px; background:${r.color}; flex-shrink:0;"></div>
+        <div style="padding:12px 14px; flex:1; min-width:0;"><div style="font-size:16px; font-weight:600; color:#1F2937;">${r.name}</div><div style="font-size:12.5px; color:#6B7273;">${r.meta}</div><span class="pill" style="margin-top:8px; font-size:11.5px; padding:3px 9px;">${r.tag}</span></div>
+        ${S.rutasEdit ? `<button class="tappable" aria-label="Eliminar ${r.name}" onclick="delRuta('${r.id}')" style="border:none; background:#FDECEC; color:#C0392B; width:56px; font-size:18px;">🗑</button>` : ''}
+      </div>`).join('') + (S.rutasEdit ? `<button class="btn" onclick="addRuta()" style="background:#fff; border:2px dashed #2B6942; color:#2B6942;">+ Añadir ruta</button>` : '');
+  }
+  document.querySelectorAll('#rutasMode button').forEach(b => b.addEventListener('click', () => { S.rutasEdit = b.dataset.m === 'editar'; renderRutas(); }));
+  function delRuta(id) { const r = S.rutas.find(x => x.id === id); S.rutas = S.rutas.filter(x => x.id !== id); renderRutas(); toast(`"${r.name}" eliminada`); }
+  function addRuta() { const n = S.rutas.length + 1; S.rutas.push({ id:'nueva' + n, name:'Nueva ruta ' + n, meta:'Borrador · sin paradas', tag:'Pendiente de publicar', color:'#B5BFC6' }); renderRutas(); toast('Ruta en borrador añadida'); }
+  const _openRoute = openRoute;
+  openRoute = function (key) { if (!routeData[key]) { toast('Esta ruta aún no tiene paradas'); return; } _openRoute(key); };
+
+  /* ---------- Logros con valor real ---------- */
+  function renderLogros() {
+    const n = 9 + S.captured.size;
+    document.getElementById('logrosBody').innerHTML = `
+      <div class="card"><div style="display:flex; justify-content:space-between; font-size:14px; font-weight:600; color:#1F2937; margin-bottom:8px;"><span>Ruta: Jardín del Turia</span><span style="color:#2B6942;">5 / 8 paradas</span></div><div class="bar"><div style="width:62%;"></div></div></div>
+      <div class="card"><div style="display:flex; justify-content:space-between; font-size:14px; font-weight:600; color:#1F2937; margin-bottom:8px;"><span>Herbario personal</span><span style="color:#6C4CE0;">${n} / 40 especies</span></div><div class="bar" style="background:#EDE7FB;"><div style="width:${Math.round(n / 40 * 100)}%; background:#6C4CE0;"></div></div></div>
+      <div class="row card tappable" onclick="openFicha('jacaranda')"><div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2B6942" stroke-width="1.8"><path d="M12 3 2 8l10 5 10-5-10-5Z"/><path d="M6 10.5V16c0 1.1 2.7 2 6 2s6-.9 6-2v-5.5"/></svg></div><div class="grow"><div style="font-size:15px; font-weight:600; color:#1F2937;">Ficha ampliada</div><div style="font-size:12.5px; color:#6B7273;">Jacaranda mimosifolia · historia completa</div></div><span class="tag-ok">Desbloqueado</span></div>
+      <div class="row card tappable" onclick="toast('Reproduciendo la audioguía del Jardín del Turia (demo)')"><div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2B6942" stroke-width="1.8"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3ZM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3Z"/></svg></div><div class="grow"><div style="font-size:15px; font-weight:600; color:#1F2937;">Audioguía</div><div style="font-size:12.5px; color:#6B7273;">Historia del Jardín del Turia · 4 min</div></div><span class="tag-ok">Desbloqueado</span></div>
+      <div class="row card" style="opacity:.6;"><div class="ico" style="background:#F1F1EE;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6B7273" stroke-width="1.8"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div><div class="grow"><div style="font-size:15px; font-weight:600; color:#1F2937;">Curiosidad verificada</div><div style="font-size:12.5px; color:#6B7273;">Origen de la Palmera Washingtonia</div></div><span class="tag-lock">3 paradas más</span></div>
+      <div class="row card" style="opacity:.6;"><div class="ico" style="background:#F1F1EE;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6B7273" stroke-width="1.8"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div><div class="grow"><div style="font-size:15px; font-weight:600; color:#1F2937;">Ruta secreta: árboles centenarios</div><div style="font-size:12.5px; color:#6B7273;">Se abre con 15 especies en tu herbario</div></div><span class="tag-lock">${Math.max(0, 15 - n)} especies más</span></div>
+      <div style="padding:12px 14px; border-radius:12px; background:#fff; border:1px dashed #E8E8E3; font-size:12.5px; color:#6B7273; line-height:1.4;">Puedes elegir no jugar: toda la información de las plantas sigue disponible sin necesidad de desbloqueos.</div>`;
+  }
+
+  /* ---------- Ajustes, idioma, offline, avisos ---------- */
+  const LANGN = { es:'Español', va:'Valencià', en:'English' };
+  function renderAjustes() {
+    document.getElementById('ajLang').textContent = LANGN[S.lang];
+    document.getElementById('notifToggle').setAttribute('aria-pressed', S.notif);
+    const d = S.offline.filter(z => z.done).length; document.getElementById('ajOffline').textContent = `${d} de 3 zonas descargada${d === 1 ? '' : 's'}`;
+    document.querySelectorAll('#simSeg button').forEach(b => b.classList.toggle('on', b.dataset.s === S.sim));
+  }
+  document.querySelectorAll('#simSeg button').forEach(b => b.addEventListener('click', () => {
+    S.sim = b.dataset.s; renderAjustes();
+    toast({ ok:'Identificación normal', offline:'Simulando: sin conexión', limite:'Simulando: límite diario alcanzado' }[S.sim]);
+  }));
+  function toggleNotif() { S.notif = !S.notif; renderAjustes(); toast(S.notif ? 'Avisos cercanos activados' : 'Avisos cercanos desactivados'); }
+  function syncLangRows() {
+    document.querySelectorAll('#langList .lang-row').forEach(r => { const on = r.dataset.l === S.lang; r.classList.toggle('selected', on); r.querySelector('.radio').classList.toggle('on', on); });
+  }
+  function langPick(el) {
+    if (el.dataset.l === 'fr') { toast('Traducción al francés en preparación'); return; }
+    S.lang = el.dataset.l; syncLangRows(); toast('Idioma: ' + LANGN[S.lang]);
+  }
+  let pushTimer;
+  function demoPush() {
+    if (!S.notif) { toast('Activa primero las notificaciones pasivas'); return; }
+    goHome(); toast('Simulando un paseo junto al Jardín del Turia…');
+    clearTimeout(pushTimer);
+    pushTimer = setTimeout(() => { const p = document.getElementById('pushBanner'); p.classList.add('on'); pushTimer = setTimeout(() => p.classList.remove('on'), 7000); }, 2200);
+  }
+  function pushTap() { document.getElementById('pushBanner').classList.remove('on'); clearTimeout(pushTimer); openFicha('jacaranda'); }
+  function renderOffline() {
+    const done = S.offline.filter(z => z.done), mb = done.reduce((a, z) => a + z.mb, 0);
+    document.getElementById('offBody').innerHTML = `
+      <div class="row" style="padding:14px; border-radius:14px; background:#2B6942;"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8"><path d="M17.5 19H6a4 4 0 0 1-1-7.87A5.5 5.5 0 0 1 15.9 8.5H17a3.5 3.5 0 0 1 .5 6.96V19Z"/></svg><div><div style="font-size:15px; font-weight:600; color:#fff;">${mb} MB descargados</div><div style="font-size:12.5px; color:#D8E7D3;">${done.length} de 3 zonas disponible${done.length === 1 ? '' : 's'} sin conexión</div></div></div>
+      ${S.offline.map(z => `<div class="row card" style="padding:12px;"><div class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2B6942" stroke-width="1.8">${LEAF}</svg></div><div class="grow"><div style="font-size:15px; font-weight:600; color:#1F2937;">${z.name}</div><div style="font-size:12.5px; color:#6B7273;" id="offTxt-${z.id}">${z.mb} MB · ${z.done ? 'descargado' : 'sin descargar'}</div><div class="bar" id="offBar-${z.id}" style="margin-top:6px; display:none;"><div style="width:0%;"></div></div></div>
+        ${z.done ? '<span style="width:28px; height:28px; border-radius:14px; background:#E7EEDD; display:flex; align-items:center; justify-content:center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2B6942" stroke-width="2.6"><path d="M5 12l5 5L20 7"/></svg></span>' : `<button class="btn btn-pri btn-sm" id="offBtn-${z.id}" onclick="download('${z.id}')">Descargar</button>`}</div>`).join('')}`;
+  }
+  function download(id) {
+    const z = S.offline.find(x => x.id === id), btn = document.getElementById('offBtn-' + id), bar = document.getElementById('offBar-' + id), txt = document.getElementById('offTxt-' + id);
+    btn.disabled = true; btn.textContent = '…'; bar.style.display = 'block';
+    let p = 0; const iv = setInterval(() => {
+      p += 9; bar.firstElementChild.style.width = Math.min(p, 100) + '%'; txt.textContent = `${Math.round(z.mb * Math.min(p, 100) / 100)} de ${z.mb} MB`;
+      if (p >= 100) { clearInterval(iv); z.done = true; renderOffline(); toast(`${z.name} disponible sin conexión`); }
+    }, 120);
+  }
+
+  /* ---------- Modo educativo: mapa, test y resumen ---------- */
+  function renderEduPins() {
+    const P = [[50,240,'d'],[120,130,'d'],[175,148,'d'],[230,110,'d'],[285,72,'n'],[340,70,'p']];
+    document.getElementById('eduPins').innerHTML = P.map(([x, y, s], i) => {
+      const c = s === 'd' ? '#2B9E5A' : s === 'n' ? '#F2A53A' : '#B5BFC6';
+      return `<div style="position:absolute; left:${x - 15}px; top:${y - 38}px;"><svg width="30" height="38" viewBox="0 0 30 38"><path d="M15 0C6.7 0 0 6.7 0 15c0 9.5 15 23 15 23s15-13.5 15-23C30 6.7 23.3 0 15 0Z" fill="${c}"/><circle cx="15" cy="14" r="9.5" fill="#fff"/><text x="15" y="18" font-size="10" font-weight="700" fill="${c}" text-anchor="middle" font-family="Inter, sans-serif">${i + 1}</text></svg></div>`;
+    }).join('') + '<div style="position:absolute; left:352px; top:40px; font-size:20px;">🏁</div>';
+  }
+  const TEST = [
+    { type:'Opción múltiple · con foto', q:'¿Cómo se llama esta planta que fotografiaste en la parada 4?', photo:'#C0392B', opts:['Jacaranda mimosifolia','Hibiscus rosa-sinensis','Ficus microcarpa','Laurus nobilis'], ok:1, why:'Es el hibisco: flores grandes y rojas que salen casi todo el año.' },
+    { type:'Verdadero / Falso', q:'El Ficus microcarpa es una especie originaria de Asia.', opts:['✅ Verdadero','❌ Falso'], ok:0, why:'Correcto: procede del sur y sudeste de Asia y se usa en plazas por su sombra.' },
+    { type:'Completar la frase', q:'La palmera es un árbol muy presente en la ___ valenciana desde hace siglos.', opts:['cultura','fauna','gastronomía'], ok:0, why:'La palmera forma parte del paisaje y la cultura valenciana.' },
+    { type:'Opción múltiple', q:'¿De qué color son las flores de la jacaranda?', opts:['Azul-violeta','Amarillas','Blancas'], ok:0, why:'Sus flores azul-violeta tiñen las aceras de Valencia en primavera.' },
+    { type:'Verdadero / Falso', q:'El Jardín del Turia ocupa el antiguo cauce de un río.', opts:['✅ Verdadero','❌ Falso'], ok:0, why:'El jardín se construyó en el antiguo cauce del río Turia.' }
+  ];
+  const SUGGEST = [
+    { type:'Completar la frase', q:'Según el Tema 4, un ecosistema está formado por seres vivos y su ___.', opts:['medio físico','alimento','familia'], ok:0, why:'Un ecosistema une a los seres vivos con el medio físico en el que viven.' },
+    { type:'Verdadero / Falso', q:'Las plantas de hoja perenne pierden todas sus hojas en otoño.', opts:['✅ Verdadero','❌ Falso'], ok:1, why:'Falso: las de hoja perenne mantienen hojas todo el año, como el ficus o el laurel.' }
+  ];
+  let qi = 0, qok = 0, qAnswered = false;
+  function startTest() { qi = 0; qok = 0; nav('test'); }
+  function renderQ() {
+    const q = TEST[qi]; qAnswered = false;
+    document.getElementById('qNum').textContent = `Pregunta ${qi + 1} de ${TEST.length}`;
+    document.getElementById('qScore').textContent = `${qok} acierto${qok === 1 ? '' : 's'}`;
+    document.getElementById('qBar').style.width = Math.round((qi + 1) / TEST.length * 100) + '%';
+    const nx = document.getElementById('qNext'); nx.disabled = true; nx.style.opacity = .5; nx.textContent = qi === TEST.length - 1 ? 'Ver resultado' : 'Siguiente pregunta';
+    document.getElementById('qBody').innerHTML = `
+      <span style="align-self:flex-start; font-size:11px; font-weight:800; color:#2F8FE0; background:#DBEEFF; padding:4px 9px; border-radius:10px; text-transform:uppercase; letter-spacing:.04em;">${q.type}</span>
+      ${q.photo ? `<div style="height:120px; border-radius:16px; background:${q.photo}; display:flex; align-items:center; justify-content:center;"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.4"><circle cx="12" cy="9" r="4"/><path d="M12 13v7"/></svg></div>` : ''}
+      <div style="font-size:18px; font-weight:700; color:#1F2937; line-height:1.35;">${esc(q.q)}</div>
+      <div style="display:flex; flex-direction:column; gap:9px;">${q.opts.map((o, i) => `<button class="opt-btn" onclick="answer(${i})">${esc(o)}</button>`).join('')}</div>
+      <div id="qFeed" style="font-size:13.5px; line-height:1.45;"></div>`;
+    document.querySelector('#scr-test .scroll').scrollTop = 0;
+  }
+  function answer(i) {
+    if (qAnswered) return; qAnswered = true;
+    const q = TEST[qi], btns = document.querySelectorAll('#qBody .opt-btn');
+    btns.forEach((b, j) => { b.disabled = true; if (j === q.ok) b.classList.add('ok'); else if (j === i) b.classList.add('ko'); });
+    const good = i === q.ok; if (good) qok++;
+    document.getElementById('qScore').textContent = `${qok} acierto${qok === 1 ? '' : 's'}`;
+    document.getElementById('qFeed').innerHTML = `<b style="color:${good ? '#2B9E5A' : '#C0392B'};">${good ? '¡Correcto!' : 'Casi.'}</b> <span style="color:#3E5C73;">${esc(q.why)}</span>`;
+    const nx = document.getElementById('qNext'); nx.disabled = false; nx.style.opacity = 1;
+  }
+  function nextQ() {
+    if (!qAnswered) return;
+    if (qi < TEST.length - 1) { qi++; renderQ(); return; }
+    document.getElementById('finScore').textContent = `${qok}/${TEST.length}`;
+    document.getElementById('finPts').textContent = `aciertos · ${qok * 35} puntos por biodiversidad`;
+    go('test-fin');
+  }
+
+  /* ---------- Vista profesor ---------- */
+  function loginProfe() {
+    if (!document.getElementById('profEmail').value.includes('@')) { toast('Escribe un correo docente válido'); return; }
+    nav('config-ruta');
+  }
+  function attachMaterial(inp) {
+    const f = inp.files && inp.files[0]; if (!f) return;
+    document.querySelector('#materialCard .grow').innerHTML = `<div style="font-size:13.5px; font-weight:600; color:#1F2937;">${esc(f.name)}</div><div style="font-size:11.5px; color:#6B7273;">Material adjuntado · la IA propondrá preguntas a partir de él</div>`;
+    toast('Material adjuntado');
+  }
+  function publishRoute() { homeTarget = 'home-educativo'; historyStack = []; go('home-educativo'); toast('Ruta publicada para 4ºB'); }
+  function renderCrear() {
+    const card = (q, i, sug) => `<div class="card" style="${sug ? 'border:1.5px dashed #C46686; background:#FFF8FB;' : ''}">
+      <div class="row" style="justify-content:space-between;"><span style="font-size:10.5px; font-weight:800; color:${sug ? '#A64D87' : '#2B6942'}; text-transform:uppercase; letter-spacing:.04em;">${q.type}${sug ? ' · sugerida por IA' : ''}</span>${sug ? '' : `<button class="tappable" aria-label="Quitar pregunta" onclick="TEST.splice(${i},1); renderCrear();" style="border:none; background:none; color:#9AA0A0; font-size:15px;">✕</button>`}</div>
+      <div style="font-size:14px; font-weight:600; color:#1F2937; margin-top:4px; line-height:1.35;">${esc(q.q)}</div>
+      <div style="font-size:12px; color:#2B6942; margin-top:4px;">Respuesta correcta: ${esc(q.opts[q.ok].replace(/^[✅❌] /, ''))}</div>
+      ${sug ? `<div class="row" style="gap:8px; margin-top:10px;"><button class="btn btn-pri btn-sm" onclick="TEST.push(SUGGEST.splice(${i},1)[0]); renderCrear(); toast('Pregunta añadida al test')">Aceptar</button><button class="btn btn-sec btn-sm" onclick="SUGGEST.splice(${i},1); renderCrear();">Descartar</button></div>` : ''}</div>`;
+    document.getElementById('ctBody').innerHTML = `
+      <div class="row" style="padding:12px; border-radius:14px; background:#F2E4EC; align-items:flex-start;"><span style="font-size:11px; font-weight:800; color:#fff; background:#A64D87; padding:3px 7px; border-radius:8px;">✨ IA</span><div style="font-size:12.5px; color:#6E3159; line-height:1.4;">Preguntas generadas a partir de <b>Ciencias Naturales — Tema 4: Ecosistemas y biodiversidad</b>, el material que adjuntaste. ${TEST.length} incluidas · ${SUGGEST.length} sugeridas por revisar.</div></div>
+      ${TEST.map((q, i) => card(q, i, false)).join('')}
+      ${SUGGEST.map((q, i) => card(q, i, true)).join('')}
+      <form class="card" style="display:flex; flex-direction:column; gap:9px;" onsubmit="event.preventDefault(); addManualQ();">
+        <div style="font-size:14px; font-weight:700; color:#1F2937;">Añadir pregunta manual</div>
+        <label class="field"><span>Tipo</span><select id="mqType"><option>Opción múltiple</option><option>Verdadero / Falso</option></select></label>
+        <label class="field"><span>Pregunta</span><input id="mqQ" placeholder="Ej.: ¿Qué árbol da sombra en la plaza del Ayuntamiento?"></label>
+        <label class="field"><span>Respuesta correcta</span><input id="mqA" placeholder="Ej.: Ficus microcarpa"></label>
+        <label class="field"><span>Respuestas incorrectas (separadas por comas)</span><input id="mqB" placeholder="Ej.: Laurel, Palmera"></label>
+        <button type="submit" class="btn btn-sec" style="border:1.5px solid #2B6942; color:#2B6942;">＋ Añadir pregunta</button>
+      </form>`;
+    document.getElementById('ctPublish').textContent = `Publicar test (${TEST.length} preguntas)`;
+  }
+  function addManualQ() {
+    const vf = document.getElementById('mqType').value.startsWith('Verdadero');
+    const q = document.getElementById('mqQ').value.trim(), a = document.getElementById('mqA').value.trim();
+    if (!q || (!vf && !a)) { toast('Escribe la pregunta y la respuesta correcta'); return; }
+    if (vf) {
+      const isTrue = !/^f/i.test(a);
+      TEST.push({ type:'Verdadero / Falso', q, opts:['✅ Verdadero','❌ Falso'], ok:isTrue ? 0 : 1, why:'Pregunta añadida por la profesora.' });
+    } else {
+      const wrong = document.getElementById('mqB').value.split(',').map(s => s.trim()).filter(Boolean).slice(0, 3);
+      if (!wrong.length) { toast('Añade al menos una respuesta incorrecta'); return; }
+      const opts = [...wrong]; const pos = Math.floor(Math.random() * (opts.length + 1)); opts.splice(pos, 0, a);
+      TEST.push({ type:'Opción múltiple', q, opts, ok:pos, why:'Pregunta añadida por la profesora.' });
+    }
+    renderCrear(); toast('Pregunta añadida al test');
+  }
+  function publishTest() { homeTarget = 'home-educativo'; historyStack = []; go('home-educativo'); toast(`Test publicado para 4ºB (${TEST.length} preguntas)`); }
+
+  /* ---------- Ajustes de pantallas existentes ---------- */
+  function chooseProfile(target, el) {
+    homeTarget = target;
+    document.querySelectorAll('#scr-encuesta .opt').forEach(o => { o.classList.remove('selected'); o.style.borderColor = '#E8E8E3'; o.querySelector('.check').style.display = 'none'; });
+    el.classList.add('selected'); el.style.borderColor = '#2B6942'; el.querySelector('.check').style.display = 'block';
+    const esencial = el.textContent.includes('Solo lo esencial');
+    setTimeout(() => { historyStack = []; go(target); if (target === 'home-descubridor') setPill(!esencial); }, 280);
+  }
+  document.querySelectorAll('[onclick="nav(\'ficha\')"]').forEach(el => {
+    const txt = el.textContent || '', key = /Hibisc|Hibisco/.test(txt) ? 'hibisco' : /Palmera|Washingtonia/.test(txt) ? 'palmera' : /Ficus/.test(txt) ? 'ficus' : /Laurel/.test(txt) ? 'laurel' : 'jacaranda';
+    el.setAttribute('onclick', `openFicha('${key}')`);
+  });
+  document.querySelectorAll('.flip-card').forEach(fc => {
+    const txt = fc.textContent, key = /Hibisco/.test(txt) ? 'hibisco' : /Palmera/.test(txt) ? 'palmera' : 'jacaranda';
+    fc.setAttribute('onclick', `flipCardTo(this,'${key}')`);
+  });
+  function flipCardTo(el, key) { el.classList.add('flipped'); setTimeout(() => openFicha(key), 480); setTimeout(() => el.classList.remove('flipped'), 900); }
+  renderSearch(); renderCerca(); syncLangRows(); updateCounts();
+  { const mc = document.getElementById('mapCardName').closest('.tappable'); mc.setAttribute('onclick', "openFicha(/Hibisc/.test(document.getElementById('mapCardName').textContent) ? 'hibisco' : /Washing/.test(document.getElementById('mapCardName').textContent) ? 'palmera' : 'jacaranda')"); }
 
 </script>
 </body></html>
