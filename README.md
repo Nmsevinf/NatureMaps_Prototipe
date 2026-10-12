@@ -24,3 +24,10 @@ Abre `index.html` en el navegador para probarlo.
 - **Notificaciones pasivas**: **Ajustes › Probar aviso al pasear (demo)**. El aviso aparece solo, sin abrir nada.
 
 En **Ajustes › Demo para la presentación** se puede simular "Sin conexión" o "Límite diario" para enseñar las pantallas de error.
+
+## Documentación
+
+- [`docs/NatureMaps_Navegacion_de_pantallas.docx`](docs/NatureMaps_Navegacion_de_pantallas.docx): documento de navegación de pantallas en Word, con la vista general del Figma, cada modo, los diagramas tipo UML y el índice de pantallas.
+- [`docs/NatureMaps_Navegacion_de_pantallas.pdf`](docs/NatureMaps_Navegacion_de_pantallas.pdf): el mismo documento en PDF.
+- [`docs/diagramas/`](docs/diagramas): diagramas de navegación tipo UML en SVG (modos de uso; identificación y fichas; ajustes, profesor y administrador).
+- [`docs/NatureMAPS_QR.png`](docs/NatureMAPS_QR.png): QR que abre el prototipo publicado en Claude. Solo funciona para los testers si el enlace está compartido desde el menú Compartir de la página.
