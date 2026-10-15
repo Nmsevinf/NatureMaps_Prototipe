@@ -1113,8 +1113,8 @@
     'login-profesor','config-ruta','crear-test','login-admin','dashboard-admin');
 
   const S = {
-    lang: 'es', perms: { loc: false, cam: false }, captured: new Set(['jacaranda','palmera','hibisco']), lastPhoto: null,
-    sim: 'ok', notif: true, scanTarget: 'jacaranda', nextTarget: null, fromScan: false, plant: 'jacaranda',
+    lang: 'es', perms: { loc: false, cam: false }, captured: new Set(['tradescantia','jacaranda','palmera','hibisco']), lastPhoto: null,
+    sim: 'ok', notif: true, scanTarget: 'tradescantia', nextTarget: null, fromScan: false, plant: 'tradescantia',
     fav: new Set(), pending: null, rutasEdit: false, searchTab: 'plantas',
     offline: [{ id:'turia', name:'Jardín del Turia', mb:128, done:true }, { id:'central', name:'Parc Central', mb:96, done:false }, { id:'botanico', name:'Jardín Botánico UV', mb:84, done:false }],
     rutas: [{ id:'turia', name:'Jardín del Turia', meta:'2.4 km · 40 min · 8 paradas', tag:'Contexto histórico · s. XIX', color:'#8FB672' },
@@ -1127,6 +1127,16 @@
 
   /* ---------- Datos de plantas (ES / EN / VAL) ---------- */
   const PL = {
+    tradescantia: { sci:'Tradescantia zebrina', fam:'Commelinaceae', loc:'Ejemplar de interior (demo)', color:'#6B3FA0', pct:95,
+      alts:[['Tradescantia pallida',4],['Tradescantia fluminensis',3]],
+      com:{ es:'Amor de hombre', en:'Inch plant', va:'Tradescàntia' },
+      flor:{ es:'Floración: todo el año en interior con luz', en:'Bloom: year-round indoors with light', va:'Floració: tot l\'any en interior amb llum' },
+      desc:{ es:'Planta de interior de tallos rastreros y hojas lanceoladas con bandas plateadas y moradas, de envés púrpura. Originaria de Centroamérica y México, es muy popular como planta colgante por su crecimiento rápido y bajo mantenimiento.',
+             en:'A trailing houseplant with lance-shaped leaves striped silver and purple, with a purple underside. Native to Central America and Mexico, it is popular as a hanging plant for its fast growth and low maintenance.',
+             va:'Planta d\'interior de tiges rastreres i fulles lanceolades amb bandes plantejades i morades, de revers porpra. Originària de Centreamèrica i Mèxic, és molt popular com a planta penjant pel seu creixement ràpid i baix manteniment.' },
+      cur:{ es:'Es una planta suculenta: almacena agua en tallos y hojas, así que aguanta bien los descuidos de riego. Un pequeño trozo de tallo enraíza fácilmente en agua.',
+            en:'It is a succulent plant that stores water in its stems and leaves, so it tolerates missed waterings well. A small stem cutting roots easily in water.',
+            va:'És una planta suculenta: emmagatzema aigua en tiges i fulles, per la qual cosa aguanta bé els descuits de reg. Un xicotet tros de tija arrela fàcilment en aigua.' } },
     jacaranda: { sci:'Jacaranda mimosifolia', fam:'Bignoniaceae', loc:'Parc Central', color:'#79A15F', pct:82,
       alts:[['Paulownia tomentosa',9],['Melia azedarach',5]],
       com:{ es:'Jacaranda', en:'Blue jacaranda', va:'Xicranda' },
