@@ -1212,7 +1212,7 @@
     const cur = currentScreen();
     let t = resolveRoute(id);
     if (t === 'identificar') {
-      S.scanTarget = S.nextTarget || ((cur === 'home-gamer' || cur === 'home-educativo') ? 'ficus' : 'jacaranda');
+      S.scanTarget = S.nextTarget || 'tradescantia';
       S.nextTarget = null; S.eduScan = (cur === 'home-educativo');
       if (!S.perms.cam) { S.pending = 'identificar'; t = 'permiso-camara'; }
     }
