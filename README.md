@@ -8,7 +8,7 @@ Abre `index.html` en el navegador para probarlo.
 
 **1. Demostración de la app: mapa, escaneo y fichas**
 - Elige **Modo aventura**. Toca **Mapa**: primero aparece el permiso de ubicación y después el mapa "Caza de especies".
-- Toca un pin con **?** y luego **Hacer foto**. Verás el permiso de cámara, el visor, "Analizando tu foto" con Pl@ntNet y el resultado con el % de certeza y las especies alternativas.
+- Toca un pin con **?** y luego **Hacer foto** (la foto es simulada: no hace falta tener la planta delante; funciona igual en todos los modos). Verás el permiso de cámara, el visor, "Analizando tu foto" con Pl@ntNet y el resultado con el % de certeza y las especies alternativas.
 - Pulsa **Ver ficha**. La ficha incluye la atribución de Pl@ntNet y las fuentes de información. Con los botones **ES / EN / VAL** se traduce, y la fuente del Ayuntamiento abre el Portal de Datos.
 
 **2. Modos de uso**
